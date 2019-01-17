@@ -6,18 +6,17 @@
 #include <System.Classes.hpp>			//추가한 헤더
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-const int MAX_BUFFER_SIZE = 1024;
+const int MAX_TCP_BUFFER = 1024;
 //---------------------------------------------------------------------------
 class TTcpBase
 {
 private:
 protected:
-	int __fastcall fnDefaultEncoding(BYTE *pBuffer, int &iIndex, void *pData, int iDataSize);
-	int __fastcall fnDefaultDecoding(BYTE *pBuffer, int &iIndex, int iSize, void *pData, int iDataSize);
+	int __fastcall fnDefaultEncoding(BYTE *pBuffer, int &iIndex, void *pData, int iDataSize);				// 저장되어있는 구조체 데이터를 보낼 버퍼에 쌓는 함수
+	int __fastcall fnDefaultDecoding(BYTE *pBuffer, int &iIndex, int iSize, void *pData, int iDataSize);	// 받은 버퍼에서 구조체에 저장할 데이터를 추출하는 함수
 public:
 	__fastcall 	TTcpBase();
 	__fastcall ~TTcpBase();
-
 };
 //---------------------------------------------------------------------------
 struct TstHeader	//9바이트
@@ -41,9 +40,17 @@ struct TstTail		//4바이트
 class TProtocol	: public TTcpBase
 {
 private:
-	TstHeader m_stHeader;
-	TstTail	  m_stTail;
-	void	 *m_pBody;
+	TstHeader	m_stHeader;
+	TstTail	  	m_stTail;
+	void	   *m_pBody;
+	int			m_iDataLen;
+	int		    m_iSendPackSize;
+	int		  	m_iRecvPackSize;
+	BYTE	  	m_bySendPacket[MAX_TCP_BUFFER];
+	BYTE	  	m_byRecvPacket[MAX_TCP_BUFFER];
+private:
+	void __fastcall fnSetDataLen(int a_iValue);
+	int  __fastcall fnGetDataLen();
 public:
 	__fastcall  TProtocol();
 	__fastcall ~TProtocol();
@@ -51,6 +58,9 @@ public:
 	int __fastcall fnEncoding();
 	int __fastcall fnDecoding(BYTE *a_pBuffer, int a_iSize);
 //	void __fastcall fnSetOpCode(int a_op);
+public:
+	__property	BYTE	Code    = {read=m_stHeader.byOpCode		,	write=m_stHeader.byOpCode	};
+	__property	int		DataLen	= {read=fnGetDataLen			,	write=fnSetDataLen			};
 };
 //---------------------------------------------------------------------------
 struct TstCode05
@@ -66,9 +76,15 @@ class TTcpData05   	: public TTcpBase
 {
 private:
 	TstCode05 m_stData;
+	int __fastcall fnGetDataLen();
+public:
+	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex);
+	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize);
 public:
 	__fastcall  TTcpData05();
 	__fastcall ~TTcpData05();
+public:
+	__property int DataLen	=	{read=fnGetDataLen	};
 };
 //---------------------------------------------------------------------------
 struct TstCode06							// State     //12바이트
@@ -91,9 +107,15 @@ class TTcpData06	: public TTcpBase
 {
 private:
 	TstCode06 m_stData;
+	int __fastcall fnGetDataLen();
+public:
+	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex);
+	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize);
 public:
 	__fastcall  TTcpData06();
 	__fastcall ~TTcpData06();
+public:
+	__property int DataLen	=	{read=fnGetDataLen	};
 };
 //---------------------------------------------------------------------------
 struct TstCode07                      		// LocalState
@@ -118,9 +140,15 @@ class TTcpData07	: public TTcpBase
 {
 private:
 	TstCode07 m_stData;
+	int __fastcall fnGetDataLen();
+public:
+	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex);
+	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize);
 public:
 	__fastcall  TTcpData07();
 	__fastcall ~TTcpData07();
+public:
+	__property int DataLen	=	{read=fnGetDataLen	};
 };
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
