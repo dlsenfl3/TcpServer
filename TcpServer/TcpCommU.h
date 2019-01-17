@@ -12,8 +12,8 @@ class TTcpBase
 {
 private:
 protected:
-	int __fastcall fnDefaultEncoding(BYTE *pBuffer, int &iIndex, void *pData, int iDataSize, int iTail);				// 저장되어있는 구조체 데이터를 보낼 버퍼에 쌓는 함수
-	int __fastcall fnDefaultDecoding(BYTE *pBuffer, int &iIndex, int iSize, void *pData, int iDataSize);	// 받은 버퍼에서 구조체에 저장할 데이터를 추출하는 함수
+	int __fastcall fnDefaultEncoding(BYTE *pBuffer, int &iIndex, void *pData, int iDataSize, int iTail);  // 저장되어있는 구조체 데이터를 보낼 버퍼에 쌓는 함수
+	int __fastcall fnDefaultDecoding(BYTE *pBuffer, int &iIndex, int iSize, void *pData, int iDataSize);  // 받은 버퍼에서 구조체에 저장할 데이터를 추출하는 함수
 public:
 	__fastcall 	TTcpBase();
 	__fastcall ~TTcpBase();

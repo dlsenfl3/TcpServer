@@ -79,6 +79,7 @@ void __fastcall TProtocol::fnDeleteBody()
 		m_pBody = NULL;
 }
 //---------------------------------------------------------------------------
+//====== TProtocol::fnEncoding => TTcpData??::fnEncodingBody => TTcpBase::fnDefaultEncoding 호출 ============
 int __fastcall TProtocol::fnEncoding()
 {
 	int iResult = 0;
@@ -123,9 +124,11 @@ int __fastcall TProtocol::fnEncoding()
 	return iResult;                                                              //	정상이면 0반환.
 }
 //---------------------------------------------------------------------------
+//====== TProtocol::fnDecoding => TTcpData??::fnDecodingBody => TTcpBase::fnDefaultDecoding 호출 ============
 int __fastcall TProtocol::fnDecoding(BYTE *a_pBuffer, int a_iSize)
 {
 	int iResult = 0;
+	int iTailSize = 0;
 	fnDeleteBody();
 	if(a_iSize > MAX_TCP_BUFFER)	return 1;
 	ZeroMemory(m_byRecvPacket, sizeof(m_byRecvPacket));
@@ -148,6 +151,14 @@ int __fastcall TProtocol::fnDecoding(BYTE *a_pBuffer, int a_iSize)
 		default:
 			break;
 	}
+
+	m_iRecvPackSize += iTailSize;                          				//	헤더사이즈 + 데이터사이즈 + 테일사이즈
+	if (iResult == 0) {
+		if (m_iRecvPackSize != a_iSize) {
+			iResult =3;
+		}
+	}
+	return iResult;			// 정상이면 0반환, Error이면 3반환.
 }
 //---------------------------------------------------------------------------
 __fastcall TTcpData05::TTcpData05()
@@ -167,6 +178,11 @@ int __fastcall TTcpData05::fnGetDataLen()
 int __fastcall TTcpData05::fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iTail)
 {
 	return fnDefaultEncoding(a_pBuffer, a_iIndex, &m_stData, sizeof(m_stData), a_iTail);
+}
+//---------------------------------------------------------------------------
+int __fastcall TTcpData05::fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize)
+{
+	return fnDefaultDecoding(a_pBuffer, a_iIndex, a_iSize, &m_stData, sizeof(m_stData));
 }
 //---------------------------------------------------------------------------
 __fastcall TTcpData06::TTcpData06()
