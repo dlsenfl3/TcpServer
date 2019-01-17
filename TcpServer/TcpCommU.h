@@ -12,7 +12,7 @@ class TTcpBase
 {
 private:
 protected:
-	int __fastcall fnDefaultEncoding(BYTE *pBuffer, int &iIndex, void *pData, int iDataSize);				// 저장되어있는 구조체 데이터를 보낼 버퍼에 쌓는 함수
+	int __fastcall fnDefaultEncoding(BYTE *pBuffer, int &iIndex, void *pData, int iDataSize, int iTail);				// 저장되어있는 구조체 데이터를 보낼 버퍼에 쌓는 함수
 	int __fastcall fnDefaultDecoding(BYTE *pBuffer, int &iIndex, int iSize, void *pData, int iDataSize);	// 받은 버퍼에서 구조체에 저장할 데이터를 추출하는 함수
 public:
 	__fastcall 	TTcpBase();
@@ -55,8 +55,9 @@ public:
 	__fastcall  TProtocol();
 	__fastcall ~TProtocol();
 public:
-	int __fastcall fnEncoding();
-	int __fastcall fnDecoding(BYTE *a_pBuffer, int a_iSize);
+	int  __fastcall fnEncoding();
+	int  __fastcall fnDecoding(BYTE *a_pBuffer, int a_iSize);
+	void __fastcall fnDeleteBody();
 //	void __fastcall fnSetOpCode(int a_op);
 public:
 	__property	BYTE	Code    = {read=m_stHeader.byOpCode		,	write=m_stHeader.byOpCode	};
@@ -78,7 +79,7 @@ private:
 	TstCode05 m_stData;
 	int __fastcall fnGetDataLen();
 public:
-	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex);
+	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iTail);
 	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize);
 public:
 	__fastcall  TTcpData05();
@@ -109,7 +110,7 @@ private:
 	TstCode06 m_stData;
 	int __fastcall fnGetDataLen();
 public:
-	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex);
+	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iTail);
 	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize);
 public:
 	__fastcall  TTcpData06();
@@ -142,7 +143,7 @@ private:
 	TstCode07 m_stData;
 	int __fastcall fnGetDataLen();
 public:
-	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex);
+	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iTail);
 	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize);
 public:
 	__fastcall  TTcpData07();
