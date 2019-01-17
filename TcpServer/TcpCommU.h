@@ -116,7 +116,8 @@ public:
 	__fastcall  TTcpData06();
 	__fastcall ~TTcpData06();
 public:
-	__property int DataLen	=	{read=fnGetDataLen	};
+	__property TstCode06	Data 	=	{					write=m_stData	  };
+	__property int 		 	DataLen	=	{read=fnGetDataLen					  };
 };
 //---------------------------------------------------------------------------
 struct TstCode07                      		// LocalState

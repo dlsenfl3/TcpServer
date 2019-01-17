@@ -554,6 +554,16 @@ object MainF: TMainF
             TabOrder = 2
             Width = 96
           end
+          object edMaskTest: TMaskEdit
+            Left = 167
+            Top = 18
+            Width = 118
+            Height = 21
+            EditMask = '!999'#176'\C;0;_'
+            MaxLength = 5
+            TabOrder = 3
+            Text = ''
+          end
         end
         object rdModulError: TRadioGroup
           AlignWithMargins = True

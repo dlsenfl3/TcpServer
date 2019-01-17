@@ -78,6 +78,7 @@ TMainF *MainF;
 __fastcall TMainF::TMainF(TComponent* Owner)
 	: TForm(Owner)
 {
+	m_pData06 = new TTcpData06();
 
 }
 //---------------------------------------------------------------------------
@@ -87,10 +88,25 @@ __fastcall TMainF::TMainF(TComponent* Owner)
 
 void __fastcall TMainF::btSaveClick(TObject *Sender)
 {
-//	int iOpCode = cxPageControl1->ActivePageIndex + 5;
-//	ShowMessage(iOpCode);
-//	TData05 Data05;
-//	Data05.
+	int iActivaPage = cxPageControl1->ActivePageIndex + 5;
+	UnicodeString sTemp;
+	switch (iActivaPage) {
+		case 6:
+			TstCode06 stData06;
+			sTemp = edMaskTest->Text;
+			stData06.byTemperature = StrToInt(sTemp);//*(BYTE*)sTemp.c_str();
+			stData06.byDisplayBright;
+			stData06.byEtc2;
+			stData06.byDoor = rdDoor->ItemIndex;
+			stData06.byPower;
+
+			ShowMessage(stData06.byTemperature);
+//			m_pData06->Data
+		case 7:
+			break;
+		default:
+			break;
+	}
 
 }
 
