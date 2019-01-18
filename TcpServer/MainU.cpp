@@ -78,37 +78,56 @@ TMainF *MainF;
 __fastcall TMainF::TMainF(TComponent* Owner)
 	: TForm(Owner)
 {
-	m_pData06 = new TTcpData06();
-
 }
 //---------------------------------------------------------------------------
-
-
-
-
+__fastcall TMainF::~TMainF()
+{
+}
+//---------------------------------------------------------------------------
 void __fastcall TMainF::btSaveClick(TObject *Sender)
 {
-	int iActivaPage = cxPageControl1->ActivePageIndex + 5;
+	int iActivePage = cxPageControl1->ActivePageIndex;
 	UnicodeString sTemp;
-	switch (iActivaPage) {
-		case 6:
-			TstCode06 stData06;
-			sTemp = edMaskTest->Text;
-			stData06.byTemperature = StrToInt(sTemp);//*(BYTE*)sTemp.c_str();
-			stData06.byDisplayBright;
-			stData06.byEtc2;
-			stData06.byDoor = rdDoor->ItemIndex;
-			stData06.byPower;
+	m_pProtocol = new TProtocol();
 
-			ShowMessage(stData06.byTemperature);
-//			m_pData06->Data
-		case 7:
+	enum CTRL_PAGE{
+		CtrlPage = 0,
+		StatePage,
+		LocalPage,
+	};
+
+
+	switch (iActivePage) {
+		case StatePage : {
+//			ShowMessage(StatePage);
+			TTcpData06 *TcpData06 = new TTcpData06;
+			sTemp = edMaskTemper->Text;
+			TcpData06->Temperature 		= StrToInt(sTemp);//*(BYTE*)sTemp.c_str();
+//			stData06.byDisplayBright 	= StrToInt(edMaskBright->Text);
+//			stData06.byEtc2				= *(BYTE*)(edEtc->Text).c_str();
+//			stData06.byFoamKind 		= rdFormKind->ItemIndex;
+//			stData06.byPower 			= rdPowerState->ItemIndex;
+//			stData06.byOuterLight 		= rdOuterLampState->ItemIndex;
+//			stData06.byReplayCheck 		= rdReStart->ItemIndex;
+//			stData06.byDoor 			= rdDoor->ItemIndex;
+//			stData06.byFan 				= rdFanState->ItemIndex;
+//			stData06.byHeater 			= rdHeaterState->ItemIndex;
+//			stData06.byModulOdd 		= rdModulError->ItemIndex;
+//			stData06.byPowerOdd 		= rdPowerError->ItemIndex;
+//			m_pData06->Data 			= stData06;
 			break;
+			}
+		case LocalPage : {
+			break;
+			}
 		default:
 			break;
 	}
-
 }
-
+//---------------------------------------------------------------------------
+void __fastcall TMainF::IdTCPServer1Execute(TIdContext *AContext)
+{
+//
+}
 //---------------------------------------------------------------------------
 

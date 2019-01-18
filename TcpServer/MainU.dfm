@@ -421,6 +421,7 @@ object MainF: TMainF
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
+          ItemIndex = 0
           Items.Strings = (
             #51221#49345
             #51116#49892#54665)
@@ -444,6 +445,7 @@ object MainF: TMainF
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
+          ItemIndex = 0
           Items.Strings = (
             'On'
             'Off'
@@ -468,6 +470,7 @@ object MainF: TMainF
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
+          ItemIndex = 1
           Items.Strings = (
             #50640#47084#48156#49373
             #51221#49345
@@ -552,16 +555,27 @@ object MainF: TMainF
             Left = 425
             Top = 8
             TabOrder = 2
+            Text = 'etcTest'
             Width = 96
           end
-          object edMaskTest: TMaskEdit
-            Left = 167
-            Top = 18
-            Width = 118
+          object edMaskTemper: TMaskEdit
+            Left = 57
+            Top = 10
+            Width = 114
             Height = 21
-            EditMask = '!999'#176'\C;0;_'
+            EditMask = '!999'#176'\C;0;0'
             MaxLength = 5
             TabOrder = 3
+            Text = ''
+          end
+          object edMaskBright: TMaskEdit
+            Left = 248
+            Top = 8
+            Width = 112
+            Height = 21
+            EditMask = '!999%;0;0'
+            MaxLength = 4
+            TabOrder = 4
             Text = ''
           end
         end
@@ -576,6 +590,7 @@ object MainF: TMainF
           BiDiMode = bdLeftToRight
           Caption = #47784#46280' '#51060#49345#50668#48512
           Columns = 3
+          ItemIndex = 0
           Items.Strings = (
             #50640#47084#48156#49373
             #51221#49345
@@ -599,6 +614,7 @@ object MainF: TMainF
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
+          ItemIndex = 0
           Items.Strings = (
             #53685#49888' '#54268
             #46356#54260#53944' '#54268)
@@ -622,6 +638,7 @@ object MainF: TMainF
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
+          ItemIndex = 1
           Items.Strings = (
             'On'
             'Off')
@@ -645,6 +662,7 @@ object MainF: TMainF
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
+          ItemIndex = 0
           Items.Strings = (
             'On'
             'Off'
@@ -669,6 +687,7 @@ object MainF: TMainF
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
+          ItemIndex = 1
           Items.Strings = (
             'On'
             'Off')
@@ -692,6 +711,7 @@ object MainF: TMainF
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
+          ItemIndex = 2
           Items.Strings = (
             'Open'
             'Close'
@@ -1000,8 +1020,10 @@ object MainF: TMainF
     end
   end
   object IdTCPServer1: TIdTCPServer
+    Active = True
     Bindings = <>
     DefaultPort = 5000
+    OnExecute = IdTCPServer1Execute
     Left = 24
     Top = 16
   end

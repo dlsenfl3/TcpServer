@@ -58,7 +58,7 @@ int __fastcall TProtocol::fnGetDataLen()
 	return m_iDataLen;
 }
 //---------------------------------------------------------------------------
-//*************???? AytoFree ????*************
+//*************???? AutoFree ????*************
 void __fastcall TProtocol::fnDeleteBody()
 {
 	if(m_pBody == NULL) return;
@@ -140,7 +140,7 @@ int __fastcall TProtocol::fnDecoding(BYTE *a_pBuffer, int a_iSize)
 	switch (Code) {
 		case 0x05:	{
 			TTcpData05 *pData = new TTcpData05();
-			iResult = pData->fnDecodingBody(a_pBuffer, m_iRecvPackSize, a_iSize);
+			iResult = pData->fnDecodingBody(a_pBuffer, m_iRecvPackSize, a_iSize);      // m_iRecvPackSize는 a_pBuffer의 메모리위치 인덱스
 			if (iResult == 0) {
 				m_pBody = (void*)pData;
 			}else	delete pData;
@@ -152,6 +152,7 @@ int __fastcall TProtocol::fnDecoding(BYTE *a_pBuffer, int a_iSize)
 			break;
 	}
 
+	CopyMemory(&m_stTail, m_byRecvPacket, sizeof(m_stTail));
 	m_iRecvPackSize += iTailSize;                          				//	헤더사이즈 + 데이터사이즈 + 테일사이즈
 	if (iResult == 0) {
 		if (m_iRecvPackSize != a_iSize) {

@@ -152,13 +152,15 @@ __published:	// IDE-managed Components
 	TButton *btSave06;
 	TButton *btSave07;
 	TButton *btSave;
-	TMaskEdit *edMaskTest;
+	TMaskEdit *edMaskTemper;
+	TMaskEdit *edMaskBright;
 	void __fastcall btSaveClick(TObject *Sender);
+	void __fastcall IdTCPServer1Execute(TIdContext *AContext);
 private:
 	TProtocol 	*m_pProtocol;
-	TTcpData06 	*m_pData06;
 public:		// User declarations
-	__fastcall TMainF(TComponent* Owner);
+	__fastcall 	TMainF(TComponent* Owner);
+	__fastcall ~TMainF();
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TMainF *MainF;

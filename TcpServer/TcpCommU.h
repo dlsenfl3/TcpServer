@@ -62,6 +62,7 @@ public:
 public:
 	__property	BYTE	Code    = {read=m_stHeader.byOpCode		,	write=m_stHeader.byOpCode	};
 	__property	int		DataLen	= {read=fnGetDataLen			,	write=fnSetDataLen			};
+	__property 	void*	Body	= {read=m_pBody					,	write=m_pBody				};
 };
 //---------------------------------------------------------------------------
 struct TstCode05
@@ -85,7 +86,12 @@ public:
 	__fastcall  TTcpData05();
 	__fastcall ~TTcpData05();
 public:
-	__property int DataLen	=	{read=fnGetDataLen	};
+	__property BYTE		   CtrlCode	    		=	{read=m_stData.byCtrlCode   	};
+	__property BYTE		   CtrlData01	       	=	{read=m_stData.byCtrlData01		};
+	__property BYTE		   CtrlData02	 		=	{read=m_stData.byCtrlData02[0]  };
+	__property char		   CtrlData08  		 	=	{read=m_stData.byCtrlData08[0]  };
+	__property char		   CtrlData14	    	=	{read=m_stData.byCtrlData14[0]  };
+	__property int 		   DataLen				=	{read=fnGetDataLen			 	};
 };
 //---------------------------------------------------------------------------
 struct TstCode06							// State     //12πŸ¿Ã∆Æ
@@ -116,8 +122,20 @@ public:
 	__fastcall  TTcpData06();
 	__fastcall ~TTcpData06();
 public:
-	__property TstCode06	Data 	=	{					write=m_stData	  };
-	__property int 		 	DataLen	=	{read=fnGetDataLen					  };
+	__property BYTE		   Door	    		=	{read=m_stData.byDoor,			write=m_stData.byDoor			};
+	__property BYTE		   Power	    	=	{read=m_stData.byPower,			write=m_stData.byPower			};
+	__property BYTE		   Fan	    		=	{read=m_stData.byFan,			write=m_stData.byFan		 	};
+	__property BYTE		   Heater	    	=	{read=m_stData.byHeater,		write=m_stData.byHeater			};
+	__property BYTE		   OuterLight	   	=	{read=m_stData.byOuterLight,	write=m_stData.byOuterLight		};
+	__property BYTE		   FoamKind	    	=	{read=m_stData.byFoamKind,		write=m_stData.byFoamKind		};
+	__property BYTE		   ReplayCheck	   	=	{read=m_stData.byReplayCheck,	write=m_stData.byReplayCheck   	};
+	__property BYTE		   PowerOdd	    	=	{read=m_stData.byPowerOdd,		write=m_stData.byPowerOdd		};
+	__property BYTE		   ModulOdd	    	=	{read=m_stData.byModulOdd,		write=m_stData.byModulOdd		};
+	__property BYTE		   Temperature	   	=	{read=m_stData.byTemperature,	write=m_stData.byTemperature   	};
+	__property BYTE		   DisplayBright   	=	{read=m_stData.byDisplayBright,	write=m_stData.byDisplayBright	};
+	__property BYTE		   Etc2	    		=	{read=m_stData.byEtc2,			write=m_stData.byEtc2			};
+
+	__property int 		   DataLen			=	{read=fnGetDataLen					  							};
 };
 //---------------------------------------------------------------------------
 struct TstCode07                      		// LocalState
@@ -150,6 +168,17 @@ public:
 	__fastcall  TTcpData07();
 	__fastcall ~TTcpData07();
 public:
+	__property BYTE		   PowerMode	    		=	{read=m_stData.byPowerMode,				write=m_stData.byPowerMode				};
+	__property BYTE		   Fan	    				=	{read=m_stData.byFan,					write=m_stData.byFan		 			};
+	__property BYTE		   FanTemper	    		=	{read=m_stData.byFanTemper,				write=m_stData.byFanTemper				};
+	__property BYTE		   Etc1	  				 	=	{read=m_stData.byEtc1,					write=m_stData.byEtc1					};
+	__property BYTE		   Heater	    			=	{read=m_stData.byHeater,				write=m_stData.byHeater					};
+	__property BYTE		   HeaterTemper	   			=	{read=m_stData.byHeaterTemper,			write=m_stData.byHeaterTemper   		};
+	__property BYTE		   DisplayBright	    	=	{read=m_stData.byDisplayBright,			write=m_stData.byDisplayBright			};
+	__property BYTE		   FlashCycle	    		=	{read=m_stData.byFlashCycle,			write=m_stData.byFlashCycle				};
+	__property BYTE		   OuterLightOperating	   	=	{read=m_stData.byOuterLightOperating,	write=m_stData.byOuterLightOperating   	};
+	__property BYTE		   OuterLightOnBright   	=	{read=m_stData.byOuterLightOnBright,	write=m_stData.byOuterLightOnBright		};
+	__property BYTE		   Etc2	    				=	{read=m_stData.byEtc2,					write=m_stData.byEtc2					};
 	__property int DataLen	=	{read=fnGetDataLen	};
 };
 //---------------------------------------------------------------------------
