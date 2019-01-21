@@ -101,7 +101,7 @@ struct TstCode06							// State     //12πŸ¿Ã∆Æ
 	BYTE byFan;								//  On: 0x00, 	Off: 0x01,   Unkown: 0x09
 	BYTE byHeater;                         	//  On: 0x00, 	Off: 0x01,   Unkown: 0x09
 	BYTE byOuterLight;                 	   	//  On: 0x00, 	Off: 0x01
-	BYTE byFoamKind;						//  CFoam: 0x00, 	DFoam: 0x01
+	BYTE byFormKind;						//  CFoam: 0x00, 	DFoam: 0x01
 	BYTE byReplayCheck;                	    //  Normal: 0x00, 	RePlay: 0x01
 	BYTE byPowerOdd;						//	Eorror: 0x00,	Normal:	0x01,	0x02: Unknown
 	BYTE byModulOdd;						//  Eorror: 0x00,	Normal:	0x01,	0x02: Unknown
@@ -127,7 +127,7 @@ public:
 	__property BYTE		   Fan	    		=	{read=m_stData.byFan,			write=m_stData.byFan		 	};
 	__property BYTE		   Heater	    	=	{read=m_stData.byHeater,		write=m_stData.byHeater			};
 	__property BYTE		   OuterLight	   	=	{read=m_stData.byOuterLight,	write=m_stData.byOuterLight		};
-	__property BYTE		   FoamKind	    	=	{read=m_stData.byFoamKind,		write=m_stData.byFoamKind		};
+	__property BYTE		   FormKind	    	=	{read=m_stData.byFormKind,		write=m_stData.byFormKind		};
 	__property BYTE		   ReplayCheck	   	=	{read=m_stData.byReplayCheck,	write=m_stData.byReplayCheck   	};
 	__property BYTE		   PowerOdd	    	=	{read=m_stData.byPowerOdd,		write=m_stData.byPowerOdd		};
 	__property BYTE		   ModulOdd	    	=	{read=m_stData.byModulOdd,		write=m_stData.byModulOdd		};

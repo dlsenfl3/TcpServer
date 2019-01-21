@@ -82,6 +82,12 @@
 #include <IdCustomTCPServer.hpp>
 #include <IdTCPServer.hpp>
 #include <Vcl.Mask.hpp>
+#include "cspin.h"
+#include <IdSocketHandle.hpp>
+#include <IdUDPBase.hpp>
+#include <IdUDPServer.hpp>
+//---------------------------------------------------------------------------
+const int MAX_BUFFER = 1024;
 //---------------------------------------------------------------------------
 class TMainF : public TForm
 {
@@ -147,17 +153,23 @@ __published:	// IDE-managed Components
 	TcxTextEdit *edScinarioTransTime;
 	TLabel *lbEtc2;
 	TcxTextEdit *edEtc2;
-	TIdTCPServer *IdTCPServer1;
 	TButton *btSave05;
 	TButton *btSave06;
 	TButton *btSave07;
 	TButton *btSave;
 	TMaskEdit *edMaskTemper;
 	TMaskEdit *edMaskBright;
+	TButton *Button1;
+	TIdUDPServer *IdUDPServer1;
 	void __fastcall btSaveClick(TObject *Sender);
-	void __fastcall IdTCPServer1Execute(TIdContext *AContext);
+	void __fastcall Button1Click(TObject *Sender);
+	void __fastcall IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
+		  TIdSocketHandle *ABinding);
 private:
+	UnicodeString sIpPort;
 	TProtocol 	*m_pProtocol;
+
+	TTcpData06 *m_pData06;
 public:		// User declarations
 	__fastcall 	TMainF(TComponent* Owner);
 	__fastcall ~TMainF();

@@ -72,23 +72,30 @@
 #pragma link "dxLayoutcxEditAdapters"
 #pragma link "dxLayoutLookAndFeels"
 #pragma link "cxDBEdit"
+#pragma link "cspin"
 #pragma resource "*.dfm"
 TMainF *MainF;
 //---------------------------------------------------------------------------
 __fastcall TMainF::TMainF(TComponent* Owner)
 	: TForm(Owner)
 {
+	sIpPort = "127.0.0.1";
+	m_pData06 = new TTcpData06();
+
+	//file load;
+
 }
 //---------------------------------------------------------------------------
 __fastcall TMainF::~TMainF()
 {
+	delete m_pData06;
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainF::btSaveClick(TObject *Sender)
 {
 	int iActivePage = cxPageControl1->ActivePageIndex;
-	UnicodeString sTemp;
-	m_pProtocol = new TProtocol();
+	UnicodeString sTemp = "";
+	UnicodeString sUtem = "";
 
 	enum CTRL_PAGE{
 		CtrlPage = 0,
@@ -99,22 +106,20 @@ void __fastcall TMainF::btSaveClick(TObject *Sender)
 
 	switch (iActivePage) {
 		case StatePage : {
-//			ShowMessage(StatePage);
-			TTcpData06 *TcpData06 = new TTcpData06;
-			sTemp = edMaskTemper->Text;
-			TcpData06->Temperature 		= StrToInt(sTemp);//*(BYTE*)sTemp.c_str();
-//			stData06.byDisplayBright 	= StrToInt(edMaskBright->Text);
-//			stData06.byEtc2				= *(BYTE*)(edEtc->Text).c_str();
-//			stData06.byFoamKind 		= rdFormKind->ItemIndex;
-//			stData06.byPower 			= rdPowerState->ItemIndex;
-//			stData06.byOuterLight 		= rdOuterLampState->ItemIndex;
-//			stData06.byReplayCheck 		= rdReStart->ItemIndex;
-//			stData06.byDoor 			= rdDoor->ItemIndex;
-//			stData06.byFan 				= rdFanState->ItemIndex;
-//			stData06.byHeater 			= rdHeaterState->ItemIndex;
-//			stData06.byModulOdd 		= rdModulError->ItemIndex;
-//			stData06.byPowerOdd 		= rdPowerError->ItemIndex;
-//			m_pData06->Data 			= stData06;
+			m_pData06->Temperature 		= StrToInt(edMaskTemper->Text);//*(BYTE*)sTemp.c_str();
+			m_pData06->DisplayBright 	= StrToInt(edMaskBright->Text);
+			m_pData06->Etc2				= *(BYTE*)(edEtc->Text).c_str();
+			m_pData06->FormKind 		= rdFormKind->ItemIndex;
+			m_pData06->Power 			= rdPowerState->ItemIndex;
+			m_pData06->OuterLight 		= rdOuterLampState->ItemIndex;
+			m_pData06->ReplayCheck 		= rdReStart->ItemIndex;
+			m_pData06->Door 			= rdDoor->ItemIndex;
+			m_pData06->Fan 				= rdFanState->ItemIndex;
+			m_pData06->Heater 			= rdHeaterState->ItemIndex;
+			m_pData06->ModulOdd 		= rdModulError->ItemIndex;
+			m_pData06->PowerOdd 		= rdPowerError->ItemIndex;
+
+			//file save;
 			break;
 			}
 		case LocalPage : {
@@ -125,9 +130,48 @@ void __fastcall TMainF::btSaveClick(TObject *Sender)
 	}
 }
 //---------------------------------------------------------------------------
-void __fastcall TMainF::IdTCPServer1Execute(TIdContext *AContext)
+void __fastcall TMainF::Button1Click(TObject *Sender)
 {
-//
+//	UnicodeString sLog;
+//	sLog.sprintf(L"====>>> %d", m_pData06->FoamKind);
+//	OutputDebugString(sLog.c_str());
+
+//	TTcpData06 *pData06;
+//	pData06 	    = new TTcpData06();
+//	pData06->Door  = m_pData06->Door;
+//	pData06->Power = m_pData06->Power;
+
+
+
+//	TProtocol 	*pProtocol;
+//	pProtocol = new TProtocol();
+//	pProtocol->Body = (void*)pData06;
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TMainF::IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
+          TIdSocketHandle *ABinding)
+{
+	BYTE byBuf[MAX_BUFFER];
+	ZeroMemory(byBuf, sizeof(byBuf));
+	BytesToRaw(AData, byBuf, sizeof(byBuf));
+	m_pProtocol = new TProtocol();
+	m_pProtocol->fnDecoding(byBuf, sizeof(byBuf));
+
+
+
+	switch (m_pProtocol->Code) {
+		case 0x05 :
+			break;
+		case 0x06 :
+			break;
+		case 0x07 :
+			break;
+	default:
+        ;
+	}
+
 }
 //---------------------------------------------------------------------------
 

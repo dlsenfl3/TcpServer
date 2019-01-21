@@ -152,11 +152,11 @@ int __fastcall TProtocol::fnDecoding(BYTE *a_pBuffer, int a_iSize)
 			break;
 	}
 
-	CopyMemory(&m_stTail, m_byRecvPacket, sizeof(m_stTail));
+	CopyMemory(&m_stTail, (m_byRecvPacket + m_iRecvPackSize), sizeof(m_stTail));
 	m_iRecvPackSize += iTailSize;                          				//	헤더사이즈 + 데이터사이즈 + 테일사이즈
 	if (iResult == 0) {
 		if (m_iRecvPackSize != a_iSize) {
-			iResult =3;
+			iResult = 3;
 		}
 	}
 	return iResult;			// 정상이면 0반환, Error이면 3반환.
