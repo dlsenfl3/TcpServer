@@ -166,7 +166,8 @@ __published:	// IDE-managed Components
 	void __fastcall IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
 		  TIdSocketHandle *ABinding);
 private:
-	UnicodeString sIpPort;
+	UnicodeString sIP;
+	WORD wPORT;
 	TProtocol 	*m_pProtocol;
 
 	TTcpData06 *m_pData06;

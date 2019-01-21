@@ -79,7 +79,8 @@ TMainF *MainF;
 __fastcall TMainF::TMainF(TComponent* Owner)
 	: TForm(Owner)
 {
-	sIpPort = "127.0.0.1";
+	sIP   = "127.0.0.1";
+	wPORT = 5000;
 	m_pData06 = new TTcpData06();
 
 	//file load;
@@ -151,7 +152,7 @@ void __fastcall TMainF::Button1Click(TObject *Sender)
 
 
 void __fastcall TMainF::IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
-          TIdSocketHandle *ABinding)
+		  TIdSocketHandle *ABinding)
 {
 	BYTE byBuf[MAX_BUFFER];
 	ZeroMemory(byBuf, sizeof(byBuf));
@@ -159,18 +160,23 @@ void __fastcall TMainF::IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const
 	m_pProtocol = new TProtocol();
 	m_pProtocol->fnDecoding(byBuf, sizeof(byBuf));
 
+	TTcpData06 *SendData06 = new TTcpData06(m_pData06);
 
 
 	switch (m_pProtocol->Code) {
 		case 0x05 :
 			break;
 		case 0x06 :
+			m_pProtocol->fnEncoding();
+			m_pProtocol->Body = SendData06;
 			break;
 		case 0x07 :
 			break;
-	default:
-        ;
+		default:
+			break;
 	}
+
+	IdUDPServer1->SendBuffer(sIP, wPORT, RawToBytes(&byBuf, sizeof(byBuf)));
 
 }
 //---------------------------------------------------------------------------

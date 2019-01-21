@@ -191,6 +191,13 @@ __fastcall TTcpData06::TTcpData06()
 	ZeroMemory(&m_stData, sizeof(m_stData));
 }
 //---------------------------------------------------------------------------
+__fastcall TTcpData06::TTcpData06(const TTcpData06 *data)                     // 깊은복사 생성자
+{
+
+	ZeroMemory(&m_stData, sizeof(m_stData));
+	m_stData = data->m_stData;
+}
+//---------------------------------------------------------------------------
 __fastcall TTcpData06::~TTcpData06()
 {
 }

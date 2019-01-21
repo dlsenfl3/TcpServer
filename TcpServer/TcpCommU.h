@@ -120,6 +120,7 @@ public:
 	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize);
 public:
 	__fastcall  TTcpData06();
+	__fastcall  TTcpData06(const TTcpData06 *data);     //	깊은복사 생성자
 	__fastcall ~TTcpData06();
 public:
 	__property BYTE		   Door	    		=	{read=m_stData.byDoor,			write=m_stData.byDoor			};
