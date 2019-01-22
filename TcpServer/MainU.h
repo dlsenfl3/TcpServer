@@ -140,7 +140,7 @@ __published:	// IDE-managed Components
 	TcxTextEdit *edHeaterRunTemperature;
 	TcxTextEdit *edLampRunBright;
 	TcxTextEdit *edEtc1;
-	TcxTextEdit *edBlinkCircle;
+	TcxTextEdit *edFlashkCircle;
 	TcxTextEdit *edScinarioTransTime;
 	TLabel *lbEtc2;
 	TcxTextEdit *edEtc2;
@@ -151,6 +151,9 @@ __published:	// IDE-managed Components
 	TMaskEdit *edMaskTemper;
 	TMaskEdit *edMaskBright;
 	TIdUDPServer *IdUDPServer1;
+	TMaskEdit *edMaskFanTemp;
+	TMaskEdit *edMaskHeaterTemp;
+	TMaskEdit *edMaskLamp;
 	void __fastcall btSaveClick(TObject *Sender);
 	void __fastcall IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
 		  TIdSocketHandle *ABinding);
@@ -160,9 +163,10 @@ private:
 //	TProtocol 	*m_pProtocol;
 
 	TTcpData06 *m_pData06;
+	TTcpData07 *m_pData07;
 
 
-	void __fastcall fnSendData06(TProtocol 	*a_pPrtl);
+	void __fastcall fnSendData	(TProtocol 	*a_pPrtl);
 	void __fastcall fnSendIOData(TProtocol 	*a_pPrtl);
 public:		// User declarations
 	__fastcall 	TMainF(TComponent* Owner);

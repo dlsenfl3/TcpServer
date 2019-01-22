@@ -190,6 +190,8 @@ public:
 	__property BYTE		   OuterLightOperating	   	=	{read=m_stData.byOuterLightOperating,	write=m_stData.byOuterLightOperating   	};
 	__property BYTE		   OuterLightOnBright   	=	{read=m_stData.byOuterLightOnBright,	write=m_stData.byOuterLightOnBright		};
 	__property BYTE		   Etc2	    				=	{read=m_stData.byEtc2,					write=m_stData.byEtc2					};
+	__property BYTE		   Scenario	    			=	{read=m_stData.byDefaultScenarioWait,	write=m_stData.byDefaultScenarioWait	};
+
 	__property int DataLen	=	{read=fnGetDataLen	};
 };
 //---------------------------------------------------------------------------

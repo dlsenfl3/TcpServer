@@ -111,6 +111,10 @@
             <DependentOn>MainU.h</DependentOn>
             <BuildOrder>2</BuildOrder>
         </CppCompile>
+        <CppCompile Include="ObjectU.cpp">
+            <DependentOn>ObjectU.h</DependentOn>
+            <BuildOrder>4</BuildOrder>
+        </CppCompile>
         <CppCompile Include="TcpCommU.cpp">
             <DependentOn>TcpCommU.h</DependentOn>
             <BuildOrder>3</BuildOrder>

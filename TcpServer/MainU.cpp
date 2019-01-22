@@ -78,12 +78,13 @@ __fastcall TMainF::TMainF(TComponent* Owner)
 	//file load;
 
 	m_pData06 = new TTcpData06();
-
+	m_pData07 = new TTcpData07();
 }
 //---------------------------------------------------------------------------
 __fastcall TMainF::~TMainF()
 {
 	delete m_pData06;
+	delete m_pData07;
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainF::btSaveClick(TObject *Sender)
@@ -113,16 +114,27 @@ void __fastcall TMainF::btSaveClick(TObject *Sender)
 			m_pData06->Heater 			= rdHeaterState->ItemIndex;
 			m_pData06->ModulOdd 		= rdModulError->ItemIndex;
 			m_pData06->PowerOdd 		= rdPowerError->ItemIndex;
-
-			//file save;
 			break;
 			}
 		case LocalPage : {
+			m_pData07->FanTemper			= StrToInt(edMaskFanTemp->Text);
+			m_pData07->HeaterTemper			= StrToInt(edMaskHeaterTemp->Text);
+			m_pData07->Scenario				= *(BYTE*)(edScinarioTransTime->Text).c_str();
+			m_pData07->FlashCycle			= *(BYTE*)(edFlashkCircle->Text).c_str();
+			m_pData07->OuterLightOnBright	= StrToInt(edMaskLamp->Text);
+			m_pData07->Etc1				   	= StrToInt(edEtc1->Text);
+			m_pData07->Etc2					= StrToInt(edEtc2->Text);
+			m_pData07->DisplayBright		= rdDisplayBright->ItemIndex;
+			m_pData07->OuterLightOperating	= rdOuterLampRun->ItemIndex;
+			m_pData07->PowerMode			= rdPowerControlMode->ItemIndex;
+			m_pData07->Fan					= rdFanRunMode->ItemIndex;
+			m_pData07->Heater				= rdHeaterRunMode->ItemIndex;
 			break;
 			}
 		default:
 			break;
 	}
+			//file save;
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainF::IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
@@ -140,46 +152,45 @@ void __fastcall TMainF::IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const
 			case 0x05 :
 				break;
 			case 0x06 :
-				fnSendData06(pPrtl);
-//				m_pProtocol->Body = m_pData06;
-//				m_pProtocol->fnEncoding();
+				pPrtl->Body = (void*)m_pData06;
+				fnSendData(pPrtl);
 				break;
 			case 0x07 :
+				pPrtl->Body = (void*)m_pData07;
+				fnSendData(pPrtl);
 				break;
 			default:
 				break;
 		}
+	}else{
+		ShowMessage("Decoding Error");
 	}
 	delete pPrtl;
 }
 //---------------------------------------------------------------------------
-void __fastcall TMainF::fnSendData06(TProtocol 	*a_pPrtl)              //	????????????
+void __fastcall TMainF::fnSendData	(TProtocol 	*a_pPrtl)              //	????????????
 {
 	TProtocol  *pPrtl;
-	TTcpData06 *pData;
-
 	pPrtl = new TProtocol();
 	//보낼 프래임    //받은 프램임
 	pPrtl->VMSID   = a_pPrtl->VMSID;
 	pPrtl->Code    = a_pPrtl->Code;
 	pPrtl->SFNo	   = a_pPrtl->SFNo;
 	pPrtl->AFNo    = a_pPrtl->AFNo;
-
-//	pData = new TTcpData06();
-	pPrtl->Body = m_pData06;
+	pPrtl->Body    = a_pPrtl->Body;
 
 	fnSendIOData(pPrtl);
 	delete pPrtl;
 }
 //---------------------------------------------------------------------------
-void __fastcall TMainF::fnSendIOData(TProtocol 	*a_pPrtl)
+void __fastcall TMainF::fnSendIOData(TProtocol	*a_pPrtl)
 {
 	int iResult = 0;
 	if((iResult=a_pPrtl->fnEncoding()) == 0){
 		IdUDPServer1->SendBuffer(sIP, wPORT, RawToBytes(a_pPrtl->SendPacket, sizeof(a_pPrtl->SendPacket)));
 	}else{
 		//Log iResult;
+		ShowMessage("Encoding Error");
 	}
-//	delete a_pPrtl;
 }
 

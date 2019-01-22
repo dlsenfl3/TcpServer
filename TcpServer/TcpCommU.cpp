@@ -73,7 +73,6 @@ BYTE* __fastcall TProtocol::fnGetRecvPacket(void)
 void __fastcall TProtocol::fnDeleteBody()
 {
 	if(m_pBody == NULL) return;
-
 	switch (Code) {
 		case 0x05: {
 			if (((TTcpData05*)m_pBody)->AutoFree) {

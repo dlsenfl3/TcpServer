@@ -69,7 +69,7 @@ object MainF: TMainF
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      Properties.ActivePage = cxTabSheet1
+      Properties.ActivePage = cxTabSheet3
       Properties.CustomButtons.Buttons = <>
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'DarkSide'
@@ -896,7 +896,7 @@ object MainF: TMainF
             TabOrder = 3
             Width = 93
           end
-          object edBlinkCircle: TcxTextEdit
+          object edFlashkCircle: TcxTextEdit
             Left = 420
             Top = 13
             TabOrder = 4
@@ -915,6 +915,36 @@ object MainF: TMainF
             Top = 124
             TabOrder = 6
             Width = 93
+          end
+          object edMaskFanTemp: TMaskEdit
+            Left = 172
+            Top = 13
+            Width = 108
+            Height = 21
+            EditMask = '!999\'#8451';0;_'
+            MaxLength = 4
+            TabOrder = 7
+            Text = ''
+          end
+          object edMaskHeaterTemp: TMaskEdit
+            Left = 172
+            Top = 55
+            Width = 108
+            Height = 21
+            EditMask = '!999\'#8451';0;_'
+            MaxLength = 4
+            TabOrder = 8
+            Text = ''
+          end
+          object edMaskLamp: TMaskEdit
+            Left = 420
+            Top = 55
+            Width = 112
+            Height = 21
+            EditMask = '!999%;0;0'
+            MaxLength = 4
+            TabOrder = 9
+            Text = ''
           end
         end
         object rdDisplayBright: TRadioGroup
