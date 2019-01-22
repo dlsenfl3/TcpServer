@@ -6,11 +6,15 @@
 #include "MainU.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
+
+#pragma link "cxContainer"
 #pragma link "cxControls"
+#pragma link "cxEdit"
 #pragma link "cxGraphics"
 #pragma link "cxLookAndFeelPainters"
 #pragma link "cxLookAndFeels"
 #pragma link "cxPC"
+#pragma link "cxTextEdit"
 #pragma link "dxBarBuiltInMenu"
 #pragma link "dxSkinBlack"
 #pragma link "dxSkinBlue"
@@ -63,16 +67,6 @@
 #pragma link "dxSkinVS2010"
 #pragma link "dxSkinWhiteprint"
 #pragma link "dxSkinXmas2008Blue"
-#pragma link "cxClasses"
-#pragma link "dxLayoutContainer"
-#pragma link "dxLayoutControl"
-#pragma link "cxContainer"
-#pragma link "cxEdit"
-#pragma link "cxTextEdit"
-#pragma link "dxLayoutcxEditAdapters"
-#pragma link "dxLayoutLookAndFeels"
-#pragma link "cxDBEdit"
-#pragma link "cspin"
 #pragma resource "*.dfm"
 TMainF *MainF;
 //---------------------------------------------------------------------------
@@ -81,9 +75,9 @@ __fastcall TMainF::TMainF(TComponent* Owner)
 {
 	sIP   = "127.0.0.1";
 	wPORT = 5000;
-	m_pData06 = new TTcpData06();
-
 	//file load;
+
+	m_pData06 = new TTcpData06();
 
 }
 //---------------------------------------------------------------------------
@@ -131,53 +125,61 @@ void __fastcall TMainF::btSaveClick(TObject *Sender)
 	}
 }
 //---------------------------------------------------------------------------
-void __fastcall TMainF::Button1Click(TObject *Sender)
-{
-//	UnicodeString sLog;
-//	sLog.sprintf(L"====>>> %d", m_pData06->FoamKind);
-//	OutputDebugString(sLog.c_str());
-
-//	TTcpData06 *pData06;
-//	pData06 	    = new TTcpData06();
-//	pData06->Door  = m_pData06->Door;
-//	pData06->Power = m_pData06->Power;
-
-
-
-//	TProtocol 	*pProtocol;
-//	pProtocol = new TProtocol();
-//	pProtocol->Body = (void*)pData06;
-}
-//---------------------------------------------------------------------------
-
-
 void __fastcall TMainF::IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
 		  TIdSocketHandle *ABinding)
 {
+	int iResult = 0;
+	TProtocol *pPrtl;
 	BYTE byBuf[MAX_BUFFER];
 	ZeroMemory(byBuf, sizeof(byBuf));
 	BytesToRaw(AData, byBuf, sizeof(byBuf));
-	m_pProtocol = new TProtocol();
-	m_pProtocol->fnDecoding(byBuf, sizeof(byBuf));
 
-	TTcpData06 *SendData06 = new TTcpData06(m_pData06);
-
-
-	switch (m_pProtocol->Code) {
-		case 0x05 :
-			break;
-		case 0x06 :
-			m_pProtocol->fnEncoding();
-			m_pProtocol->Body = SendData06;
-			break;
-		case 0x07 :
-			break;
-		default:
-			break;
+	pPrtl = new TProtocol();
+	if((iResult=pPrtl->fnDecoding(byBuf, sizeof(byBuf))) == 0){
+        switch (pPrtl->Code) {
+			case 0x05 :
+				break;
+			case 0x06 :
+				fnSendData06(pPrtl);
+//				m_pProtocol->Body = m_pData06;
+//				m_pProtocol->fnEncoding();
+				break;
+			case 0x07 :
+				break;
+			default:
+				break;
+		}
 	}
-
-	IdUDPServer1->SendBuffer(sIP, wPORT, RawToBytes(&byBuf, sizeof(byBuf)));
-
+	delete pPrtl;
 }
 //---------------------------------------------------------------------------
+void __fastcall TMainF::fnSendData06(TProtocol 	*a_pPrtl)              //	????????????
+{
+	TProtocol  *pPrtl;
+	TTcpData06 *pData;
+
+	pPrtl = new TProtocol();
+	//보낼 프래임    //받은 프램임
+	pPrtl->VMSID   = a_pPrtl->VMSID;
+	pPrtl->Code    = a_pPrtl->Code;
+	pPrtl->SFNo	   = a_pPrtl->SFNo;
+	pPrtl->AFNo    = a_pPrtl->AFNo;
+
+//	pData = new TTcpData06();
+	pPrtl->Body = m_pData06;
+
+	fnSendIOData(pPrtl);
+	delete pPrtl;
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainF::fnSendIOData(TProtocol 	*a_pPrtl)
+{
+	int iResult = 0;
+	if((iResult=a_pPrtl->fnEncoding()) == 0){
+		IdUDPServer1->SendBuffer(sIP, wPORT, RawToBytes(a_pPrtl->SendPacket, sizeof(a_pPrtl->SendPacket)));
+	}else{
+		//Log iResult;
+	}
+//	delete a_pPrtl;
+}
 

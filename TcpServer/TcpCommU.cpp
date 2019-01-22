@@ -9,6 +9,7 @@
 //---------------------------------------------------------------------------
 __fastcall TTcpBase::TTcpBase()
 {
+	m_bAutoFree = true;
 }
 //---------------------------------------------------------------------------
 __fastcall TTcpBase::~TTcpBase()
@@ -58,21 +59,40 @@ int __fastcall TProtocol::fnGetDataLen()
 	return m_iDataLen;
 }
 //---------------------------------------------------------------------------
+BYTE* __fastcall TProtocol::fnGetSendPacket(void)
+{
+	return m_bySendPacket;
+}
+//---------------------------------------------------------------------------
+BYTE* __fastcall TProtocol::fnGetRecvPacket(void)
+{
+	return m_byRecvPacket;
+}
+//---------------------------------------------------------------------------
 //*************???? AutoFree ????*************
 void __fastcall TProtocol::fnDeleteBody()
 {
 	if(m_pBody == NULL) return;
 
 	switch (Code) {
-		case 0x05:
-			delete (TTcpData05*)m_pBody;
+		case 0x05: {
+			if (((TTcpData05*)m_pBody)->AutoFree) {
+				delete (TTcpData05*)m_pBody;
+			}
 			break;
-		case 0x06:
-			delete (TTcpData06*)m_pBody;
+			}
+		case 0x06: {
+			if (((TTcpData06*)m_pBody)->AutoFree) {
+				delete (TTcpData06*)m_pBody;
+			}
 			break;
-		case 0x07:
-			delete (TTcpData07*)m_pBody;
+			}
+		case 0x07: {
+			if (((TTcpData07*)m_pBody)->AutoFree) {
+				delete (TTcpData07*)m_pBody;
+			}
 			break;
+			}
 		default:
 			break;
 	}
@@ -153,7 +173,7 @@ int __fastcall TProtocol::fnDecoding(BYTE *a_pBuffer, int a_iSize)
 	}
 
 	CopyMemory(&m_stTail, (m_byRecvPacket + m_iRecvPackSize), sizeof(m_stTail));
-	m_iRecvPackSize += iTailSize;                          				//	헤더사이즈 + 데이터사이즈 + 테일사이즈
+	m_iRecvPackSize += iTailSize;                          				// m_iRecvPackSize = 헤더사이즈 + 데이터사이즈 + 테일사이즈
 	if (iResult == 0) {
 		if (m_iRecvPackSize != a_iSize) {
 			iResult = 3;

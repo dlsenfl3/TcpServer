@@ -1,32 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899-12-30 00:00:00.000.500,=C:\project\Src\Project1PCH1.h</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.644,C:\project\Src\Project1PCH1.h=C:\project\Src\TcpServer_ProjectPCH1.h</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.849,C:\project\Src\Project1PCH1.h=C:\project\Src\TcpServer_ProjectPCH1.h</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.002,C:\project\Src\Unit1.dfm=C:\project\Src\TcpServer\Unit1.dfm</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.603,C:\project\Src\TcpServer\ObjectU.cpp=C:\project\Src\TcpServer\Unit1.cpp</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.940,C:\project\Src\TcpServer\ObjectU.cpp=C:\project\Src\TcpServer\TcpCommU.cpp</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.049,C:\project\Src\TcpServer\TcpServer_ProjectPCH1.h=C:\project\Src\TcpServer\Project1PCH1.h</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.742,C:\project\Src\TcpServer\MainU.cpp=C:\project\Src\TcpServer\Unit1.cpp</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.603,C:\project\Src\TcpServer\Unit1.cpp=C:\project\Src\TcpServer\ObjectU.cpp</Transaction>
     <Transaction>1899-12-30 00:00:00.000.018,=C:\project\Src\Project1PCH1.h</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.002,C:\project\Src\Unit1.h=C:\project\Src\TcpServer\Unit1.h</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.858,C:\project\Src\TcpServer_ProjectPCH1.h=C:\project\Src\Project1PCH1.h</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.657,C:\project\Src\TcpServer_ProjectPCH1.h=C:\project\Src\Project1PCH1.h</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.708,C:\project\Src\Project1PCH1.h=C:\project\Src\TcpServer\Project1PCH1.h</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.742,C:\project\Src\TcpServer\Unit1.cpp=C:\project\Src\TcpServer\MainU.cpp</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.858,C:\project\Src\Project1PCH1.h=C:\project\Src\TcpServer_ProjectPCH1.h</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.657,C:\project\Src\Project1PCH1.h=C:\project\Src\TcpServer_ProjectPCH1.h</Transaction>
     <Transaction>1899-12-30 00:00:00.000.848,=C:\project\Src\TcpServer\Unit1.cpp</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.060,C:\project\Src\TcpServer\Project1.cbproj=C:\project\Src\TcpServer\TcpServer_Project.cbproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.940,C:\project\Src\TcpServer\TcpCommU.cpp=C:\project\Src\TcpServer\ObjectU.cpp</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.644,C:\project\Src\TcpServer_ProjectPCH1.h=C:\project\Src\Project1PCH1.h</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.849,C:\project\Src\TcpServer_ProjectPCH1.h=C:\project\Src\Project1PCH1.h</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.002,C:\project\Src\TcpServer\Unit1.cpp=C:\project\Src\Unit1.cpp</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.742,C:\project\Src\TcpServer\MainU.dfm=C:\project\Src\TcpServer\Unit1.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.940,C:\project\Src\TcpServer\TcpCommU.h=C:\project\Src\TcpServer\ObjectU.h</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.500,=C:\project\Src\Project1PCH1.h</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.742,C:\project\Src\TcpServer\MainU.h=C:\project\Src\TcpServer\Unit1.h</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.647,C:\project\Src\TcpServer_Project.cbproj=C:\project\Src\Project1.cbproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.852,C:\project\Src\TcpServer_Project.cbproj=C:\project\Src\Project1.cbproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.708,C:\project\Src\TcpServer\Project1PCH1.h=C:\project\Src\Project1PCH1.h</Transaction>
     <Transaction>1899-12-30 00:00:00.000.041,=C:\project\Src\Unit1.cpp</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.647,C:\project\Src\Project1.cbproj=C:\project\Src\TcpServer_Project.cbproj</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.852,C:\project\Src\Project1.cbproj=C:\project\Src\TcpServer_Project.cbproj</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.049,C:\project\Src\TcpServer\Project1PCH1.h=C:\project\Src\TcpServer\TcpServer_ProjectPCH1.h</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.002,C:\project\Src\Unit1.cpp=C:\project\Src\TcpServer\Unit1.cpp</Transaction>
     <Transaction>1899-12-30 00:00:00.000.241,=C:\project\Src\Unit1.cpp</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.324,C:\project\Src\Project1.cbproj=C:\project\Src\TcpServer\Project1.cbproj</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.603,C:\project\Src\TcpServer\ObjectU.h=C:\project\Src\TcpServer\Unit1.h</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.742,C:\project\Src\TcpServer\Unit1.dfm=C:\project\Src\TcpServer\MainU.dfm</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.742,C:\project\Src\TcpServer\Unit1.h=C:\project\Src\TcpServer\MainU.h</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.660,C:\project\Src\TcpServer_Project.cbproj=C:\project\Src\Project1.cbproj</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.861,C:\project\Src\TcpServer_Project.cbproj=C:\project\Src\Project1.cbproj</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.940,C:\project\Src\TcpServer\ObjectU.h=C:\project\Src\TcpServer\TcpCommU.h</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.660,C:\project\Src\Project1.cbproj=C:\project\Src\TcpServer_Project.cbproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.060,C:\project\Src\TcpServer\TcpServer_Project.cbproj=C:\project\Src\TcpServer\Project1.cbproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.002,C:\project\Src\TcpServer\Unit1.dfm=C:\project\Src\Unit1.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.324,C:\project\Src\TcpServer\Project1.cbproj=C:\project\Src\Project1.cbproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.861,C:\project\Src\Project1.cbproj=C:\project\Src\TcpServer_Project.cbproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.002,C:\project\Src\TcpServer\Unit1.h=C:\project\Src\Unit1.h</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.603,C:\project\Src\TcpServer\Unit1.h=C:\project\Src\TcpServer\ObjectU.h</Transaction>
   </Transactions>
 </BorlandProject>

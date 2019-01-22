@@ -3,7 +3,7 @@ object MainF: TMainF
   Top = 0
   Anchors = [akRight, akBottom]
   Caption = 'TCP'#49436#48260
-  ClientHeight = 662
+  ClientHeight = 726
   ClientWidth = 1285
   Color = clBtnFace
   Constraints.MinHeight = 700
@@ -20,7 +20,7 @@ object MainF: TMainF
     Left = 0
     Top = 0
     Width = 697
-    Height = 662
+    Height = 726
     Align = alLeft
     Caption = 'FORM'
     Font.Charset = DEFAULT_CHARSET
@@ -39,21 +39,12 @@ object MainF: TMainF
       TabOrder = 0
       OnClick = btSaveClick
     end
-    object Button1: TButton
-      Left = 240
-      Top = 448
-      Width = 209
-      Height = 105
-      Caption = 'Button1'
-      TabOrder = 1
-      OnClick = Button1Click
-    end
   end
   object Panel2: TPanel
     Left = 697
     Top = 0
     Width = 588
-    Height = 662
+    Height = 726
     Align = alClient
     Caption = 'Panel2'
     Color = 5789784
@@ -69,7 +60,7 @@ object MainF: TMainF
       Left = 1
       Top = 1
       Width = 586
-      Height = 660
+      Height = 724
       Align = alClient
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -78,11 +69,11 @@ object MainF: TMainF
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      Properties.ActivePage = cxTabSheet2
+      Properties.ActivePage = cxTabSheet1
       Properties.CustomButtons.Buttons = <>
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'DarkSide'
-      ClientRectBottom = 655
+      ClientRectBottom = 719
       ClientRectLeft = 2
       ClientRectRight = 581
       ClientRectTop = 25
@@ -730,8 +721,8 @@ object MainF: TMainF
           TabOrder = 9
         end
         object btSave06: TButton
-          Left = 256
-          Top = 608
+          Left = 240
+          Top = 640
           Width = 75
           Height = 25
           Caption = 'Save'

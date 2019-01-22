@@ -9,11 +9,14 @@
 #include <Vcl.Controls.hpp>
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.Forms.hpp>
+#include "cxContainer.hpp"
 #include "cxControls.hpp"
+#include "cxEdit.hpp"
 #include "cxGraphics.hpp"
 #include "cxLookAndFeelPainters.hpp"
 #include "cxLookAndFeels.hpp"
 #include "cxPC.hpp"
+#include "cxTextEdit.hpp"
 #include "dxBarBuiltInMenu.hpp"
 #include "dxSkinBlack.hpp"
 #include "dxSkinBlue.hpp"
@@ -66,28 +69,16 @@
 #include "dxSkinVS2010.hpp"
 #include "dxSkinWhiteprint.hpp"
 #include "dxSkinXmas2008Blue.hpp"
-#include <Vcl.ExtCtrls.hpp>
-#include "cxClasses.hpp"
-#include "dxLayoutContainer.hpp"
-#include "dxLayoutControl.hpp"
-#include "cxContainer.hpp"
-#include "cxEdit.hpp"
-#include "cxTextEdit.hpp"
-#include "dxLayoutcxEditAdapters.hpp"
-#include "dxLayoutLookAndFeels.hpp"
-#include "cxDBEdit.hpp"
 #include <IdBaseComponent.hpp>
 #include <IdComponent.hpp>
-#include <IdContext.hpp>
-#include <IdCustomTCPServer.hpp>
-#include <IdTCPServer.hpp>
-#include <Vcl.Mask.hpp>
-#include "cspin.h"
 #include <IdSocketHandle.hpp>
 #include <IdUDPBase.hpp>
 #include <IdUDPServer.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Mask.hpp>
+
 //---------------------------------------------------------------------------
-const int MAX_BUFFER = 1024;
+const int MAX_BUFFER = 2048;
 //---------------------------------------------------------------------------
 class TMainF : public TForm
 {
@@ -159,18 +150,20 @@ __published:	// IDE-managed Components
 	TButton *btSave;
 	TMaskEdit *edMaskTemper;
 	TMaskEdit *edMaskBright;
-	TButton *Button1;
 	TIdUDPServer *IdUDPServer1;
 	void __fastcall btSaveClick(TObject *Sender);
-	void __fastcall Button1Click(TObject *Sender);
 	void __fastcall IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
 		  TIdSocketHandle *ABinding);
 private:
 	UnicodeString sIP;
 	WORD wPORT;
-	TProtocol 	*m_pProtocol;
+//	TProtocol 	*m_pProtocol;
 
 	TTcpData06 *m_pData06;
+
+
+	void __fastcall fnSendData06(TProtocol 	*a_pPrtl);
+	void __fastcall fnSendIOData(TProtocol 	*a_pPrtl);
 public:		// User declarations
 	__fastcall 	TMainF(TComponent* Owner);
 	__fastcall ~TMainF();

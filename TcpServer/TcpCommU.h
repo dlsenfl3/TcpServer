@@ -6,17 +6,20 @@
 #include <System.Classes.hpp>			//추가한 헤더
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-const int MAX_TCP_BUFFER = 1024;
+const int MAX_TCP_BUFFER = 2048;
 //---------------------------------------------------------------------------
 class TTcpBase
 {
 private:
+	bool	m_bAutoFree;
 protected:
 	int __fastcall fnDefaultEncoding(BYTE *pBuffer, int &iIndex, void *pData, int iDataSize, int iTail);  // 저장되어있는 구조체 데이터를 보낼 버퍼에 쌓는 함수
 	int __fastcall fnDefaultDecoding(BYTE *pBuffer, int &iIndex, int iSize, void *pData, int iDataSize);  // 받은 버퍼에서 구조체에 저장할 데이터를 추출하는 함수
 public:
 	__fastcall 	TTcpBase();
 	__fastcall ~TTcpBase();
+public:
+	__property bool		AutoFree	=	{read=m_bAutoFree	,	write=m_bAutoFree};
 };
 //---------------------------------------------------------------------------
 struct TstHeader	//9바이트
@@ -49,8 +52,10 @@ private:
 	BYTE	  	m_bySendPacket[MAX_TCP_BUFFER];
 	BYTE	  	m_byRecvPacket[MAX_TCP_BUFFER];
 private:
-	void __fastcall fnSetDataLen(int a_iValue);
-	int  __fastcall fnGetDataLen();
+	void  __fastcall fnSetDataLen(int a_iValue);
+	int   __fastcall fnGetDataLen();
+	BYTE* __fastcall fnGetSendPacket(void);
+	BYTE* __fastcall fnGetRecvPacket(void);
 public:
 	__fastcall  TProtocol();
 	__fastcall ~TProtocol();
@@ -60,9 +65,14 @@ public:
 	void __fastcall fnDeleteBody();
 //	void __fastcall fnSetOpCode(int a_op);
 public:
-	__property	BYTE	Code    = {read=m_stHeader.byOpCode		,	write=m_stHeader.byOpCode	};
-	__property	int		DataLen	= {read=fnGetDataLen			,	write=fnSetDataLen			};
-	__property 	void*	Body	= {read=m_pBody					,	write=m_pBody				};
+	__property  BYTE	SFNo		= {read=m_stHeader.bySFNo		,	write=m_stHeader.bySFNo		};
+	__property  BYTE	AFNo		= {read=m_stHeader.byAFNo		,	write=m_stHeader.byAFNo		};
+	__property  WORD    VMSID		= {read=m_stHeader.wVMSID		,	write=m_stHeader.wVMSID		};
+	__property	BYTE	Code    	= {read=m_stHeader.byOpCode		,	write=m_stHeader.byOpCode	};
+	__property	int		DataLen		= {read=fnGetDataLen			,	write=fnSetDataLen			};
+	__property 	void*	Body	    = {read=m_pBody					,	write=m_pBody				};
+	__property  BYTE*	SendPacket  = {read=fnGetSendPacket											};
+	__property  BYTE*	RecvPacket  = {read=fnGetRecvPacket											};
 };
 //---------------------------------------------------------------------------
 struct TstCode05
@@ -80,11 +90,11 @@ private:
 	TstCode05 m_stData;
 	int __fastcall fnGetDataLen();
 public:
-	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iTail);
-	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize);
-public:
 	__fastcall  TTcpData05();
 	__fastcall ~TTcpData05();
+public:
+	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iTail);
+	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize);
 public:
 	__property BYTE		   CtrlCode	    		=	{read=m_stData.byCtrlCode   	};
 	__property BYTE		   CtrlData01	       	=	{read=m_stData.byCtrlData01		};
@@ -116,12 +126,12 @@ private:
 	TstCode06 m_stData;
 	int __fastcall fnGetDataLen();
 public:
-	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iTail);
-	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize);
-public:
 	__fastcall  TTcpData06();
 	__fastcall  TTcpData06(const TTcpData06 *data);     //	깊은복사 생성자
 	__fastcall ~TTcpData06();
+public:
+	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iTail);
+	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize);
 public:
 	__property BYTE		   Door	    		=	{read=m_stData.byDoor,			write=m_stData.byDoor			};
 	__property BYTE		   Power	    	=	{read=m_stData.byPower,			write=m_stData.byPower			};
@@ -163,11 +173,11 @@ private:
 	TstCode07 m_stData;
 	int __fastcall fnGetDataLen();
 public:
-	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iTail);
-	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize);
-public:
 	__fastcall  TTcpData07();
 	__fastcall ~TTcpData07();
+public:
+	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iTail);
+	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize);
 public:
 	__property BYTE		   PowerMode	    		=	{read=m_stData.byPowerMode,				write=m_stData.byPowerMode				};
 	__property BYTE		   Fan	    				=	{read=m_stData.byFan,					write=m_stData.byFan		 			};
