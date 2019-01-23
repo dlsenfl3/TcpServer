@@ -4,6 +4,7 @@
 #define MainUH
 //---------------------------------------------------------------------------
 #include "TcpCommU.h"
+//#include "ObjectU.h"
 //---------------------------------------------------------------------------
 #include <System.Classes.hpp>
 #include <Vcl.Controls.hpp>
@@ -154,20 +155,27 @@ __published:	// IDE-managed Components
 	TMaskEdit *edMaskFanTemp;
 	TMaskEdit *edMaskHeaterTemp;
 	TMaskEdit *edMaskLamp;
+	TMaskEdit *edMaskScenario;
+	TMaskEdit *edMaskFlashCycle;
+	TMaskEdit *edMaskEtc1;
+	TMaskEdit *edMaskEtc2;
+	TMaskEdit *edMaskEtc;
+	TButton *Button1;
 	void __fastcall btSaveClick(TObject *Sender);
 	void __fastcall IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
 		  TIdSocketHandle *ABinding);
+	void __fastcall Button1Click(TObject *Sender);
 private:
-	UnicodeString sIP;
-	WORD wPORT;
-//	TProtocol 	*m_pProtocol;
+	UnicodeString  sIP;
+	WORD 		   wPORT;
+	TTcpData05	   *m_pData05;
+	TTcpData06 	   *m_pData06;
+	TTcpData07 	   *m_pData07;
 
-	TTcpData06 *m_pData06;
-	TTcpData07 *m_pData07;
-
-
-	void __fastcall fnSendData	(TProtocol 	*a_pPrtl);
-	void __fastcall fnSendIOData(TProtocol 	*a_pPrtl);
+	void __fastcall fnRecvData05(TProtocol *a_pRecvPack);
+	void __fastcall fnSendData06(TProtocol *a_pRecvPack);
+	void __fastcall fnSendData07(TProtocol *a_pRecvPack);
+	void __fastcall fnSendIOData(TProtocol *a_pSendPack);
 public:		// User declarations
 	__fastcall 	TMainF(TComponent* Owner);
 	__fastcall ~TMainF();

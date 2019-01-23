@@ -39,6 +39,15 @@ object MainF: TMainF
       TabOrder = 0
       OnClick = btSaveClick
     end
+    object Button1: TButton
+      Left = 296
+      Top = 448
+      Width = 121
+      Height = 81
+      Caption = 'Button1'
+      TabOrder = 1
+      OnClick = Button1Click
+    end
   end
   object Panel2: TPanel
     Left = 697
@@ -69,7 +78,7 @@ object MainF: TMainF
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      Properties.ActivePage = cxTabSheet3
+      Properties.ActivePage = cxTabSheet1
       Properties.CustomButtons.Buttons = <>
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'DarkSide'
@@ -561,22 +570,32 @@ object MainF: TMainF
           object edMaskTemper: TMaskEdit
             Left = 60
             Top = 8
-            Width = 108
+            Width = 107
             Height = 21
             EditMask = '!999\'#8451';0;_'
             MaxLength = 4
             TabOrder = 3
-            Text = ''
+            Text = '000'
           end
           object edMaskBright: TMaskEdit
             Left = 248
             Top = 8
-            Width = 112
+            Width = 103
             Height = 21
-            EditMask = '!999%;0;0'
+            EditMask = '!999\%;0;'
             MaxLength = 4
             TabOrder = 4
-            Text = ''
+            Text = '000'
+          end
+          object edMaskEtc: TMaskEdit
+            Left = 424
+            Top = 8
+            Width = 107
+            Height = 21
+            EditMask = '!99;0;'
+            MaxLength = 2
+            TabOrder = 5
+            Text = '00'
           end
         end
         object rdModulError: TRadioGroup
@@ -892,7 +911,7 @@ object MainF: TMainF
           end
           object edEtc1: TcxTextEdit
             Left = 420
-            Top = 92
+            Top = 97
             TabOrder = 3
             Width = 93
           end
@@ -919,32 +938,72 @@ object MainF: TMainF
           object edMaskFanTemp: TMaskEdit
             Left = 172
             Top = 13
-            Width = 108
+            Width = 107
             Height = 21
             EditMask = '!999\'#8451';0;_'
             MaxLength = 4
             TabOrder = 7
-            Text = ''
+            Text = '000'
           end
           object edMaskHeaterTemp: TMaskEdit
             Left = 172
             Top = 55
-            Width = 108
+            Width = 107
             Height = 21
             EditMask = '!999\'#8451';0;_'
             MaxLength = 4
             TabOrder = 8
-            Text = ''
+            Text = '000'
           end
           object edMaskLamp: TMaskEdit
             Left = 420
             Top = 55
-            Width = 112
+            Width = 110
             Height = 21
-            EditMask = '!999%;0;0'
+            EditMask = '!999\%;0;0'
             MaxLength = 4
             TabOrder = 9
             Text = ''
+          end
+          object edMaskScenario: TMaskEdit
+            Left = 172
+            Top = 92
+            Width = 103
+            Height = 21
+            EditMask = '!99\'#48516';0;'
+            MaxLength = 3
+            TabOrder = 10
+            Text = '00'
+          end
+          object edMaskFlashCycle: TMaskEdit
+            Left = 420
+            Top = 13
+            Width = 99
+            Height = 21
+            EditMask = '!99\'#48516';0;'
+            MaxLength = 3
+            TabOrder = 11
+            Text = '00'
+          end
+          object edMaskEtc1: TMaskEdit
+            Left = 420
+            Top = 97
+            Width = 105
+            Height = 21
+            EditMask = '!99;0;_'
+            MaxLength = 2
+            TabOrder = 12
+            Text = '00'
+          end
+          object edMaskEtc2: TMaskEdit
+            Left = 420
+            Top = 124
+            Width = 105
+            Height = 21
+            EditMask = '!99;0;_'
+            MaxLength = 2
+            TabOrder = 13
+            Text = '00'
           end
         end
         object rdDisplayBright: TRadioGroup
@@ -1050,6 +1109,7 @@ object MainF: TMainF
     end
   end
   object IdUDPServer1: TIdUDPServer
+    Active = True
     Bindings = <>
     DefaultPort = 5000
     OnUDPRead = IdUDPServer1UDPRead

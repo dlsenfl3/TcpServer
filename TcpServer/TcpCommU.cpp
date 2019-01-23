@@ -24,9 +24,9 @@ int __fastcall TTcpBase::fnDefaultEncoding(BYTE *pBuffer, int &iIndex, void *pDa
 	return 0;
 }
 //---------------------------------------------------------------------------
-int __fastcall TTcpBase::fnDefaultDecoding(BYTE *pBuffer, int &iIndex, int iSize, void *pData, int iDataSize)
+int __fastcall TTcpBase::fnDefaultDecoding(BYTE *pBuffer, int &iIndex, int iSize, void *pData, int iDataSize, int iTail)
 {
-	if(iIndex + iDataSize > iSize) return 11;
+	if(iIndex + iDataSize + iTail> iSize) return 11;
 	CopyMemory(pData, pBuffer+iIndex, iDataSize);
 	iIndex += iDataSize;
 	return 0;
@@ -46,6 +46,7 @@ __fastcall TProtocol::TProtocol()
 //---------------------------------------------------------------------------
 __fastcall TProtocol::~TProtocol()
 {
+	fnDeleteBody();
 }
 //---------------------------------------------------------------------------
 void __fastcall TProtocol::fnSetDataLen(int a_iValue)
@@ -148,25 +149,26 @@ int __fastcall TProtocol::fnDecoding(BYTE *a_pBuffer, int a_iSize)
 {
 	int iResult = 0;
 	int iTailSize = 0;
-	fnDeleteBody();
+//	fnDeleteBody();
 	if(a_iSize > MAX_TCP_BUFFER)	return 1;
 	ZeroMemory(m_byRecvPacket, sizeof(m_byRecvPacket));
 	m_iRecvPackSize = 0;
 	CopyMemory(m_byRecvPacket, a_pBuffer, a_iSize);
 	CopyMemory(&m_stHeader, m_byRecvPacket, sizeof(m_stHeader));       	//	구조체안에 데이터 저장
 	m_iRecvPackSize += sizeof(m_stHeader);                              //	헤더사이즈만큼 인덱스 증가
+	iTailSize += sizeof(m_stTail);
 
 	switch (Code) {
 		case 0x05:	{
 			TTcpData05 *pData = new TTcpData05();
-			iResult = pData->fnDecodingBody(a_pBuffer, m_iRecvPackSize, a_iSize);      // m_iRecvPackSize는 a_pBuffer의 메모리위치 인덱스
+			iResult = pData->fnDecodingBody(a_pBuffer, m_iRecvPackSize, a_iSize, iTailSize);      // m_iRecvPackSize는 a_pBuffer의 메모리위치 인덱스
 			if (iResult == 0) {
 				m_pBody = (void*)pData;
 			}else	delete pData;
 			break;
 		}
-		case 0x06:
-		case 0x07:
+		case 0x06: fnDeleteBody();
+		case 0x07: fnDeleteBody();
 		default:
 			break;
 	}
@@ -186,6 +188,12 @@ __fastcall TTcpData05::TTcpData05()
 	ZeroMemory(&m_stData, sizeof(m_stData));
 }
 //---------------------------------------------------------------------------
+__fastcall  TTcpData05::TTcpData05(const TTcpData05 *a_pData)
+{
+	ZeroMemory(&m_stData, sizeof(m_stData));
+	m_stData = a_pData->m_stData;
+}
+//---------------------------------------------------------------------------
 __fastcall TTcpData05::~TTcpData05()
 {
 }
@@ -200,9 +208,9 @@ int __fastcall TTcpData05::fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_
 	return fnDefaultEncoding(a_pBuffer, a_iIndex, &m_stData, sizeof(m_stData), a_iTail);
 }
 //---------------------------------------------------------------------------
-int __fastcall TTcpData05::fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize)
-{
-	return fnDefaultDecoding(a_pBuffer, a_iIndex, a_iSize, &m_stData, sizeof(m_stData));
+int __fastcall TTcpData05::fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize, int a_iTail)
+{				//	디코딩할 버퍼, 데이터 넣을 위치, 디코딩할 버퍼 사이즈,Data05구조체, Data05구조체 크기
+	return fnDefaultDecoding(a_pBuffer, a_iIndex, a_iSize, &m_stData, sizeof(m_stData), a_iTail);
 }
 //---------------------------------------------------------------------------
 __fastcall TTcpData06::TTcpData06()
@@ -210,11 +218,10 @@ __fastcall TTcpData06::TTcpData06()
 	ZeroMemory(&m_stData, sizeof(m_stData));
 }
 //---------------------------------------------------------------------------
-__fastcall TTcpData06::TTcpData06(const TTcpData06 *data)                     // 깊은복사 생성자
+__fastcall TTcpData06::TTcpData06(const TTcpData06 *a_pData)                     // 깊은복사 생성자
 {
-
 	ZeroMemory(&m_stData, sizeof(m_stData));
-	m_stData = data->m_stData;
+	m_stData = a_pData->m_stData;
 }
 //---------------------------------------------------------------------------
 __fastcall TTcpData06::~TTcpData06()
@@ -234,6 +241,12 @@ int __fastcall TTcpData06::fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_
 __fastcall TTcpData07::TTcpData07()
 {
 	ZeroMemory(&m_stData, sizeof(m_stData));
+}
+//---------------------------------------------------------------------------
+__fastcall	TTcpData07::TTcpData07(const TTcpData07 *a_pData)
+{
+	ZeroMemory(&m_stData, sizeof(m_stData));
+	m_stData = a_pData->m_stData;
 }
 //---------------------------------------------------------------------------
 __fastcall TTcpData07::~TTcpData07()

@@ -14,7 +14,7 @@ private:
 	bool	m_bAutoFree;
 protected:
 	int __fastcall fnDefaultEncoding(BYTE *pBuffer, int &iIndex, void *pData, int iDataSize, int iTail);  // 저장되어있는 구조체 데이터를 보낼 버퍼에 쌓는 함수
-	int __fastcall fnDefaultDecoding(BYTE *pBuffer, int &iIndex, int iSize, void *pData, int iDataSize);  // 받은 버퍼에서 구조체에 저장할 데이터를 추출하는 함수
+	int __fastcall fnDefaultDecoding(BYTE *pBuffer, int &iIndex, int iSize, void *pData, int iDataSize, int iTail);  // 받은 버퍼에서 구조체에 저장할 데이터를 추출하는 함수
 public:
 	__fastcall 	TTcpBase();
 	__fastcall ~TTcpBase();
@@ -65,14 +65,15 @@ public:
 	void __fastcall fnDeleteBody();
 //	void __fastcall fnSetOpCode(int a_op);
 public:
-	__property  BYTE	SFNo		= {read=m_stHeader.bySFNo		,	write=m_stHeader.bySFNo		};
-	__property  BYTE	AFNo		= {read=m_stHeader.byAFNo		,	write=m_stHeader.byAFNo		};
-	__property  WORD    VMSID		= {read=m_stHeader.wVMSID		,	write=m_stHeader.wVMSID		};
-	__property	BYTE	Code    	= {read=m_stHeader.byOpCode		,	write=m_stHeader.byOpCode	};
-	__property	int		DataLen		= {read=fnGetDataLen			,	write=fnSetDataLen			};
-	__property 	void*	Body	    = {read=m_pBody					,	write=m_pBody				};
-	__property  BYTE*	SendPacket  = {read=fnGetSendPacket											};
-	__property  BYTE*	RecvPacket  = {read=fnGetRecvPacket											};
+	__property  BYTE	SFNo		    = {read=m_stHeader.bySFNo		,	write=m_stHeader.bySFNo		};
+	__property  BYTE	AFNo		    = {read=m_stHeader.byAFNo		,	write=m_stHeader.byAFNo		};
+	__property  WORD    VMSID		    = {read=m_stHeader.wVMSID		,	write=m_stHeader.wVMSID		};
+	__property	BYTE	Code    	    = {read=m_stHeader.byOpCode		,	write=m_stHeader.byOpCode	};
+	__property	int		DataLen		    = {read=fnGetDataLen			,	write=fnSetDataLen			};
+	__property 	void*	Body	        = {read=m_pBody					,	write=m_pBody				};
+	__property  BYTE*	SendPacket      = {read=fnGetSendPacket											};
+	__property  BYTE*	RecvPacket      = {read=fnGetRecvPacket											};
+	__property  int 	SendPacketSize	= {read=m_iSendPackSize 										};
 };
 //---------------------------------------------------------------------------
 struct TstCode05
@@ -91,10 +92,11 @@ private:
 	int __fastcall fnGetDataLen();
 public:
 	__fastcall  TTcpData05();
+	__fastcall  TTcpData05(const TTcpData05 *a_pData);
 	__fastcall ~TTcpData05();
 public:
 	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iTail);
-	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize);
+	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize, int a_iTail);
 public:
 	__property BYTE		   CtrlCode	    		=	{read=m_stData.byCtrlCode   	};
 	__property BYTE		   CtrlData01	       	=	{read=m_stData.byCtrlData01		};
@@ -127,7 +129,7 @@ private:
 	int __fastcall fnGetDataLen();
 public:
 	__fastcall  TTcpData06();
-	__fastcall  TTcpData06(const TTcpData06 *data);     //	깊은복사 생성자
+	__fastcall  TTcpData06(const TTcpData06 *a_pData);     //	깊은복사 생성자
 	__fastcall ~TTcpData06();
 public:
 	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iTail);
@@ -174,6 +176,7 @@ private:
 	int __fastcall fnGetDataLen();
 public:
 	__fastcall  TTcpData07();
+	__fastcall	TTcpData07(const TTcpData07 *a_pData);
 	__fastcall ~TTcpData07();
 public:
 	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iTail);
