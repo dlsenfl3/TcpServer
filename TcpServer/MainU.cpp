@@ -154,17 +154,10 @@ void __fastcall TMainF::IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const
 	pRecvPack = new TProtocol();
 	if((iResult=pRecvPack->fnDecoding(byBuf, sizeof(byBuf))) == 0){
 		switch (pRecvPack->Code) {
-			case 0x05 :
-				fnRecvData05(pRecvPack);
-				break;
-			case 0x06 :
-				fnSendData06(pRecvPack);
-				break;
-			case 0x07 :
-				fnSendData07(pRecvPack);
-				break;
-			default:
-				break;
+			case 0x05 : fnRecvData05(pRecvPack); break;
+			case 0x06 : fnSendData06(pRecvPack); break;
+			case 0x07 : fnSendData07(pRecvPack); break;
+			default	  : break;
 		}
 	}else{
 		ShowMessage("Decoding Error");
@@ -174,7 +167,7 @@ void __fastcall TMainF::IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const
 //---------------------------------------------------------------------------
 void __fastcall TMainF::fnRecvData05(TProtocol *a_pRecvPack)
 {
-	TTcpData05 *pData = new TTcpData05();
+	TTcpData05 *pData;
 	pData = (TTcpData05*)a_pRecvPack->Body;
 	m_pData05 = pData;
 	switch (pData->CtrlCode) {
@@ -222,7 +215,7 @@ void __fastcall TMainF::fnSendData06(TProtocol *a_pRecvPack)
 //	pData->DisplayBright = m_pData06->DisplayBright;
 //	pData->Etc2 		 = m_pData06->Etc2;
 
-	pSendPack->Body = (void*)pData;
+	pSendPack->Body      = pData;
 	fnSendIOData(pSendPack);
 	delete pSendPack;
 }
@@ -249,7 +242,15 @@ void __fastcall TMainF::fnSendIOData(TProtocol *a_pSendPack)
 {
 	int iResult = 0;
 	if((iResult=a_pSendPack->fnEncoding()) == 0){
-		IdUDPServer1->SendBuffer(sIP, wPORT, RawToBytes(a_pSendPack->SendPacket, a_pSendPack->SendPacketSize));
+//		IdUDPServer1->SendBuffer(sIP, wPORT, RawToBytes(a_pSendPack->SendPacket, a_pSendPack->SendPacketSize));
+
+		UnicodeString sTemp;
+		UnicodeString sLog = "";
+		for(int i=0; i<a_pSendPack->SendPacketSize; i++){
+			sLog += sTemp.sprintf(L"%02X ", a_pSendPack->SendPacket[i]);
+		}
+		OutputDebugString(sLog.c_str());
+
 	}else{
 		//Log iResult;
 		ShowMessage("Encoding Error");
@@ -266,8 +267,11 @@ void __fastcall TMainF::Button1Click(TObject *Sender)
 //	BytesToRaw(AData, byBuf, sizeof(byBuf));
 
 	pRecvPack = new TProtocol();
+	pRecvPack->VMSID = 0xFF;
+	pRecvPack->Code  = 0x06;
+	pRecvPack->SFNo  = 0x01;
+	pRecvPack->AFNo  = 0x01;
 
-	pRecvPack->Code = 0x06;
 	fnSendData06(pRecvPack);
 	delete pRecvPack;
 }

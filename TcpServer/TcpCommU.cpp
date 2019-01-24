@@ -39,9 +39,9 @@ __fastcall TProtocol::TProtocol()
 
 	m_stHeader.bySTX1 = 0x10;
 	m_stHeader.bySTX2 = 0x02;
-
 	m_stTail.byETX1	  = 0x10;
-	m_stTail.byETX1	  = 0x03;
+	m_stTail.byETX2	  = 0x03;
+	m_pBody 		  = NULL;
 }
 //---------------------------------------------------------------------------
 __fastcall TProtocol::~TProtocol()
@@ -82,7 +82,7 @@ void __fastcall TProtocol::fnDeleteBody()
 			break;
 			}
 		case 0x06: {
-			if (((TTcpData06*)m_pBody)->AutoFree) {
+			if (((TTcpData06*)m_pBody)->AutoFree){
 				delete (TTcpData06*)m_pBody;
 			}
 			break;
@@ -115,21 +115,21 @@ int __fastcall TProtocol::fnEncoding()
 			TTcpData05 *pData = (TTcpData05*)m_pBody;
 			DataLen = pData->DataLen;											 //	Data05의 데이터 사이즈 반환
 			iResult = pData->fnEncodingBody(m_bySendPacket, m_iSendPackSize, iTailSize);
-			m_iSendPackSize += DataLen;
+//			m_iSendPackSize += DataLen;
 			break;
 			}
 		case 0x06:	{
 			TTcpData06 *pData = (TTcpData06*)m_pBody;
 			DataLen = pData->DataLen;											 //	Data06의 데이터 사이즈 반환
 			iResult = pData->fnEncodingBody(m_bySendPacket, m_iSendPackSize, iTailSize);
-			m_iSendPackSize += DataLen;
+//			m_iSendPackSize += DataLen;
 			break;
 			}
 		case 0x07:	{
 			TTcpData07 *pData = (TTcpData07*)m_pBody;
 			DataLen = pData->DataLen;											 //	Data07의 데이터 사이즈 반환
 			iResult = pData->fnEncodingBody(m_bySendPacket, m_iSendPackSize, iTailSize);
-			m_iSendPackSize += DataLen;
+//			m_iSendPackSize += DataLen;
 			break;
 			}
 		default:	{
@@ -221,7 +221,8 @@ __fastcall TTcpData06::TTcpData06()
 __fastcall TTcpData06::TTcpData06(const TTcpData06 *a_pData)                     // 깊은복사 생성자
 {
 	ZeroMemory(&m_stData, sizeof(m_stData));
-	m_stData = a_pData->m_stData;
+	CopyMemory(&m_stData, &a_pData->m_stData, sizeof(m_stData));
+//	m_stData = a_pData->m_stData;
 }
 //---------------------------------------------------------------------------
 __fastcall TTcpData06::~TTcpData06()

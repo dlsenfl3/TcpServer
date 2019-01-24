@@ -78,7 +78,7 @@ object MainF: TMainF
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      Properties.ActivePage = cxTabSheet1
+      Properties.ActivePage = cxTabSheet2
       Properties.CustomButtons.Buttons = <>
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'DarkSide'
@@ -430,7 +430,7 @@ object MainF: TMainF
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
-          ItemIndex = 0
+          ItemIndex = 1
           Items.Strings = (
             #51221#49345
             #51116#49892#54665)
@@ -454,7 +454,7 @@ object MainF: TMainF
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
-          ItemIndex = 0
+          ItemIndex = 1
           Items.Strings = (
             'On'
             'Off'
@@ -609,7 +609,7 @@ object MainF: TMainF
           BiDiMode = bdLeftToRight
           Caption = #47784#46280' '#51060#49345#50668#48512
           Columns = 3
-          ItemIndex = 0
+          ItemIndex = 1
           Items.Strings = (
             #50640#47084#48156#49373
             #51221#49345
@@ -633,7 +633,7 @@ object MainF: TMainF
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
-          ItemIndex = 0
+          ItemIndex = 1
           Items.Strings = (
             #53685#49888' '#54268
             #46356#54260#53944' '#54268)
@@ -681,7 +681,7 @@ object MainF: TMainF
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
-          ItemIndex = 0
+          ItemIndex = 1
           Items.Strings = (
             'On'
             'Off'
@@ -730,7 +730,7 @@ object MainF: TMainF
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
-          ItemIndex = 2
+          ItemIndex = 1
           Items.Strings = (
             'Open'
             'Close'
