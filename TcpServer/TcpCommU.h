@@ -76,7 +76,7 @@ public:
 	__property  int 	SendPacketSize	= {read=m_iSendPackSize 										};
 };
 //---------------------------------------------------------------------------
-struct TstCode05
+struct TstCode05                          //  제어	//	26바이트
 {
 	BYTE byCtrlCode;
 	BYTE byCtrlData01;
@@ -149,9 +149,11 @@ public:
 	__property BYTE		   Etc2	    		=	{read=m_stData.byEtc2,			write=m_stData.byEtc2			};
 
 	__property int 		   DataLen			=	{read=fnGetDataLen					  							};
+
+//	__property TstCode06   Data	    		=	{read=m_stData,					write=m_stData					};
 };
 //---------------------------------------------------------------------------
-struct TstCode07                      		// LocalState
+struct TstCode07                      		// LocalState	//18바이트
 {
 	BYTE byPowerMode;					   	//	Off: 0x00,  On: 0x01, Auto: 0x02
 	BYTE byFan;								//  Off: 0x00, 	On: 0x01, Auto: 0x02,  Unkown: 0x09

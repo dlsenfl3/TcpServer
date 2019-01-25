@@ -84,7 +84,7 @@ const int MAX_BUFFER = 2048;
 class TMainF : public TForm
 {
 __published:	// IDE-managed Components
-	TPanel *paForm;
+	TPanel *pnForm;
 	TcxPageControl *cxPageControl1;
 	TcxTabSheet *cxTabSheet2;
 	TcxTabSheet *cxTabSheet3;
@@ -145,9 +145,6 @@ __published:	// IDE-managed Components
 	TcxTextEdit *edScinarioTransTime;
 	TLabel *lbEtc2;
 	TcxTextEdit *edEtc2;
-	TButton *btSave05;
-	TButton *btSave06;
-	TButton *btSave07;
 	TButton *btSave;
 	TMaskEdit *edMaskTemper;
 	TMaskEdit *edMaskBright;
@@ -161,16 +158,26 @@ __published:	// IDE-managed Components
 	TMaskEdit *edMaskEtc2;
 	TMaskEdit *edMaskEtc;
 	TButton *Button1;
+	TButton *Button2;
+	TTimer *Timer1;
+	TMemo *Memo1;
 	void __fastcall btSaveClick(TObject *Sender);
 	void __fastcall IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
 		  TIdSocketHandle *ABinding);
 	void __fastcall Button1Click(TObject *Sender);
+	void __fastcall FormShow(TObject *Sender);
+	void __fastcall Button2Click(TObject *Sender);
+	void __fastcall Timer1Timer(TObject *Sender);
 private:
 	UnicodeString  sIP;
 	WORD 		   wPORT;
 	TTcpData05	   *m_pData05;
 	TTcpData06 	   *m_pData06;
 	TTcpData07 	   *m_pData07;
+
+
+	void __fastcall fnLoadData();
+	void __fastcall fnSaveData06();
 
 	void __fastcall fnRecvData05(TProtocol *a_pRecvPack);
 	void __fastcall fnSendData06(TProtocol *a_pRecvPack);

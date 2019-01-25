@@ -4,6 +4,7 @@
 #pragma hdrstop
 
 #include "MainU.h"
+#include "stdio.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
@@ -73,13 +74,25 @@ TMainF *MainF;
 __fastcall TMainF::TMainF(TComponent* Owner)
 	: TForm(Owner)
 {
+//	TStringList *pTemp;
+//	pTemp = new TStringList();
+//	pTemp->LoadFromFile(GetCurrentDir() + "DataFile.txt");
 	sIP   = "127.0.0.1";
 	wPORT = 5000;
-	//file load;
+	//Load File
+//	FILE *fIn;
+//	UnicodeString sPath = "";
+//	sPath.sprintf(L"%s",GetCurrentDir() + "\\" + "DataFile.txt");
+//	ShowMessage(sPath);
+//
+//	if ((fIn = fopen(sPath, "rt")) == NULL) {
+//		ShowMessage("File Open Error");
+//	}
 
 	m_pData05 = new TTcpData05();
 	m_pData06 = new TTcpData06();
 	m_pData07 = new TTcpData07();
+
 }
 //---------------------------------------------------------------------------
 __fastcall TMainF::~TMainF()
@@ -101,26 +114,12 @@ void __fastcall TMainF::btSaveClick(TObject *Sender)
 		LocalPage,
 	};
 
-//	ShowMessage(edMaskTemper->Text);
+//	ShowMessage(m_pData05->DataLen);
 //	ShowMessage(edMaskBright->Text);
 //	ShowMessage(edMaskEtc->Text);
 
 	switch (iActivePage) {
-		case StatePage : {
-			m_pData06->Temperature 		= StrToInt(edMaskTemper->Text);//*(BYTE*)sTemp.c_str();
-			m_pData06->DisplayBright 	= StrToInt(edMaskBright->Text);
-			m_pData06->Etc2				= StrToInt(edMaskEtc->Text);//*(BYTE*)(edEtc->Text).c_str();
-			m_pData06->FormKind 		= rdFormKind->ItemIndex;
-			m_pData06->Power 			= rdPowerState->ItemIndex;
-			m_pData06->OuterLight 		= rdOuterLampState->ItemIndex;
-			m_pData06->ReplayCheck 		= rdReStart->ItemIndex;
-			m_pData06->Door 			= rdDoor->ItemIndex;
-			m_pData06->Fan 				= rdFanState->ItemIndex;
-			m_pData06->Heater 			= rdHeaterState->ItemIndex;
-			m_pData06->ModulOdd 		= rdModulError->ItemIndex;
-			m_pData06->PowerOdd 		= rdPowerError->ItemIndex;
-			break;
-			}
+		case StatePage : fnSaveData06(); break;
 		case LocalPage : {
 			m_pData07->FanTemper			= StrToInt(edMaskFanTemp->Text);
 			m_pData07->HeaterTemper			= StrToInt(edMaskHeaterTemp->Text);
@@ -139,7 +138,61 @@ void __fastcall TMainF::btSaveClick(TObject *Sender)
 		default:
 			break;
 	}
-			//file save;
+			//Save File;
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainF::fnLoadData()
+{
+	TStringList *pList;
+	pList = new TStringList();
+	UnicodeString sTemp = "";
+
+	AnsiString sPath;
+	sPath 			= ExtractFilePath(Application->ExeName) + "TcpServer_Project.ini";
+
+	TIniFile* pIni  = new TIniFile(sPath);
+
+	rdDoor->ItemIndex 		= pIni->ReadInteger("Data06", "Door", 0 );
+	rdPowerState->ItemIndex = pIni->ReadInteger("Data06", "Power", 0);
+	// Data06 섹션의 키이름과 키값을 가져옴 	ex) Door = 0
+
+	pIni->ReadSectionValues("Data06", pList);
+	for (int i=0; i<pList->Count; i++) {
+		sTemp += pList->Strings[i]; //Memo1->Lines->Add(pList->Strings[i]);
+	}
+	pList->Delimiter = '=';
+	pList->DelimitedText = sTemp;
+	for (int i=0; i<pList->Count; i++) {
+		Memo1->Lines->Add(pList->Strings[i]);
+	}
+
+	delete pList;
+	delete pIni;
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainF::fnSaveData06()
+{
+	AnsiString sPath;
+	sPath 			= ExtractFilePath(Application->ExeName) + "TcpServer_Project.ini";
+
+	m_pData06->Temperature 		= StrToInt(edMaskTemper->Text)	; //*(BYTE*)sTemp.c_str();
+	m_pData06->DisplayBright 	= StrToInt(edMaskBright->Text)	;
+	m_pData06->Etc2				= StrToInt(edMaskEtc->Text)		;	//*(BYTE*)(edEtc->Text).c_str();
+	m_pData06->FormKind 		= rdFormKind->ItemIndex			;
+	m_pData06->Power 			= rdPowerState->ItemIndex		;
+	m_pData06->OuterLight 		= rdOuterLampState->ItemIndex	;
+	m_pData06->ReplayCheck 		= rdReStart->ItemIndex			;
+	m_pData06->Door 			= rdDoor->ItemIndex				;
+	m_pData06->Fan 				= rdFanState->ItemIndex			;
+	m_pData06->Heater 			= rdHeaterState->ItemIndex		;
+	m_pData06->ModulOdd 		= rdModulError->ItemIndex		;
+	m_pData06->PowerOdd 		= rdPowerError->ItemIndex		;
+
+	TIniFile* pIni  = new TIniFile(sPath);
+
+	pIni->WriteInteger("Data06", "Door" , m_pData06->Door );
+	pIni->WriteInteger("Data06", "Power", m_pData06->Power);
+	delete pIni;
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainF::IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
@@ -150,9 +203,11 @@ void __fastcall TMainF::IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const
 	BYTE byBuf[MAX_BUFFER];
 	ZeroMemory(byBuf, sizeof(byBuf));
 	BytesToRaw(AData, byBuf, sizeof(byBuf));
+	sizeof(AData);
+	sizeof(AData.Length);
 
 	pRecvPack = new TProtocol();
-	if((iResult=pRecvPack->fnDecoding(byBuf, sizeof(byBuf))) == 0){
+	if((iResult=pRecvPack->fnDecoding(byBuf, AData.Length)) == 0){
 		switch (pRecvPack->Code) {
 			case 0x05 : fnRecvData05(pRecvPack); break;
 			case 0x06 : fnSendData06(pRecvPack); break;
@@ -185,6 +240,7 @@ void __fastcall TMainF::fnRecvData05(TProtocol *a_pRecvPack)
 		case 0x41 :	rdLedControl->ItemIndex 	= pData->CtrlData01; break;
 		default	  : break;
 	}
+	// Save File
 	delete pData;
 }
 
@@ -242,7 +298,7 @@ void __fastcall TMainF::fnSendIOData(TProtocol *a_pSendPack)
 {
 	int iResult = 0;
 	if((iResult=a_pSendPack->fnEncoding()) == 0){
-//		IdUDPServer1->SendBuffer(sIP, wPORT, RawToBytes(a_pSendPack->SendPacket, a_pSendPack->SendPacketSize));
+		IdUDPServer1->SendBuffer(sIP, wPORT, RawToBytes(a_pSendPack->SendPacket, a_pSendPack->SendPacketSize));
 
 		UnicodeString sTemp;
 		UnicodeString sLog = "";
@@ -272,8 +328,29 @@ void __fastcall TMainF::Button1Click(TObject *Sender)
 	pRecvPack->SFNo  = 0x01;
 	pRecvPack->AFNo  = 0x01;
 
+
 	fnSendData06(pRecvPack);
 	delete pRecvPack;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainF::FormShow(TObject *Sender)
+{
+	fnLoadData();
+	IdUDPServer1->Active = true;
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainF::Button2Click(TObject *Sender)
+{
+	Timer1->Enabled = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainF::Timer1Timer(TObject *Sender)
+{
+	Button1Click(Sender);
 }
 //---------------------------------------------------------------------------
 

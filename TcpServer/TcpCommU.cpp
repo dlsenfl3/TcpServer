@@ -70,7 +70,7 @@ BYTE* __fastcall TProtocol::fnGetRecvPacket(void)
 	return m_byRecvPacket;
 }
 //---------------------------------------------------------------------------
-//*************???? AutoFree ????*************
+//************* AutoFree *************
 void __fastcall TProtocol::fnDeleteBody()
 {
 	if(m_pBody == NULL) return;
