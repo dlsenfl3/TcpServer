@@ -107,6 +107,7 @@ void __fastcall TMainF::btSaveClick(TObject *Sender)
 //	ShowMessage(edMaskEtc->Text);
 
 	switch (iActivePage) {
+//		case CtrlPage  : fnSaveData05(); break;
 		case StatePage : fnSaveData06(); break;
 		case LocalPage : fnSaveData07(); break;
 		default:
@@ -126,6 +127,20 @@ void __fastcall TMainF::fnLoadData()
 	m_wPORT = pIni->ReadInteger	("App", "Port"	   ,  5000		);
 //	Memo1->Lines->Add(m_sIP);
 //	Memo1->Lines->Add(IntToStr(m_wPORT));
+
+	// Data05 섹션의 키이름과 키값을 가져옴 	ex) Door = 0
+	rdModulPower->ItemIndex     = pIni->ReadInteger("Data05", "ModulPower"	   	, 0 );
+	edResetTime->Text           = pIni->ReadInteger("Data05", "ResetTime"	   	, 0 );
+	edTryCount->Text            = pIni->ReadInteger("Data05", "TryCount"	    , 0 );
+	edControlTime->Text         = pIni->ReadInteger("Data05", "ControlTime"	   	, 0 );
+	edRunTime->Text             = pIni->ReadInteger("Data05", "RunTime"	 	   	, 0 );
+	edBlinkCycle->Text          = pIni->ReadInteger("Data05", "BlinkCycle"	   	, 0 );
+	edScinarioRunTime->Text     = pIni->ReadInteger("Data05", "ScinarioRunTime" , 0 );
+	rdBrightControl->ItemIndex  = pIni->ReadInteger("Data05", "BrightControl"   , 0 );
+	rdFanControl->ItemIndex     = pIni->ReadInteger("Data05", "FanControl"	   	, 0 );
+	rdHeaterControl->ItemIndex  = pIni->ReadInteger("Data05", "HeaterControl"   , 0 );
+	rdLampControl->ItemIndex    = pIni->ReadInteger("Data05", "LampControl"     , 0 );
+	rdLedControl->ItemIndex     = pIni->ReadInteger("Data05", "LedControl"	   	, 0 );
 
 	// Data06 섹션의 키이름과 키값을 가져옴 	ex) Door = 0
 	rdDoor->ItemIndex 			= pIni->ReadInteger("Data06", "Door"		  , 0 );
@@ -154,6 +169,28 @@ void __fastcall TMainF::fnLoadData()
 	edMaskScenario->Text   			= pIni->ReadInteger("Data07", "Scenario"			 , 0 );
 	edMaskEtc1->Text       			= pIni->ReadInteger("Data07", "Etc1"				 , 0 );
 	edMaskEtc2->Text       			= pIni->ReadInteger("Data07", "Etc2"				 , 0 );
+
+	delete pIni;
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainF::fnSaveData05()
+{
+	AnsiString sPath;
+	sPath 			= ExtractFilePath(Application->ExeName) + "TcpServer_Project.ini";
+	TIniFile *pIni  = new TIniFile(sPath);
+
+	pIni->WriteInteger("Data05", "ModulPower"	   , rdModulPower->ItemIndex 	  		);
+	pIni->WriteInteger("Data05", "ResetTime"	   , StrToInt(edResetTime->Text)  		);
+	pIni->WriteInteger("Data05", "TryCount"		   , StrToInt(edTryCount->Text)   		);
+	pIni->WriteInteger("Data05", "ControlTime"	   , StrToInt(edControlTime->Text)		);
+	pIni->WriteInteger("Data05", "RunTime"	 	   , StrToInt(edRunTime->Text) 	  		);
+	pIni->WriteInteger("Data05", "BlinkCycle"	   , StrToInt(edBlinkCycle->Text) 		);
+	pIni->WriteInteger("Data05", "ScinarioRunTime" , StrToInt(edScinarioRunTime->Text)	);
+	pIni->WriteInteger("Data05", "BrightControl"   , rdBrightControl->ItemIndex   	  	);
+	pIni->WriteInteger("Data05", "FanControl"	   , rdFanControl->ItemIndex 	  		);
+	pIni->WriteInteger("Data05", "HeaterControl"   , rdHeaterControl->ItemIndex   		);
+	pIni->WriteInteger("Data05", "LampControl" 	   , rdLampControl->ItemIndex     		);
+	pIni->WriteInteger("Data05", "LedControl"	   , rdLedControl->ItemIndex 	 		);
 
 	delete pIni;
 }
@@ -276,6 +313,7 @@ void __fastcall TMainF::fnRecvData05(TProtocol *a_pRecvPack)
 		default	  : break;
 	}
 	// Save File
+	fnSaveData05();
 	delete pData;
 }
 

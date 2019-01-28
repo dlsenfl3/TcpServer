@@ -88,7 +88,7 @@ object MainF: TMainF
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      Properties.ActivePage = cxTabSheet3
+      Properties.ActivePage = cxTabSheet1
       Properties.CustomButtons.Buttons = <>
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'DarkSide'

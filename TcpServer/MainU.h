@@ -176,6 +176,7 @@ private:
 	TTcpData07 	   *m_pData07;
 private:
 	void __fastcall fnLoadData();
+	void __fastcall fnSaveData05();
 	void __fastcall fnSaveData06();
 	void __fastcall fnSaveData07();
 
