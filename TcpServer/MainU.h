@@ -169,15 +169,15 @@ __published:	// IDE-managed Components
 	void __fastcall Button2Click(TObject *Sender);
 	void __fastcall Timer1Timer(TObject *Sender);
 private:
-	UnicodeString  sIP;
-	WORD 		   wPORT;
+	UnicodeString  m_sIP;
+	WORD 		   m_wPORT;
 	TTcpData05	   *m_pData05;
 	TTcpData06 	   *m_pData06;
 	TTcpData07 	   *m_pData07;
-
-
+private:
 	void __fastcall fnLoadData();
 	void __fastcall fnSaveData06();
+	void __fastcall fnSaveData07();
 
 	void __fastcall fnRecvData05(TProtocol *a_pRecvPack);
 	void __fastcall fnSendData06(TProtocol *a_pRecvPack);

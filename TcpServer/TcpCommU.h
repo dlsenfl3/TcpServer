@@ -150,7 +150,7 @@ public:
 
 	__property int 		   DataLen			=	{read=fnGetDataLen					  							};
 
-//	__property TstCode06   Data	    		=	{read=m_stData,					write=m_stData					};
+	__property TstCode06   Data	    		=	{read=m_stData,					write=m_stData					};
 };
 //---------------------------------------------------------------------------
 struct TstCode07                      		// LocalState	//18πŸ¿Ã∆Æ
@@ -187,15 +187,15 @@ public:
 	__property BYTE		   PowerMode	    		=	{read=m_stData.byPowerMode,				write=m_stData.byPowerMode				};
 	__property BYTE		   Fan	    				=	{read=m_stData.byFan,					write=m_stData.byFan		 			};
 	__property BYTE		   FanTemper	    		=	{read=m_stData.byFanTemper,				write=m_stData.byFanTemper				};
-	__property BYTE		   Etc1	  				 	=	{read=m_stData.byEtc1,					write=m_stData.byEtc1					};
 	__property BYTE		   Heater	    			=	{read=m_stData.byHeater,				write=m_stData.byHeater					};
 	__property BYTE		   HeaterTemper	   			=	{read=m_stData.byHeaterTemper,			write=m_stData.byHeaterTemper   		};
 	__property BYTE		   DisplayBright	    	=	{read=m_stData.byDisplayBright,			write=m_stData.byDisplayBright			};
 	__property BYTE		   FlashCycle	    		=	{read=m_stData.byFlashCycle,			write=m_stData.byFlashCycle				};
 	__property BYTE		   OuterLightOperating	   	=	{read=m_stData.byOuterLightOperating,	write=m_stData.byOuterLightOperating   	};
 	__property BYTE		   OuterLightOnBright   	=	{read=m_stData.byOuterLightOnBright,	write=m_stData.byOuterLightOnBright		};
-	__property BYTE		   Etc2	    				=	{read=m_stData.byEtc2,					write=m_stData.byEtc2					};
 	__property BYTE		   Scenario	    			=	{read=m_stData.byDefaultScenarioWait,	write=m_stData.byDefaultScenarioWait	};
+	__property BYTE		   Etc1	  				 	=	{read=m_stData.byEtc1,					write=m_stData.byEtc1					};
+	__property BYTE		   Etc2	    				=	{read=m_stData.byEtc2,					write=m_stData.byEtc2					};
 
 	__property int DataLen	=	{read=fnGetDataLen	};
 };

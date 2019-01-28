@@ -6,11 +6,11 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 //---------------------------------------------------------------------------
-//void __fastcall fnRecvData05(TProtocol *a_pRecvPack)
+//void __fastcall fnRecvData05(TProtocol *a_pRecvPack, TTcpData05 *a_pRecvData)
 //{
 //	TTcpData05 *pData = new TTcpData05();
 //	pData = (TTcpData05*)a_pRecvPack->Body;
-//	m_pData05 = pData;
+//	a_pRecvData = pData;
 //	switch (pData->CtrlCode) {
 //		case 0x30 : rdModulPower->ItemIndex 	= pData->CtrlData01; break;
 //		case 0x31 :	edResetTime->Text 			= pData->CtrlData01; break;
@@ -28,6 +28,7 @@
 //	}
 //	delete pData;
 //}
+//---------------------------------------------------------------------------
 
 
 

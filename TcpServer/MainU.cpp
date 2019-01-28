@@ -74,20 +74,8 @@ TMainF *MainF;
 __fastcall TMainF::TMainF(TComponent* Owner)
 	: TForm(Owner)
 {
-//	TStringList *pTemp;
-//	pTemp = new TStringList();
-//	pTemp->LoadFromFile(GetCurrentDir() + "DataFile.txt");
-	sIP   = "127.0.0.1";
-	wPORT = 5000;
-	//Load File
-//	FILE *fIn;
-//	UnicodeString sPath = "";
-//	sPath.sprintf(L"%s",GetCurrentDir() + "\\" + "DataFile.txt");
-//	ShowMessage(sPath);
-//
-//	if ((fIn = fopen(sPath, "rt")) == NULL) {
-//		ShowMessage("File Open Error");
-//	}
+//	m_sIP   = "127.0.0.1";
+//	m_wPORT = 5000;
 
 	m_pData05 = new TTcpData05();
 	m_pData06 = new TTcpData06();
@@ -120,21 +108,7 @@ void __fastcall TMainF::btSaveClick(TObject *Sender)
 
 	switch (iActivePage) {
 		case StatePage : fnSaveData06(); break;
-		case LocalPage : {
-			m_pData07->FanTemper			= StrToInt(edMaskFanTemp->Text);
-			m_pData07->HeaterTemper			= StrToInt(edMaskHeaterTemp->Text);
-			m_pData07->Scenario				= StrToInt(edMaskScenario->Text);
-			m_pData07->FlashCycle			= StrToInt(edMaskFlashCycle->Text);
-			m_pData07->OuterLightOnBright	= StrToInt(edMaskLamp->Text);
-			m_pData07->Etc1				   	= StrToInt(edMaskEtc1->Text);
-			m_pData07->Etc2					= StrToInt(edMaskEtc2->Text);
-			m_pData07->DisplayBright		= rdDisplayBright->ItemIndex;
-			m_pData07->OuterLightOperating	= rdOuterLampRun->ItemIndex;
-			m_pData07->PowerMode			= rdPowerControlMode->ItemIndex;
-			m_pData07->Fan					= rdFanRunMode->ItemIndex;
-			m_pData07->Heater				= rdHeaterRunMode->ItemIndex;
-			break;
-			}
+		case LocalPage : fnSaveData07(); break;
 		default:
 			break;
 	}
@@ -143,30 +117,44 @@ void __fastcall TMainF::btSaveClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainF::fnLoadData()
 {
-	TStringList *pList;
-	pList = new TStringList();
-	UnicodeString sTemp = "";
-
 	AnsiString sPath;
 	sPath 			= ExtractFilePath(Application->ExeName) + "TcpServer_Project.ini";
-
 	TIniFile* pIni  = new TIniFile(sPath);
 
-	rdDoor->ItemIndex 		= pIni->ReadInteger("Data06", "Door", 0 );
-	rdPowerState->ItemIndex = pIni->ReadInteger("Data06", "Power", 0);
+	// App 섹션의 Ip주소와 Port번호 가져옴
+	m_sIP 	= pIni->ReadString	("App", "IPAddress", "127.0.0.1");
+	m_wPORT = pIni->ReadInteger	("App", "Port"	   ,  5000		);
+//	Memo1->Lines->Add(m_sIP);
+//	Memo1->Lines->Add(IntToStr(m_wPORT));
+
 	// Data06 섹션의 키이름과 키값을 가져옴 	ex) Door = 0
+	rdDoor->ItemIndex 			= pIni->ReadInteger("Data06", "Door"		  , 0 );
+	rdPowerState->ItemIndex 	= pIni->ReadInteger("Data06", "Power"		  , 0 );
+	rdFanState->ItemIndex 		= pIni->ReadInteger("Data06", "Fan"			  , 0 );
+	rdHeaterState->ItemIndex 	= pIni->ReadInteger("Data06", "Heater"		  , 0 );
+	rdOuterLampState->ItemIndex = pIni->ReadInteger("Data06", "OuterLight"	  , 0 );
+	rdFormKind->ItemIndex 		= pIni->ReadInteger("Data06", "FormKind"	  , 0 );
+	rdReStart->ItemIndex 		= pIni->ReadInteger("Data06", "ReplayCheck"	  , 0 );
+	rdPowerError->ItemIndex 	= pIni->ReadInteger("Data06", "PowerOdd"	  , 0 );
+	rdModulError->ItemIndex 	= pIni->ReadInteger("Data06", "ModulOdd"	  , 0 );
+	edMaskTemper->Text 			= pIni->ReadInteger("Data06", "Temperature"	  , 0 );
+	edMaskBright->Text 			= pIni->ReadInteger("Data06", "DisplayBright" , 0 );
+	edMaskEtc->Text 			= pIni->ReadInteger("Data06", "Etc2"		  , 0 );
 
-	pIni->ReadSectionValues("Data06", pList);
-	for (int i=0; i<pList->Count; i++) {
-		sTemp += pList->Strings[i]; //Memo1->Lines->Add(pList->Strings[i]);
-	}
-	pList->Delimiter = '=';
-	pList->DelimitedText = sTemp;
-	for (int i=0; i<pList->Count; i++) {
-		Memo1->Lines->Add(pList->Strings[i]);
-	}
+	// Data07 섹션의 키이름과 키값을 가져옴 	ex) Door = 0
+	rdPowerControlMode->ItemIndex   = pIni->ReadInteger("Data07", "PowerMode" 	   		 , 0 );
+	rdFanRunMode->ItemIndex         = pIni->ReadInteger("Data07", "Fan"		  		 	 , 0 );
+	edMaskFanTemp->Text    			= pIni->ReadInteger("Data07", "FanTemper"	  		 , 0 );
+	rdHeaterRunMode->ItemIndex  	= pIni->ReadInteger("Data07", "Heater"		   	   	 , 0 );
+	edMaskHeaterTemp->Text 			= pIni->ReadInteger("Data07", "HeaterTemper"		 , 0 );
+	rdDisplayBright->ItemIndex  	= pIni->ReadInteger("Data07", "DisplayBright"	   	 , 0 );
+	edMaskFlashCycle->Text 			= pIni->ReadInteger("Data07", "FlashCycle"			 , 0 );
+	rdOuterLampRun->ItemIndex   	= pIni->ReadInteger("Data07", "OuterLightOperating"  , 0 );
+	edMaskLamp->Text      			= pIni->ReadInteger("Data07", "OuterLightOnBright"	 , 0 );
+	edMaskScenario->Text   			= pIni->ReadInteger("Data07", "Scenario"			 , 0 );
+	edMaskEtc1->Text       			= pIni->ReadInteger("Data07", "Etc1"				 , 0 );
+	edMaskEtc2->Text       			= pIni->ReadInteger("Data07", "Etc2"				 , 0 );
 
-	delete pList;
 	delete pIni;
 }
 //---------------------------------------------------------------------------
@@ -175,23 +163,70 @@ void __fastcall TMainF::fnSaveData06()
 	AnsiString sPath;
 	sPath 			= ExtractFilePath(Application->ExeName) + "TcpServer_Project.ini";
 
-	m_pData06->Temperature 		= StrToInt(edMaskTemper->Text)	; //*(BYTE*)sTemp.c_str();
-	m_pData06->DisplayBright 	= StrToInt(edMaskBright->Text)	;
-	m_pData06->Etc2				= StrToInt(edMaskEtc->Text)		;	//*(BYTE*)(edEtc->Text).c_str();
-	m_pData06->FormKind 		= rdFormKind->ItemIndex			;
-	m_pData06->Power 			= rdPowerState->ItemIndex		;
-	m_pData06->OuterLight 		= rdOuterLampState->ItemIndex	;
-	m_pData06->ReplayCheck 		= rdReStart->ItemIndex			;
 	m_pData06->Door 			= rdDoor->ItemIndex				;
+	m_pData06->Power 			= rdPowerState->ItemIndex		;
 	m_pData06->Fan 				= rdFanState->ItemIndex			;
 	m_pData06->Heater 			= rdHeaterState->ItemIndex		;
-	m_pData06->ModulOdd 		= rdModulError->ItemIndex		;
+	m_pData06->OuterLight 		= rdOuterLampState->ItemIndex	;
+	m_pData06->FormKind 		= rdFormKind->ItemIndex			;
+	m_pData06->ReplayCheck 		= rdReStart->ItemIndex			;
 	m_pData06->PowerOdd 		= rdPowerError->ItemIndex		;
+	m_pData06->ModulOdd 		= rdModulError->ItemIndex		;
+	m_pData06->Temperature 		= StrToInt(edMaskTemper->Text)	; //*(BYTE*)sTemp.c_str();
+	m_pData06->DisplayBright 	= StrToInt(edMaskBright->Text)	;
+	m_pData06->Etc2				= StrToInt(edMaskEtc->Text)		; //*(BYTE*)(edEtc->Text).c_str();
 
-	TIniFile* pIni  = new TIniFile(sPath);
+	TIniFile *pIni  = new TIniFile(sPath);
 
-	pIni->WriteInteger("Data06", "Door" , m_pData06->Door );
-	pIni->WriteInteger("Data06", "Power", m_pData06->Power);
+	pIni->WriteInteger("Data06", "Door"		  	 , m_pData06->Door 			);
+	pIni->WriteInteger("Data06", "Power"		 , m_pData06->Power 	  	);
+	pIni->WriteInteger("Data06", "Fan"			 , m_pData06->Fan 		   	);
+	pIni->WriteInteger("Data06", "Heater"		 , m_pData06->Heater 	    );
+	pIni->WriteInteger("Data06", "OuterLight"	 , m_pData06->OuterLight 	);
+	pIni->WriteInteger("Data06", "FormKind"	  	 , m_pData06->FormKind 		);
+	pIni->WriteInteger("Data06", "ReplayCheck"	 , m_pData06->ReplayCheck 	);
+	pIni->WriteInteger("Data06", "PowerOdd"	  	 , m_pData06->PowerOdd 		);
+	pIni->WriteInteger("Data06", "ModulOdd"	  	 , m_pData06->ModulOdd 		);
+	pIni->WriteInteger("Data06", "Temperature"	 , m_pData06->Temperature 	);
+	pIni->WriteInteger("Data06", "DisplayBright" , m_pData06->DisplayBright	);
+	pIni->WriteInteger("Data06", "Etc2"		  	 , m_pData06->Etc2			);
+
+	delete pIni;
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainF::fnSaveData07()
+{
+	AnsiString sPath;
+	sPath 			= ExtractFilePath(Application->ExeName) + "TcpServer_Project.ini";
+
+	m_pData07->PowerMode 			= rdPowerControlMode->ItemIndex				;
+	m_pData07->Fan					= rdFanRunMode->ItemIndex					;
+	m_pData07->FanTemper			= StrToInt(edMaskFanTemp->Text)				;
+	m_pData07->Heater				= rdHeaterRunMode->ItemIndex				;
+	m_pData07->HeaterTemper			= StrToInt(edMaskHeaterTemp->Text)			;
+	m_pData07->DisplayBright	    = rdDisplayBright->ItemIndex				;
+	m_pData07->FlashCycle			= StrToInt(edMaskFlashCycle->Text)			;
+	m_pData07->OuterLightOperating 	= rdOuterLampRun->ItemIndex					;
+	m_pData07->OuterLightOnBright	= StrToInt(edMaskLamp->Text)				;
+	m_pData07->Scenario			   	= StrToInt(edMaskScenario->Text)			;
+	m_pData07->Etc1				   	= StrToInt(edMaskEtc1->Text)				;
+	m_pData07->Etc2				   	= StrToInt(edMaskEtc2->Text)				;
+
+	TIniFile *pIni  = new TIniFile(sPath);
+
+	pIni->WriteInteger("Data07", "PowerMode" 		 	, m_pData07->PowerMode 			 );
+	pIni->WriteInteger("Data07", "Fan"				 	, m_pData07->Fan				 );
+	pIni->WriteInteger("Data07", "FanTemper"		 	, m_pData07->FanTemper			 );
+	pIni->WriteInteger("Data07", "Heater"			 	, m_pData07->Heater			 	 );
+	pIni->WriteInteger("Data07", "HeaterTemper"		 	, m_pData07->HeaterTemper		 );
+	pIni->WriteInteger("Data07", "DisplayBright"	   	, m_pData07->DisplayBright	   	 );
+	pIni->WriteInteger("Data07", "FlashCycle"		  	, m_pData07->FlashCycle			 );
+	pIni->WriteInteger("Data07", "OuterLightOperating" 	, m_pData07->OuterLightOperating );
+	pIni->WriteInteger("Data07", "OuterLightOnBright"  	, m_pData07->OuterLightOnBright	 );
+	pIni->WriteInteger("Data07", "Scenario"			   	, m_pData07->Scenario			 );
+	pIni->WriteInteger("Data07", "Etc1"				   	, m_pData07->Etc1				 );
+	pIni->WriteInteger("Data07", "Etc2"				   	, m_pData07->Etc2				 );
+
 	delete pIni;
 }
 //---------------------------------------------------------------------------
@@ -244,6 +279,7 @@ void __fastcall TMainF::fnRecvData05(TProtocol *a_pRecvPack)
 	delete pData;
 }
 
+
 //---------------------------------------------------------------------------
 void __fastcall TMainF::fnSendData06(TProtocol *a_pRecvPack)
 {
@@ -291,14 +327,14 @@ void __fastcall TMainF::fnSendData07(TProtocol *a_pRecvPack)
 
 	pSendPack->Body = (void*)pData;
 	fnSendIOData(pSendPack);
-	delete pSendPack;
+	delete pSendPack;              //	프로토콜 소멸할때 fnDeleteBody호출해서 바디메모리 delete
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainF::fnSendIOData(TProtocol *a_pSendPack)
 {
 	int iResult = 0;
 	if((iResult=a_pSendPack->fnEncoding()) == 0){
-		IdUDPServer1->SendBuffer(sIP, wPORT, RawToBytes(a_pSendPack->SendPacket, a_pSendPack->SendPacketSize));
+		IdUDPServer1->SendBuffer(m_sIP, m_wPORT, RawToBytes(a_pSendPack->SendPacket, a_pSendPack->SendPacketSize));
 
 		UnicodeString sTemp;
 		UnicodeString sLog = "";
@@ -328,12 +364,10 @@ void __fastcall TMainF::Button1Click(TObject *Sender)
 	pRecvPack->SFNo  = 0x01;
 	pRecvPack->AFNo  = 0x01;
 
-
 	fnSendData06(pRecvPack);
 	delete pRecvPack;
 }
 //---------------------------------------------------------------------------
-
 void __fastcall TMainF::FormShow(TObject *Sender)
 {
 	fnLoadData();
@@ -353,4 +387,5 @@ void __fastcall TMainF::Timer1Timer(TObject *Sender)
 	Button1Click(Sender);
 }
 //---------------------------------------------------------------------------
+
 

@@ -50,10 +50,10 @@ object MainF: TMainF
       OnClick = Button1Click
     end
     object Memo1: TMemo
-      Left = 403
-      Top = 100
-      Width = 289
-      Height = 298
+      Left = 256
+      Top = 320
+      Width = 185
+      Height = 89
       Lines.Strings = (
         'Memo1')
       TabOrder = 2
@@ -88,7 +88,7 @@ object MainF: TMainF
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      Properties.ActivePage = cxTabSheet2
+      Properties.ActivePage = cxTabSheet3
       Properties.CustomButtons.Buttons = <>
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'DarkSide'
@@ -439,7 +439,6 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 0
-          ExplicitTop = 568
         end
         object rdFanState: TRadioGroup
           AlignWithMargins = True
@@ -465,7 +464,6 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 1
-          ExplicitTop = 568
         end
         object rdPowerError: TRadioGroup
           AlignWithMargins = True
@@ -491,7 +489,6 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 2
-          ExplicitTop = 568
         end
         object Panel4: TPanel
           AlignWithMargins = True
@@ -509,7 +506,6 @@ object MainF: TMainF
           Font.Style = []
           ParentFont = False
           TabOrder = 3
-          ExplicitTop = -25
           object lbDisplayBright: TLabel
             Left = 184
             Top = 12
@@ -622,7 +618,6 @@ object MainF: TMainF
             'Unknown')
           ParentBiDiMode = False
           TabOrder = 4
-          ExplicitTop = 568
         end
         object rdFormKind: TRadioGroup
           AlignWithMargins = True
@@ -647,7 +642,6 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 5
-          ExplicitTop = 568
         end
         object rdOuterLampState: TRadioGroup
           AlignWithMargins = True
@@ -672,7 +666,6 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 6
-          ExplicitTop = 568
         end
         object rdHeaterState: TRadioGroup
           AlignWithMargins = True
@@ -698,7 +691,6 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 7
-          ExplicitTop = 568
         end
         object rdPowerState: TRadioGroup
           AlignWithMargins = True
@@ -723,7 +715,6 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 8
-          ExplicitTop = 568
         end
         object rdDoor: TRadioGroup
           AlignWithMargins = True
@@ -749,7 +740,6 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 9
-          ExplicitTop = 568
         end
       end
       object cxTabSheet3: TcxTabSheet
