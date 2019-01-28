@@ -107,7 +107,7 @@ int __fastcall TProtocol::fnEncoding()
 	m_iSendPackSize = 0;
 	ZeroMemory(m_bySendPacket, sizeof(m_bySendPacket));                      //	보낼 패킷버퍼 초기화
 	m_iSendPackSize += sizeof(m_stHeader);                                   //	보낼 패킷사이즈에 헤더크기 추가
-	iTailSize += sizeof(m_stTail);
+	iTailSize = sizeof(m_stTail);
 	DataLen = 0;                                                             //	(m_stHeader.byDataLen 부분 초기화)
 
 	switch (Code) {
@@ -156,7 +156,7 @@ int __fastcall TProtocol::fnDecoding(BYTE *a_pBuffer, int a_iSize)
 	CopyMemory(m_byRecvPacket, a_pBuffer, a_iSize);
 	CopyMemory(&m_stHeader, m_byRecvPacket, sizeof(m_stHeader));       	//	구조체안에 데이터 저장
 	m_iRecvPackSize += sizeof(m_stHeader);                              //	헤더사이즈만큼 인덱스 증가
-	iTailSize += sizeof(m_stTail);
+	iTailSize = sizeof(m_stTail);
 
 	switch (Code) {
 		case 0x05:	{

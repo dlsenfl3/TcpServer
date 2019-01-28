@@ -74,13 +74,9 @@ TMainF *MainF;
 __fastcall TMainF::TMainF(TComponent* Owner)
 	: TForm(Owner)
 {
-//	m_sIP   = "127.0.0.1";
-//	m_wPORT = 5000;
-
 	m_pData05 = new TTcpData05();
 	m_pData06 = new TTcpData06();
 	m_pData07 = new TTcpData07();
-
 }
 //---------------------------------------------------------------------------
 __fastcall TMainF::~TMainF()
@@ -101,11 +97,6 @@ void __fastcall TMainF::btSaveClick(TObject *Sender)
 		StatePage,
 		LocalPage,
 	};
-
-//	ShowMessage(m_pData05->DataLen);
-//	ShowMessage(edMaskBright->Text);
-//	ShowMessage(edMaskEtc->Text);
-
 	switch (iActivePage) {
 //		case CtrlPage  : fnSaveData05(); break;
 		case StatePage : fnSaveData06(); break;
@@ -113,7 +104,6 @@ void __fastcall TMainF::btSaveClick(TObject *Sender)
 		default:
 			break;
 	}
-			//Save File;
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainF::fnLoadData()
@@ -171,6 +161,9 @@ void __fastcall TMainF::fnLoadData()
 	edMaskEtc2->Text       			= pIni->ReadInteger("Data07", "Etc2"				 , 0 );
 
 	delete pIni;
+	//  메모리에 데이터를 넣기위해 호출
+	fnSaveData06();
+	fnSaveData07();
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainF::fnSaveData05()
@@ -275,8 +268,8 @@ void __fastcall TMainF::IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const
 	BYTE byBuf[MAX_BUFFER];
 	ZeroMemory(byBuf, sizeof(byBuf));
 	BytesToRaw(AData, byBuf, sizeof(byBuf));
-	sizeof(AData);
-	sizeof(AData.Length);
+//	sizeof(AData);
+//	sizeof(AData.Length);
 
 	pRecvPack = new TProtocol();
 	if((iResult=pRecvPack->fnDecoding(byBuf, AData.Length)) == 0){
@@ -312,7 +305,7 @@ void __fastcall TMainF::fnRecvData05(TProtocol *a_pRecvPack)
 		case 0x41 :	rdLedControl->ItemIndex 	= pData->CtrlData01; break;
 		default	  : break;
 	}
-	// Save File
+	// Save To File
 	fnSaveData05();
 	delete pData;
 }
@@ -331,19 +324,6 @@ void __fastcall TMainF::fnSendData06(TProtocol *a_pRecvPack)
 	pSendPack->AFNo    = a_pRecvPack->AFNo;
 
 	pData = new TTcpData06(m_pData06);
-
-//	pData->Door   		 = m_pData06->Door;
-//	pData->Power  		 = m_pData06->Power;
-//	pData->Fan	  		 = m_pData06->Fan;
-//	pData->Heater 		 = m_pData06->Heater;
-//	pData->OuterLight 	 = m_pData06->OuterLight;
-//	pData->FormKind	  	 = m_pData06->FormKind;
-//	pData->ReplayCheck 	 = m_pData06->ReplayCheck;
-//	pData->PowerOdd	   	 = m_pData06->PowerOdd;
-//	pData->ModulOdd    	 = m_pData06->ModulOdd;
-//	pData->Temperature 	 = m_pData06->Temperature;
-//	pData->DisplayBright = m_pData06->DisplayBright;
-//	pData->Etc2 		 = m_pData06->Etc2;
 
 	pSendPack->Body      = pData;
 	fnSendIOData(pSendPack);
@@ -387,14 +367,10 @@ void __fastcall TMainF::fnSendIOData(TProtocol *a_pSendPack)
 	}
 }
 //---------------------------------------------------------------------------
-
 void __fastcall TMainF::Button1Click(TObject *Sender)
 {
 	int iResult = 0;
 	TProtocol *pRecvPack;
-//	BYTE byBuf[MAX_BUFFER];
-//	ZeroMemory(byBuf, sizeof(byBuf));
-//	BytesToRaw(AData, byBuf, sizeof(byBuf));
 
 	pRecvPack = new TProtocol();
 	pRecvPack->VMSID = 0xFF;
@@ -408,9 +384,9 @@ void __fastcall TMainF::Button1Click(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainF::FormShow(TObject *Sender)
 {
+	// Load From File
 	fnLoadData();
 	IdUDPServer1->Active = true;
-
 }
 //---------------------------------------------------------------------------
 
@@ -423,6 +399,13 @@ void __fastcall TMainF::Button2Click(TObject *Sender)
 void __fastcall TMainF::Timer1Timer(TObject *Sender)
 {
 	Button1Click(Sender);
+
+
+
+
+
+
+
 }
 //---------------------------------------------------------------------------
 

@@ -31,9 +31,10 @@ object MainF: TMainF
     Font.Style = []
     ParentFont = False
     TabOrder = 0
+    ExplicitTop = -8
     object btSave: TButton
-      Left = 248
-      Top = 124
+      Left = 240
+      Top = 260
       Width = 209
       Height = 191
       Caption = 'SAVE'
@@ -41,22 +42,13 @@ object MainF: TMainF
       OnClick = btSaveClick
     end
     object Button1: TButton
-      Left = 296
-      Top = 448
+      Left = 32
+      Top = 248
       Width = 121
       Height = 81
-      Caption = 'Button1'
+      Caption = 'Send'
       TabOrder = 1
       OnClick = Button1Click
-    end
-    object Memo1: TMemo
-      Left = 256
-      Top = 320
-      Width = 185
-      Height = 89
-      Lines.Strings = (
-        'Memo1')
-      TabOrder = 2
     end
   end
   object Panel2: TPanel
@@ -88,7 +80,7 @@ object MainF: TMainF
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      Properties.ActivePage = cxTabSheet1
+      Properties.ActivePage = cxTabSheet2
       Properties.CustomButtons.Buttons = <>
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'DarkSide'
@@ -1095,11 +1087,11 @@ object MainF: TMainF
     end
   end
   object Button2: TButton
-    Left = 40
-    Top = 228
-    Width = 75
-    Height = 25
-    Caption = 'Button2'
+    Left = 32
+    Top = 140
+    Width = 121
+    Height = 85
+    Caption = 'RunTimer'
     TabOrder = 2
     OnClick = Button2Click
   end
@@ -1114,7 +1106,7 @@ object MainF: TMainF
     Enabled = False
     Interval = 500
     OnTimer = Timer1Timer
-    Left = 48
-    Top = 176
+    Left = 40
+    Top = 88
   end
 end
