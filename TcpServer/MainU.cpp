@@ -119,32 +119,32 @@ void __fastcall TMainF::fnLoadData()
 //	Memo1->Lines->Add(IntToStr(m_wPORT));
 
 	// Data05 섹션의 키이름과 키값을 가져옴 	ex) Door = 0
-	rdModulPower->ItemIndex     = pIni->ReadInteger("Data05", "ModulPower"	   	, 0 );
-	edResetTime->Text           = pIni->ReadInteger("Data05", "ResetTime"	   	, 0 );
-	edTryCount->Text            = pIni->ReadInteger("Data05", "TryCount"	    , 0 );
-	edControlTime->Text         = pIni->ReadInteger("Data05", "ControlTime"	   	, 0 );
-	edRunTime->Text             = pIni->ReadInteger("Data05", "RunTime"	 	   	, 0 );
-	edBlinkCycle->Text          = pIni->ReadInteger("Data05", "BlinkCycle"	   	, 0 );
-	edScinarioRunTime->Text     = pIni->ReadInteger("Data05", "ScinarioRunTime" , 0 );
-	rdBrightControl->ItemIndex  = pIni->ReadInteger("Data05", "BrightControl"   , 0 );
-	rdFanControl->ItemIndex     = pIni->ReadInteger("Data05", "FanControl"	   	, 0 );
-	rdHeaterControl->ItemIndex  = pIni->ReadInteger("Data05", "HeaterControl"   , 0 );
-	rdLampControl->ItemIndex    = pIni->ReadInteger("Data05", "LampControl"     , 0 );
-	rdLedControl->ItemIndex     = pIni->ReadInteger("Data05", "LedControl"	   	, 0 );
+	rdModulPower->ItemIndex         = pIni->ReadInteger("Data05", "ModulPower"	   	     , 0 );
+	edResetTime->Text               = pIni->ReadInteger("Data05", "ResetTime"	   	     , 0 );
+	edTryCount->Text                = pIni->ReadInteger("Data05", "TryCount"	         , 0 );
+	edControlTime->Text             = pIni->ReadInteger("Data05", "ControlTime"	   	     , 0 );
+	edRunTime->Text                 = pIni->ReadInteger("Data05", "RunTime"	 	   	     , 0 );
+	edBlinkCycle->Text              = pIni->ReadInteger("Data05", "BlinkCycle"	   	     , 0 );
+	edScinarioRunTime->Text         = pIni->ReadInteger("Data05", "ScinarioRunTime"      , 0 );
+	rdBrightControl->ItemIndex      = pIni->ReadInteger("Data05", "BrightControl"        , 0 );
+	rdFanControl->ItemIndex         = pIni->ReadInteger("Data05", "FanControl"	         , 0 );
+	rdHeaterControl->ItemIndex      = pIni->ReadInteger("Data05", "HeaterControl"        , 0 );
+	rdLampControl->ItemIndex        = pIni->ReadInteger("Data05", "LampControl"          , 0 );
+	rdLedControl->ItemIndex         = pIni->ReadInteger("Data05", "LedControl"	         , 0 );
 
 	// Data06 섹션의 키이름과 키값을 가져옴 	ex) Door = 0
-	rdDoor->ItemIndex 			= pIni->ReadInteger("Data06", "Door"		  , 0 );
-	rdPowerState->ItemIndex 	= pIni->ReadInteger("Data06", "Power"		  , 0 );
-	rdFanState->ItemIndex 		= pIni->ReadInteger("Data06", "Fan"			  , 0 );
-	rdHeaterState->ItemIndex 	= pIni->ReadInteger("Data06", "Heater"		  , 0 );
-	rdOuterLampState->ItemIndex = pIni->ReadInteger("Data06", "OuterLight"	  , 0 );
-	rdFormKind->ItemIndex 		= pIni->ReadInteger("Data06", "FormKind"	  , 0 );
-	rdReStart->ItemIndex 		= pIni->ReadInteger("Data06", "ReplayCheck"	  , 0 );
-	rdPowerError->ItemIndex 	= pIni->ReadInteger("Data06", "PowerOdd"	  , 0 );
-	rdModulError->ItemIndex 	= pIni->ReadInteger("Data06", "ModulOdd"	  , 0 );
-	edMaskTemper->Text 			= pIni->ReadInteger("Data06", "Temperature"	  , 0 );
-	edMaskBright->Text 			= pIni->ReadInteger("Data06", "DisplayBright" , 0 );
-	edMaskEtc->Text 			= pIni->ReadInteger("Data06", "Etc2"		  , 0 );
+	rdDoor->ItemIndex 			    = pIni->ReadInteger("Data06", "Door"		         , 0 );
+	rdPowerState->ItemIndex 	    = pIni->ReadInteger("Data06", "Power"		         , 0 );
+	rdFanState->ItemIndex 		    = pIni->ReadInteger("Data06", "Fan"			         , 0 );
+	rdHeaterState->ItemIndex 	    = pIni->ReadInteger("Data06", "Heater"		         , 0 );
+	rdOuterLampState->ItemIndex     = pIni->ReadInteger("Data06", "OuterLight"	         , 0 );
+	rdFormKind->ItemIndex 		    = pIni->ReadInteger("Data06", "FormKind"	         , 0 );
+	rdReStart->ItemIndex 		    = pIni->ReadInteger("Data06", "ReplayCheck"	         , 0 );
+	rdPowerError->ItemIndex 	    = pIni->ReadInteger("Data06", "PowerOdd"	         , 0 );
+	rdModulError->ItemIndex 	    = pIni->ReadInteger("Data06", "ModulOdd"	         , 0 );
+	edMaskTemper->Text 			    = pIni->ReadInteger("Data06", "Temperature"	         , 0 );
+	edMaskBright->Text 			    = pIni->ReadInteger("Data06", "DisplayBright" 	     , 0 );
+	edMaskEtc->Text 			    = pIni->ReadInteger("Data06", "Etc2"		   	     , 0 );
 
 	// Data07 섹션의 키이름과 키값을 가져옴 	ex) Door = 0
 	rdPowerControlMode->ItemIndex   = pIni->ReadInteger("Data07", "PowerMode" 	   		 , 0 );
@@ -280,7 +280,7 @@ void __fastcall TMainF::IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const
 			default	  : break;
 		}
 	}else{
-		ShowMessage("Decoding Error");
+		OutputDebugStringW(L"Decoding Error");
 	}
 	delete pRecvPack;
 }
@@ -363,7 +363,7 @@ void __fastcall TMainF::fnSendIOData(TProtocol *a_pSendPack)
 
 	}else{
 		//Log iResult;
-		ShowMessage("Encoding Error");
+		OutputDebugStringW(L"Encoding Error ");
 	}
 }
 //---------------------------------------------------------------------------

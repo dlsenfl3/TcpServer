@@ -31,7 +31,6 @@ object MainF: TMainF
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    ExplicitTop = -8
     object btSave: TButton
       Left = 240
       Top = 260
@@ -411,7 +410,7 @@ object MainF: TMainF
         object rdReStart: TRadioGroup
           AlignWithMargins = True
           Left = 3
-          Top = 610
+          Top = 476
           Width = 573
           Height = 49
           Margins.Top = 15
@@ -431,11 +430,13 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 0
+          ExplicitLeft = 11
+          ExplicitTop = 442
         end
         object rdFanState: TRadioGroup
           AlignWithMargins = True
           Left = 3
-          Top = 141
+          Top = 208
           Width = 573
           Height = 49
           Margins.Top = 15
@@ -456,11 +457,12 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 1
+          ExplicitTop = 141
         end
         object rdPowerError: TRadioGroup
           AlignWithMargins = True
           Left = 3
-          Top = 476
+          Top = 543
           Width = 573
           Height = 49
           Margins.Top = 15
@@ -481,6 +483,8 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 2
+          ExplicitLeft = -5
+          ExplicitTop = 522
         end
         object Panel4: TPanel
           AlignWithMargins = True
@@ -595,7 +599,7 @@ object MainF: TMainF
         object rdModulError: TRadioGroup
           AlignWithMargins = True
           Left = 3
-          Top = 342
+          Top = 610
           Width = 573
           Height = 49
           Margins.Top = 15
@@ -610,11 +614,12 @@ object MainF: TMainF
             'Unknown')
           ParentBiDiMode = False
           TabOrder = 4
+          ExplicitTop = 342
         end
         object rdFormKind: TRadioGroup
           AlignWithMargins = True
           Left = 3
-          Top = 208
+          Top = 409
           Width = 573
           Height = 49
           Margins.Top = 15
@@ -634,11 +639,12 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 5
+          ExplicitTop = 208
         end
         object rdOuterLampState: TRadioGroup
           AlignWithMargins = True
           Left = 3
-          Top = 409
+          Top = 342
           Width = 573
           Height = 49
           Margins.Top = 15
@@ -658,6 +664,7 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 6
+          ExplicitTop = 300
         end
         object rdHeaterState: TRadioGroup
           AlignWithMargins = True
@@ -683,11 +690,12 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 7
+          ExplicitTop = 254
         end
         object rdPowerState: TRadioGroup
           AlignWithMargins = True
           Left = 3
-          Top = 543
+          Top = 141
           Width = 573
           Height = 49
           Margins.Top = 15
