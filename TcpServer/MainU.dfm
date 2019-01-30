@@ -430,8 +430,6 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 0
-          ExplicitLeft = 11
-          ExplicitTop = 442
         end
         object rdFanState: TRadioGroup
           AlignWithMargins = True
@@ -457,7 +455,6 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 1
-          ExplicitTop = 141
         end
         object rdPowerError: TRadioGroup
           AlignWithMargins = True
@@ -483,8 +480,6 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 2
-          ExplicitLeft = -5
-          ExplicitTop = 522
         end
         object Panel4: TPanel
           AlignWithMargins = True
@@ -614,7 +609,6 @@ object MainF: TMainF
             'Unknown')
           ParentBiDiMode = False
           TabOrder = 4
-          ExplicitTop = 342
         end
         object rdFormKind: TRadioGroup
           AlignWithMargins = True
@@ -639,7 +633,6 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 5
-          ExplicitTop = 208
         end
         object rdOuterLampState: TRadioGroup
           AlignWithMargins = True
@@ -664,7 +657,6 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 6
-          ExplicitTop = 300
         end
         object rdHeaterState: TRadioGroup
           AlignWithMargins = True
@@ -690,7 +682,6 @@ object MainF: TMainF
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 7
-          ExplicitTop = 254
         end
         object rdPowerState: TRadioGroup
           AlignWithMargins = True

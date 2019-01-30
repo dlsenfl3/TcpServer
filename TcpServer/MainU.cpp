@@ -106,6 +106,36 @@ void __fastcall TMainF::btSaveClick(TObject *Sender)
 	}
 }
 //---------------------------------------------------------------------------
+void __fastcall TMainF::fnSaveToMem()
+{
+	m_pData06->Door 		       	= rdDoor->ItemIndex			       	;
+	m_pData06->Power 		       	= rdPowerState->ItemIndex	       	;
+	m_pData06->Fan 			       	= rdFanState->ItemIndex		       	;
+	m_pData06->Heater 		       	= rdHeaterState->ItemIndex	       	;
+	m_pData06->OuterLight 	       	= rdOuterLampState->ItemIndex      	;
+	m_pData06->FormKind 	       	= rdFormKind->ItemIndex		       	;
+	m_pData06->ReplayCheck 	       	= rdReStart->ItemIndex		       	;
+	m_pData06->PowerOdd 	       	= rdPowerError->ItemIndex	       	;
+	m_pData06->ModulOdd 	       	= rdModulError->ItemIndex	       	;
+	m_pData06->Temperature 	       	= StrToInt(edMaskTemper->Text)     	; //*(BYTE*)sTemp.c_str();
+	m_pData06->DisplayBright       	= StrToInt(edMaskBright->Text)     	;
+	m_pData06->Etc2			       	= StrToInt(edMaskEtc->Text)	       	; //*(BYTE*)(edEtc->Text).c_str();
+
+	m_pData07->PowerMode 			= rdPowerControlMode->ItemIndex		;
+	m_pData07->Fan					= rdFanRunMode->ItemIndex			;
+	m_pData07->FanTemper			= StrToInt(edMaskFanTemp->Text)		;
+	m_pData07->Heater				= rdHeaterRunMode->ItemIndex		;
+	m_pData07->HeaterTemper			= StrToInt(edMaskHeaterTemp->Text)	;
+	m_pData07->DisplayBright	    = rdDisplayBright->ItemIndex		;
+	m_pData07->FlashCycle			= StrToInt(edMaskFlashCycle->Text)	;
+	m_pData07->OuterLightOperating 	= rdOuterLampRun->ItemIndex			;
+	m_pData07->OuterLightOnBright	= StrToInt(edMaskLamp->Text)		;
+	m_pData07->Scenario			   	= StrToInt(edMaskScenario->Text)	;
+	m_pData07->Etc1				   	= StrToInt(edMaskEtc1->Text)		;
+	m_pData07->Etc2				   	= StrToInt(edMaskEtc2->Text)		;
+
+}
+//---------------------------------------------------------------------------
 void __fastcall TMainF::fnLoadData()
 {
 	AnsiString sPath;
@@ -162,8 +192,7 @@ void __fastcall TMainF::fnLoadData()
 
 	delete pIni;
 	//  메모리에 데이터를 넣기위해 호출
-	fnSaveData06();
-	fnSaveData07();
+	fnSaveToMem();
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainF::fnSaveData05()
@@ -192,21 +221,9 @@ void __fastcall TMainF::fnSaveData06()
 {
 	AnsiString sPath;
 	sPath 			= ExtractFilePath(Application->ExeName) + "TcpServer_Project.ini";
-
-	m_pData06->Door 			= rdDoor->ItemIndex				;
-	m_pData06->Power 			= rdPowerState->ItemIndex		;
-	m_pData06->Fan 				= rdFanState->ItemIndex			;
-	m_pData06->Heater 			= rdHeaterState->ItemIndex		;
-	m_pData06->OuterLight 		= rdOuterLampState->ItemIndex	;
-	m_pData06->FormKind 		= rdFormKind->ItemIndex			;
-	m_pData06->ReplayCheck 		= rdReStart->ItemIndex			;
-	m_pData06->PowerOdd 		= rdPowerError->ItemIndex		;
-	m_pData06->ModulOdd 		= rdModulError->ItemIndex		;
-	m_pData06->Temperature 		= StrToInt(edMaskTemper->Text)	; //*(BYTE*)sTemp.c_str();
-	m_pData06->DisplayBright 	= StrToInt(edMaskBright->Text)	;
-	m_pData06->Etc2				= StrToInt(edMaskEtc->Text)		; //*(BYTE*)(edEtc->Text).c_str();
-
 	TIniFile *pIni  = new TIniFile(sPath);
+
+	fnSaveToMem();
 
 	pIni->WriteInteger("Data06", "Door"		  	 , m_pData06->Door 			);
 	pIni->WriteInteger("Data06", "Power"		 , m_pData06->Power 	  	);
@@ -228,21 +245,9 @@ void __fastcall TMainF::fnSaveData07()
 {
 	AnsiString sPath;
 	sPath 			= ExtractFilePath(Application->ExeName) + "TcpServer_Project.ini";
-
-	m_pData07->PowerMode 			= rdPowerControlMode->ItemIndex				;
-	m_pData07->Fan					= rdFanRunMode->ItemIndex					;
-	m_pData07->FanTemper			= StrToInt(edMaskFanTemp->Text)				;
-	m_pData07->Heater				= rdHeaterRunMode->ItemIndex				;
-	m_pData07->HeaterTemper			= StrToInt(edMaskHeaterTemp->Text)			;
-	m_pData07->DisplayBright	    = rdDisplayBright->ItemIndex				;
-	m_pData07->FlashCycle			= StrToInt(edMaskFlashCycle->Text)			;
-	m_pData07->OuterLightOperating 	= rdOuterLampRun->ItemIndex					;
-	m_pData07->OuterLightOnBright	= StrToInt(edMaskLamp->Text)				;
-	m_pData07->Scenario			   	= StrToInt(edMaskScenario->Text)			;
-	m_pData07->Etc1				   	= StrToInt(edMaskEtc1->Text)				;
-	m_pData07->Etc2				   	= StrToInt(edMaskEtc2->Text)				;
-
 	TIniFile *pIni  = new TIniFile(sPath);
+
+	fnSaveToMem();
 
 	pIni->WriteInteger("Data07", "PowerMode" 		 	, m_pData07->PowerMode 			 );
 	pIni->WriteInteger("Data07", "Fan"				 	, m_pData07->Fan				 );
