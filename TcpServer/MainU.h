@@ -4,7 +4,7 @@
 #define MainUH
 //---------------------------------------------------------------------------
 #include "TcpCommU.h"
-//#include "ObjectU.h"
+#include "ObjectU.h"
 //---------------------------------------------------------------------------
 #include <System.Classes.hpp>
 #include <Vcl.Controls.hpp>
@@ -160,6 +160,8 @@ __published:	// IDE-managed Components
 	TButton *Button1;
 	TButton *Button2;
 	TTimer *Timer1;
+	TButton *Button3;
+	TEdit *Edit1;
 	void __fastcall btSaveClick(TObject *Sender);
 	void __fastcall IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
 		  TIdSocketHandle *ABinding);
@@ -167,6 +169,7 @@ __published:	// IDE-managed Components
 	void __fastcall FormShow(TObject *Sender);
 	void __fastcall Button2Click(TObject *Sender);
 	void __fastcall Timer1Timer(TObject *Sender);
+	void __fastcall Button3Click(TObject *Sender);
 private:
 	UnicodeString  m_sIP;
 	WORD 		   m_wPORT;

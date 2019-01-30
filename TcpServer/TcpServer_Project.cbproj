@@ -40,6 +40,8 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <ILINK_LibraryPath>Comm\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>Comm\;$(IncludePath)</IncludePath>
         <VCL_Custom_Styles>&quot;Obsidian|VCLSTYLE|$(PUBLIC)\Documents\RAD Studio\12.0\Styles\Obsidian.vsf&quot;</VCL_Custom_Styles>
         <BCC_AutoDepCheck>false</BCC_AutoDepCheck>
         <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
@@ -105,19 +107,23 @@
         <TASM_Debugging>None</TASM_Debugging>
     </PropertyGroup>
     <ItemGroup>
+        <CppCompile Include="Comm\ObjectU.cpp">
+            <DependentOn>Comm\ObjectU.h</DependentOn>
+            <BuildOrder>3</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="Comm\TcpCommU.cpp">
+            <DependentOn>Comm\TcpCommU.h</DependentOn>
+            <BuildOrder>4</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="Comm\TcpThreadU.cpp">
+            <DependentOn>Comm\TcpThreadU.h</DependentOn>
+            <BuildOrder>5</BuildOrder>
+        </CppCompile>
         <CppCompile Include="MainU.cpp">
             <Form>MainF</Form>
             <FormType>dfm</FormType>
             <DependentOn>MainU.h</DependentOn>
             <BuildOrder>2</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="ObjectU.cpp">
-            <DependentOn>ObjectU.h</DependentOn>
-            <BuildOrder>4</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="TcpCommU.cpp">
-            <DependentOn>TcpCommU.h</DependentOn>
-            <BuildOrder>3</BuildOrder>
         </CppCompile>
         <CppCompile Include="TcpServer_Project.cpp">
             <BuildOrder>0</BuildOrder>

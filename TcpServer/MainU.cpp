@@ -4,7 +4,7 @@
 #pragma hdrstop
 
 #include "MainU.h"
-#include "stdio.h"
+//#include "stdio.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
@@ -405,13 +405,18 @@ void __fastcall TMainF::Timer1Timer(TObject *Sender)
 {
 	Button1Click(Sender);
 
-
-
-
-
-
-
 }
 //---------------------------------------------------------------------------
 
+
+void __fastcall TMainF::Button3Click(TObject *Sender)
+{
+
+//	m_pData05->ControlTime = "19900205094535";
+//	m_pData05->ControlTime = '12';
+
+//	Edit1->Text = m_pData05->ControlTime;
+//	Edit1->Text = sizeof(UnicodeString);
+}
+//---------------------------------------------------------------------------
 
