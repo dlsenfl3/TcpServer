@@ -60,7 +60,7 @@ void __fastcall TTcpThread::Execute()
 						fnSaveData07();
 						break;
 					}
-					case WM_SEND_TEST:
+					case WM_SEND_TEST:                      //  잘 보내지는지 Test
 						fnSendTest();
 						break;
 				}

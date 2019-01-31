@@ -163,37 +163,24 @@ __published:	// IDE-managed Components
 	TTimer *Timer1;
 	TButton *Button3;
 	void __fastcall btSaveClick(TObject *Sender);
-//	void __fastcall IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
-//		  TIdSocketHandle *ABinding);
 	void __fastcall Button1Click(TObject *Sender);
 	void __fastcall FormShow(TObject *Sender);
 	void __fastcall Button2Click(TObject *Sender);
 	void __fastcall Timer1Timer(TObject *Sender);
 	void __fastcall Button3Click(TObject *Sender);
 	void __fastcall FormCreate(TObject *Sender);
-	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
 	void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
 private:
 	TApplicationInfo *m_pAppInfo;
 //	TTcpThread       *m_pThread;
 	UnicodeString     m_sIP;
 	WORD 		      m_wPORT;
-	TTcpData05	     *m_pData05;
-	TTcpData06 	     *m_pData06;
-	TTcpData07 	     *m_pData07;
 private:
 	void __fastcall fnSaveToMem05();
 	void __fastcall fnSaveToMem06();
 	void __fastcall fnSaveToMem07();
 	void __fastcall fnLoadToForm();
 	void __fastcall fnLoadData05(TMessage a_Msg);
-//	void __fastcall fnSaveData06();
-//	void __fastcall fnSaveData07();
-
-//	void __fastcall fnRecvData05(TProtocol *a_pRecvPack);
-//	void __fastcall fnSendData06(TProtocol *a_pRecvPack);
-//	void __fastcall fnSendData07(TProtocol *a_pRecvPack);
-//	void __fastcall fnSendIOData(TProtocol *a_pSendPack);
 public:		// User declarations
 	__fastcall 	TMainF(TComponent* Owner);
 	__fastcall ~TMainF();
@@ -202,7 +189,6 @@ public:		// User declarations
 
 
 BEGIN_MESSAGE_MAP
-//	VCL_MESSAGE_HANDLER(WM_TCP_OPEN, TMessage, fnLoadToForm);
 	VCL_MESSAGE_HANDLER(WM_TCP_RECV05,  TMessage, fnLoadData05);
 END_MESSAGE_MAP(TForm);
 };
