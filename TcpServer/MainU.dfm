@@ -14,6 +14,9 @@ object MainF: TMainF
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -88,7 +91,7 @@ object MainF: TMainF
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      Properties.ActivePage = cxTabSheet2
+      Properties.ActivePage = cxTabSheet1
       Properties.CustomButtons.Buttons = <>
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'DarkSide'
@@ -1107,13 +1110,12 @@ object MainF: TMainF
     Left = 264
     Top = 52
     Width = 250
-    Height = 53
+    Height = 21
     TabOrder = 3
   end
   object IdUDPServer1: TIdUDPServer
     Bindings = <>
     DefaultPort = 5000
-    OnUDPRead = IdUDPServer1UDPRead
     Left = 40
     Top = 32
   end

@@ -4,7 +4,6 @@
 #pragma hdrstop
 
 #include "MainU.h"
-//#include "stdio.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
@@ -74,16 +73,19 @@ TMainF *MainF;
 __fastcall TMainF::TMainF(TComponent* Owner)
 	: TForm(Owner)
 {
-	m_pData05 = new TTcpData05();
-	m_pData06 = new TTcpData06();
-	m_pData07 = new TTcpData07();
+	m_pAppInfo = new TApplicationInfo();
+//	m_pData05 = new TTcpData05();
+//	m_pData06 = new TTcpData06();
+//	m_pData07 = new TTcpData07();
 }
 //---------------------------------------------------------------------------
 __fastcall TMainF::~TMainF()
 {
-	delete m_pData05;
-	delete m_pData06;
-	delete m_pData07;
+	delete m_pAppInfo;
+
+//	delete m_pData05;
+//	delete m_pData06;
+//	delete m_pData07;
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainF::btSaveClick(TObject *Sender)
@@ -108,114 +110,121 @@ void __fastcall TMainF::btSaveClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainF::fnSaveToMem()
 {
-	m_pData06->Door 		       	= rdDoor->ItemIndex			       	;
-	m_pData06->Power 		       	= rdPowerState->ItemIndex	       	;
-	m_pData06->Fan 			       	= rdFanState->ItemIndex		       	;
-	m_pData06->Heater 		       	= rdHeaterState->ItemIndex	       	;
-	m_pData06->OuterLight 	       	= rdOuterLampState->ItemIndex      	;
-	m_pData06->FormKind 	       	= rdFormKind->ItemIndex		       	;
-	m_pData06->ReplayCheck 	       	= rdReStart->ItemIndex		       	;
-	m_pData06->PowerOdd 	       	= rdPowerError->ItemIndex	       	;
-	m_pData06->ModulOdd 	       	= rdModulError->ItemIndex	       	;
-	m_pData06->Temperature 	       	= StrToInt(edMaskTemper->Text)     	; //*(BYTE*)sTemp.c_str();
-	m_pData06->DisplayBright       	= StrToInt(edMaskBright->Text)     	;
-	m_pData06->Etc2			       	= StrToInt(edMaskEtc->Text)	       	; //*(BYTE*)(edEtc->Text).c_str();
-
-	m_pData07->PowerMode 			= rdPowerControlMode->ItemIndex		;
-	m_pData07->Fan					= rdFanRunMode->ItemIndex			;
-	m_pData07->FanTemper			= StrToInt(edMaskFanTemp->Text)		;
-	m_pData07->Heater				= rdHeaterRunMode->ItemIndex		;
-	m_pData07->HeaterTemper			= StrToInt(edMaskHeaterTemp->Text)	;
-	m_pData07->DisplayBright	    = rdDisplayBright->ItemIndex		;
-	m_pData07->FlashCycle			= StrToInt(edMaskFlashCycle->Text)	;
-	m_pData07->OuterLightOperating 	= rdOuterLampRun->ItemIndex			;
-	m_pData07->OuterLightOnBright	= StrToInt(edMaskLamp->Text)		;
-	m_pData07->Scenario			   	= StrToInt(edMaskScenario->Text)	;
-	m_pData07->Etc1				   	= StrToInt(edMaskEtc1->Text)		;
-	m_pData07->Etc2				   	= StrToInt(edMaskEtc2->Text)		;
+	//	05메모리
+	m_pAppInfo->Status->TcpData05->ModulPower	        =  rdModulPower->ItemIndex 	  	    ;
+	m_pAppInfo->Status->TcpData05->ResetTime	        =  StrToInt(edResetTime->Text)  	;
+	m_pAppInfo->Status->TcpData05->TryCount		        =  StrToInt(edTryCount->Text)   	;
+	m_pAppInfo->Status->TcpData05->ControlTime	        =  StrToInt(edControlTime->Text)	;
+	m_pAppInfo->Status->TcpData05->RunTime		        =  StrToInt(edRunTime->Text) 	  	;
+	m_pAppInfo->Status->TcpData05->BlinkCycle	        =  StrToInt(edBlinkCycle->Text) 	;
+	m_pAppInfo->Status->TcpData05->ScinarioRunTime      =  StrToInt(edScinarioRunTime->Text);
+	m_pAppInfo->Status->TcpData05->BrightControl1       =  rdBrightControl->ItemIndex   	;
+	m_pAppInfo->Status->TcpData05->FanControl	        =  rdFanControl->ItemIndex 	  	    ;
+	m_pAppInfo->Status->TcpData05->HeaterControl        =  rdHeaterControl->ItemIndex   	;
+	m_pAppInfo->Status->TcpData05->LampControl	        =  rdLampControl->ItemIndex     	;
+	m_pAppInfo->Status->TcpData05->LedControl	        =  rdLedControl->ItemIndex 	 	    ;
+	//	06메모리
+	m_pAppInfo->Status->TcpData06->Door 		        = rdDoor->ItemIndex			       	;
+	m_pAppInfo->Status->TcpData06->Power 		        = rdPowerState->ItemIndex	       	;
+	m_pAppInfo->Status->TcpData06->Fan 			        = rdFanState->ItemIndex		       	;
+	m_pAppInfo->Status->TcpData06->Heater 		        = rdHeaterState->ItemIndex	       	;
+	m_pAppInfo->Status->TcpData06->OuterLight 	        = rdOuterLampState->ItemIndex      	;
+	m_pAppInfo->Status->TcpData06->FormKind 	        = rdFormKind->ItemIndex		       	;
+	m_pAppInfo->Status->TcpData06->ReplayCheck 	        = rdReStart->ItemIndex		       	;
+	m_pAppInfo->Status->TcpData06->PowerOdd 	        = rdPowerError->ItemIndex	       	;
+	m_pAppInfo->Status->TcpData06->ModulOdd 	        = rdModulError->ItemIndex	       	;
+	m_pAppInfo->Status->TcpData06->Temperature 	        = StrToInt(edMaskTemper->Text)     	; //*(BYTE*)sTemp.c_str();
+	m_pAppInfo->Status->TcpData06->DisplayBright        = StrToInt(edMaskBright->Text)     	;
+	m_pAppInfo->Status->TcpData06->Etc2			        = StrToInt(edMaskEtc->Text)	       	; //*(BYTE*)(edEtc->Text).c_str();
+	//	07메모리
+	m_pAppInfo->Status->TcpData07->PowerMode 			= rdPowerControlMode->ItemIndex		;
+	m_pAppInfo->Status->TcpData07->Fan					= rdFanRunMode->ItemIndex			;
+	m_pAppInfo->Status->TcpData07->FanTemper			= StrToInt(edMaskFanTemp->Text)		;
+	m_pAppInfo->Status->TcpData07->Heater				= rdHeaterRunMode->ItemIndex		;
+	m_pAppInfo->Status->TcpData07->HeaterTemper			= StrToInt(edMaskHeaterTemp->Text)	;
+	m_pAppInfo->Status->TcpData07->DisplayBright	    = rdDisplayBright->ItemIndex		;
+	m_pAppInfo->Status->TcpData07->FlashCycle			= StrToInt(edMaskFlashCycle->Text)	;
+	m_pAppInfo->Status->TcpData07->OuterLightOperating 	= rdOuterLampRun->ItemIndex			;
+	m_pAppInfo->Status->TcpData07->OuterLightOnBright	= StrToInt(edMaskLamp->Text)		;
+	m_pAppInfo->Status->TcpData07->Scenario			   	= StrToInt(edMaskScenario->Text)	;
+	m_pAppInfo->Status->TcpData07->Etc1				   	= StrToInt(edMaskEtc1->Text)		;
+	m_pAppInfo->Status->TcpData07->Etc2				   	= StrToInt(edMaskEtc2->Text)		;
 
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainF::fnLoadData()
 {
-	AnsiString sPath;
-	sPath 			= ExtractFilePath(Application->ExeName) + "TcpServer_Project.ini";
-	TIniFile* pIni  = new TIniFile(sPath);
-
 	// App 섹션의 Ip주소와 Port번호 가져옴
-	m_sIP 	= pIni->ReadString	("App", "IPAddress", "127.0.0.1");
-	m_wPORT = pIni->ReadInteger	("App", "Port"	   ,  5000		);
-//	Memo1->Lines->Add(m_sIP);
-//	Memo1->Lines->Add(IntToStr(m_wPORT));
+	m_sIP 	= m_pAppInfo->Ip;
+	m_wPORT = m_pAppInfo->Port;
 
 	// Data05 섹션의 키이름과 키값을 가져옴 	ex) Door = 0
-	rdModulPower->ItemIndex         = pIni->ReadInteger("Data05", "ModulPower"	   	     , 0 );
-	edResetTime->Text               = pIni->ReadInteger("Data05", "ResetTime"	   	     , 0 );
-	edTryCount->Text                = pIni->ReadInteger("Data05", "TryCount"	         , 0 );
-	edControlTime->Text             = pIni->ReadInteger("Data05", "ControlTime"	   	     , 0 );
-	edRunTime->Text                 = pIni->ReadInteger("Data05", "RunTime"	 	   	     , 0 );
-	edBlinkCycle->Text              = pIni->ReadInteger("Data05", "BlinkCycle"	   	     , 0 );
-	edScinarioRunTime->Text         = pIni->ReadInteger("Data05", "ScinarioRunTime"      , 0 );
-	rdBrightControl->ItemIndex      = pIni->ReadInteger("Data05", "BrightControl"        , 0 );
-	rdFanControl->ItemIndex         = pIni->ReadInteger("Data05", "FanControl"	         , 0 );
-	rdHeaterControl->ItemIndex      = pIni->ReadInteger("Data05", "HeaterControl"        , 0 );
-	rdLampControl->ItemIndex        = pIni->ReadInteger("Data05", "LampControl"          , 0 );
-	rdLedControl->ItemIndex         = pIni->ReadInteger("Data05", "LedControl"	         , 0 );
+	rdModulPower->ItemIndex         = m_pAppInfo->Status->TcpData05->ModulPower		    ;
+	edResetTime->Text               = m_pAppInfo->Status->TcpData05->ResetTime		    ;
+	edTryCount->Text                = m_pAppInfo->Status->TcpData05->TryCount		    ;
+	edControlTime->Text             = m_pAppInfo->Status->TcpData05->ControlTime	    ;
+	edRunTime->Text                 = m_pAppInfo->Status->TcpData05->RunTime		    ;
+	edBlinkCycle->Text              = m_pAppInfo->Status->TcpData05->BlinkCycle		    ;
+	edScinarioRunTime->Text         = m_pAppInfo->Status->TcpData05->ScinarioRunTime    ;
+	rdBrightControl->ItemIndex      = m_pAppInfo->Status->TcpData05->BrightControl1	    ;
+	rdFanControl->ItemIndex         = m_pAppInfo->Status->TcpData05->FanControl		    ;
+	rdHeaterControl->ItemIndex      = m_pAppInfo->Status->TcpData05->HeaterControl	    ;
+	rdLampControl->ItemIndex        = m_pAppInfo->Status->TcpData05->LampControl	    ;
+	rdLedControl->ItemIndex         = m_pAppInfo->Status->TcpData05->LedControl		    ;
 
 	// Data06 섹션의 키이름과 키값을 가져옴 	ex) Door = 0
-	rdDoor->ItemIndex 			    = pIni->ReadInteger("Data06", "Door"		         , 0 );
-	rdPowerState->ItemIndex 	    = pIni->ReadInteger("Data06", "Power"		         , 0 );
-	rdFanState->ItemIndex 		    = pIni->ReadInteger("Data06", "Fan"			         , 0 );
-	rdHeaterState->ItemIndex 	    = pIni->ReadInteger("Data06", "Heater"		         , 0 );
-	rdOuterLampState->ItemIndex     = pIni->ReadInteger("Data06", "OuterLight"	         , 0 );
-	rdFormKind->ItemIndex 		    = pIni->ReadInteger("Data06", "FormKind"	         , 0 );
-	rdReStart->ItemIndex 		    = pIni->ReadInteger("Data06", "ReplayCheck"	         , 0 );
-	rdPowerError->ItemIndex 	    = pIni->ReadInteger("Data06", "PowerOdd"	         , 0 );
-	rdModulError->ItemIndex 	    = pIni->ReadInteger("Data06", "ModulOdd"	         , 0 );
-	edMaskTemper->Text 			    = pIni->ReadInteger("Data06", "Temperature"	         , 0 );
-	edMaskBright->Text 			    = pIni->ReadInteger("Data06", "DisplayBright" 	     , 0 );
-	edMaskEtc->Text 			    = pIni->ReadInteger("Data06", "Etc2"		   	     , 0 );
+	rdDoor->ItemIndex 			    = m_pAppInfo->Status->TcpData06->Door 			    ;
+	rdPowerState->ItemIndex 	    = m_pAppInfo->Status->TcpData06->Power 			    ;
+	rdFanState->ItemIndex 		    = m_pAppInfo->Status->TcpData06->Fan 			    ;
+	rdHeaterState->ItemIndex 	    = m_pAppInfo->Status->TcpData06->Heater 		    ;
+	rdOuterLampState->ItemIndex     = m_pAppInfo->Status->TcpData06->OuterLight 	    ;
+	rdFormKind->ItemIndex 		    = m_pAppInfo->Status->TcpData06->FormKind 		    ;
+	rdReStart->ItemIndex 		    = m_pAppInfo->Status->TcpData06->ReplayCheck 	    ;
+	rdPowerError->ItemIndex 	    = m_pAppInfo->Status->TcpData06->PowerOdd 		    ;
+	rdModulError->ItemIndex 	    = m_pAppInfo->Status->TcpData06->ModulOdd 		    ;
+	edMaskTemper->Text 			    = m_pAppInfo->Status->TcpData06->Temperature 	    ;
+	edMaskBright->Text 			    = m_pAppInfo->Status->TcpData06->DisplayBright	    ;
+	edMaskEtc->Text 			    = m_pAppInfo->Status->TcpData06->Etc2			    ;
 
 	// Data07 섹션의 키이름과 키값을 가져옴 	ex) Door = 0
-	rdPowerControlMode->ItemIndex   = pIni->ReadInteger("Data07", "PowerMode" 	   		 , 0 );
-	rdFanRunMode->ItemIndex         = pIni->ReadInteger("Data07", "Fan"		  		 	 , 0 );
-	edMaskFanTemp->Text    			= pIni->ReadInteger("Data07", "FanTemper"	  		 , 0 );
-	rdHeaterRunMode->ItemIndex  	= pIni->ReadInteger("Data07", "Heater"		   	   	 , 0 );
-	edMaskHeaterTemp->Text 			= pIni->ReadInteger("Data07", "HeaterTemper"		 , 0 );
-	rdDisplayBright->ItemIndex  	= pIni->ReadInteger("Data07", "DisplayBright"	   	 , 0 );
-	edMaskFlashCycle->Text 			= pIni->ReadInteger("Data07", "FlashCycle"			 , 0 );
-	rdOuterLampRun->ItemIndex   	= pIni->ReadInteger("Data07", "OuterLightOperating"  , 0 );
-	edMaskLamp->Text      			= pIni->ReadInteger("Data07", "OuterLightOnBright"	 , 0 );
-	edMaskScenario->Text   			= pIni->ReadInteger("Data07", "Scenario"			 , 0 );
-	edMaskEtc1->Text       			= pIni->ReadInteger("Data07", "Etc1"				 , 0 );
-	edMaskEtc2->Text       			= pIni->ReadInteger("Data07", "Etc2"				 , 0 );
+	rdPowerControlMode->ItemIndex   = m_pAppInfo->Status->TcpData07->PowerMode 			;
+	rdFanRunMode->ItemIndex         = m_pAppInfo->Status->TcpData07->Fan				;
+	edMaskFanTemp->Text    			= m_pAppInfo->Status->TcpData07->FanTemper			;
+	rdHeaterRunMode->ItemIndex  	= m_pAppInfo->Status->TcpData07->Heater				;
+	edMaskHeaterTemp->Text 			= m_pAppInfo->Status->TcpData07->HeaterTemper		;
+	rdDisplayBright->ItemIndex  	= m_pAppInfo->Status->TcpData07->DisplayBright	  	;
+	edMaskFlashCycle->Text 			= m_pAppInfo->Status->TcpData07->FlashCycle			;
+	rdOuterLampRun->ItemIndex   	= m_pAppInfo->Status->TcpData07->OuterLightOperating;
+	edMaskLamp->Text      			= m_pAppInfo->Status->TcpData07->OuterLightOnBright	;
+	edMaskScenario->Text   			= m_pAppInfo->Status->TcpData07->Scenario			;
+	edMaskEtc1->Text       			= m_pAppInfo->Status->TcpData07->Etc1				;
+	edMaskEtc2->Text       			= m_pAppInfo->Status->TcpData07->Etc2				;
 
-	delete pIni;
-	//  메모리에 데이터를 넣기위해 호출
-	fnSaveToMem();
 }
 //---------------------------------------------------------------------------
-void __fastcall TMainF::fnSaveData05()
-{
-	AnsiString sPath;
-	sPath 			= ExtractFilePath(Application->ExeName) + "TcpServer_Project.ini";
-	TIniFile *pIni  = new TIniFile(sPath);
-
-	pIni->WriteInteger("Data05", "ModulPower"	   , rdModulPower->ItemIndex 	  		);
-	pIni->WriteInteger("Data05", "ResetTime"	   , StrToInt(edResetTime->Text)  		);
-	pIni->WriteInteger("Data05", "TryCount"		   , StrToInt(edTryCount->Text)   		);
-	pIni->WriteInteger("Data05", "ControlTime"	   , StrToInt(edControlTime->Text)		);
-	pIni->WriteInteger("Data05", "RunTime"	 	   , StrToInt(edRunTime->Text) 	  		);
-	pIni->WriteInteger("Data05", "BlinkCycle"	   , StrToInt(edBlinkCycle->Text) 		);
-	pIni->WriteInteger("Data05", "ScinarioRunTime" , StrToInt(edScinarioRunTime->Text)	);
-	pIni->WriteInteger("Data05", "BrightControl"   , rdBrightControl->ItemIndex   	  	);
-	pIni->WriteInteger("Data05", "FanControl"	   , rdFanControl->ItemIndex 	  		);
-	pIni->WriteInteger("Data05", "HeaterControl"   , rdHeaterControl->ItemIndex   		);
-	pIni->WriteInteger("Data05", "LampControl" 	   , rdLampControl->ItemIndex     		);
-	pIni->WriteInteger("Data05", "LedControl"	   , rdLedControl->ItemIndex 	 		);
-
-	delete pIni;
-}
+//void __fastcall TMainF::fnSaveData05()
+//{
+//	AnsiString sPath;
+//	sPath 			= ExtractFilePath(Application->ExeName) + "TcpServer_Project.ini";
+//	TIniFile *pIni  = new TIniFile(sPath);
+//
+////	fnSaveToMem();
+//
+//	pIni->WriteInteger("Data05", "ModulPower"	        , m_pAppInfo->Status->TcpData05->ModulPower		     );
+//	pIni->WriteInteger("Data05", "ResetTime"	        , m_pAppInfo->Status->TcpData05->ResetTime		     );
+//	pIni->WriteInteger("Data05", "TryCount"		        , m_pAppInfo->Status->TcpData05->TryCount		     );
+//	pIni->WriteString ("Data05", "ControlTime"	        , m_pAppInfo->Status->TcpData05->ControlTime	     );
+//	pIni->WriteString ("Data05", "RunTime"	 	        , m_pAppInfo->Status->TcpData05->RunTime		     );
+//	pIni->WriteInteger("Data05", "BlinkCycle"	        , m_pAppInfo->Status->TcpData05->BlinkCycle		     );
+//	pIni->WriteInteger("Data05", "ScinarioRunTime"      , m_pAppInfo->Status->TcpData05->ScinarioRunTime     );
+//	pIni->WriteInteger("Data05", "BrightControl"        , m_pAppInfo->Status->TcpData05->BrightControl1	     );
+//	pIni->WriteInteger("Data05", "FanControl"	        , m_pAppInfo->Status->TcpData05->FanControl		     );
+//	pIni->WriteInteger("Data05", "HeaterControl"        , m_pAppInfo->Status->TcpData05->HeaterControl	     );
+//	pIni->WriteInteger("Data05", "LampControl" 	        , m_pAppInfo->Status->TcpData05->LampControl	     );
+//	pIni->WriteInteger("Data05", "LedControl"	        , m_pAppInfo->Status->TcpData05->LedControl		     );
+//
+//	delete pIni;
+//}
 //---------------------------------------------------------------------------
 void __fastcall TMainF::fnSaveData06()
 {
@@ -225,18 +234,18 @@ void __fastcall TMainF::fnSaveData06()
 
 	fnSaveToMem();
 
-	pIni->WriteInteger("Data06", "Door"		  	 , m_pData06->Door 			);
-	pIni->WriteInteger("Data06", "Power"		 , m_pData06->Power 	  	);
-	pIni->WriteInteger("Data06", "Fan"			 , m_pData06->Fan 		   	);
-	pIni->WriteInteger("Data06", "Heater"		 , m_pData06->Heater 	    );
-	pIni->WriteInteger("Data06", "OuterLight"	 , m_pData06->OuterLight 	);
-	pIni->WriteInteger("Data06", "FormKind"	  	 , m_pData06->FormKind 		);
-	pIni->WriteInteger("Data06", "ReplayCheck"	 , m_pData06->ReplayCheck 	);
-	pIni->WriteInteger("Data06", "PowerOdd"	  	 , m_pData06->PowerOdd 		);
-	pIni->WriteInteger("Data06", "ModulOdd"	  	 , m_pData06->ModulOdd 		);
-	pIni->WriteInteger("Data06", "Temperature"	 , m_pData06->Temperature 	);
-	pIni->WriteInteger("Data06", "DisplayBright" , m_pData06->DisplayBright	);
-	pIni->WriteInteger("Data06", "Etc2"		  	 , m_pData06->Etc2			);
+	pIni->WriteInteger("Data06", "Door"		  	        , m_pAppInfo->Status->TcpData06->Door 		         );
+	pIni->WriteInteger("Data06", "Power"		        , m_pAppInfo->Status->TcpData06->Power 	             );
+	pIni->WriteInteger("Data06", "Fan"			        , m_pAppInfo->Status->TcpData06->Fan 		         );
+	pIni->WriteInteger("Data06", "Heater"		        , m_pAppInfo->Status->TcpData06->Heater 	         );
+	pIni->WriteInteger("Data06", "OuterLight"	        , m_pAppInfo->Status->TcpData06->OuterLight          );
+	pIni->WriteInteger("Data06", "FormKind"	  	        , m_pAppInfo->Status->TcpData06->FormKind 	         );
+	pIni->WriteInteger("Data06", "ReplayCheck"	        , m_pAppInfo->Status->TcpData06->ReplayCheck         );
+	pIni->WriteInteger("Data06", "PowerOdd"	  	        , m_pAppInfo->Status->TcpData06->PowerOdd 	         );
+	pIni->WriteInteger("Data06", "ModulOdd"	  	        , m_pAppInfo->Status->TcpData06->ModulOdd 	         );
+	pIni->WriteInteger("Data06", "Temperature"	        , m_pAppInfo->Status->TcpData06->Temperature         );
+	pIni->WriteInteger("Data06", "DisplayBright"        , m_pAppInfo->Status->TcpData06->DisplayBright       );
+	pIni->WriteInteger("Data06", "Etc2"		  	        , m_pAppInfo->Status->TcpData06->Etc2		         );
 
 	delete pIni;
 }
@@ -249,52 +258,50 @@ void __fastcall TMainF::fnSaveData07()
 
 	fnSaveToMem();
 
-	pIni->WriteInteger("Data07", "PowerMode" 		 	, m_pData07->PowerMode 			 );
-	pIni->WriteInteger("Data07", "Fan"				 	, m_pData07->Fan				 );
-	pIni->WriteInteger("Data07", "FanTemper"		 	, m_pData07->FanTemper			 );
-	pIni->WriteInteger("Data07", "Heater"			 	, m_pData07->Heater			 	 );
-	pIni->WriteInteger("Data07", "HeaterTemper"		 	, m_pData07->HeaterTemper		 );
-	pIni->WriteInteger("Data07", "DisplayBright"	   	, m_pData07->DisplayBright	   	 );
-	pIni->WriteInteger("Data07", "FlashCycle"		  	, m_pData07->FlashCycle			 );
-	pIni->WriteInteger("Data07", "OuterLightOperating" 	, m_pData07->OuterLightOperating );
-	pIni->WriteInteger("Data07", "OuterLightOnBright"  	, m_pData07->OuterLightOnBright	 );
-	pIni->WriteInteger("Data07", "Scenario"			   	, m_pData07->Scenario			 );
-	pIni->WriteInteger("Data07", "Etc1"				   	, m_pData07->Etc1				 );
-	pIni->WriteInteger("Data07", "Etc2"				   	, m_pData07->Etc2				 );
+	pIni->WriteInteger("Data07", "PowerMode" 		 	, m_pAppInfo->Status->TcpData07->PowerMode 			 );
+	pIni->WriteInteger("Data07", "Fan"				 	, m_pAppInfo->Status->TcpData07->Fan				 );
+	pIni->WriteInteger("Data07", "FanTemper"		 	, m_pAppInfo->Status->TcpData07->FanTemper			 );
+	pIni->WriteInteger("Data07", "Heater"			 	, m_pAppInfo->Status->TcpData07->Heater				 );
+	pIni->WriteInteger("Data07", "HeaterTemper"		 	, m_pAppInfo->Status->TcpData07->HeaterTemper		 );
+	pIni->WriteInteger("Data07", "DisplayBright"	   	, m_pAppInfo->Status->TcpData07->DisplayBright	  	 );
+	pIni->WriteInteger("Data07", "FlashCycle"		  	, m_pAppInfo->Status->TcpData07->FlashCycle			 );
+	pIni->WriteInteger("Data07", "OuterLightOperating" 	, m_pAppInfo->Status->TcpData07->OuterLightOperating );
+	pIni->WriteInteger("Data07", "OuterLightOnBright"  	, m_pAppInfo->Status->TcpData07->OuterLightOnBright	 );
+	pIni->WriteInteger("Data07", "Scenario"			   	, m_pAppInfo->Status->TcpData07->Scenario			 );
+	pIni->WriteInteger("Data07", "Etc1"				   	, m_pAppInfo->Status->TcpData07->Etc1				 );
+	pIni->WriteInteger("Data07", "Etc2"				   	, m_pAppInfo->Status->TcpData07->Etc2				 );
 
 	delete pIni;
 }
 //---------------------------------------------------------------------------
-void __fastcall TMainF::IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
-		  TIdSocketHandle *ABinding)
-{
-	int iResult = 0;
-	TProtocol *pRecvPack;
-	BYTE byBuf[MAX_BUFFER];
-	ZeroMemory(byBuf, sizeof(byBuf));
-	BytesToRaw(AData, byBuf, sizeof(byBuf));
-//	sizeof(AData);
-//	sizeof(AData.Length);
-
-	pRecvPack = new TProtocol();
-	if((iResult=pRecvPack->fnDecoding(byBuf, AData.Length)) == 0){
-		switch (pRecvPack->Code) {
-			case 0x05 : fnRecvData05(pRecvPack); break;
-			case 0x06 : fnSendData06(pRecvPack); break;
-			case 0x07 : fnSendData07(pRecvPack); break;
-			default	  : break;
-		}
-	}else{
-		OutputDebugStringW(L"Decoding Error");
-	}
-	delete pRecvPack;
-}
+//void __fastcall TMainF::IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
+//		  TIdSocketHandle *ABinding)
+//{//
+//	int iResult = 0;
+//	TProtocol *pRecvPack;
+//	BYTE byBuf[MAX_BUFFER];
+//	ZeroMemory(byBuf, sizeof(byBuf));
+//	BytesToRaw(AData, byBuf, sizeof(byBuf));
+//
+//	pRecvPack = new TProtocol();
+//	if((iResult=pRecvPack->fnDecoding(byBuf, AData.Length)) == 0){
+//		switch (pRecvPack->Code) {
+//			case 0x05 : fnRecvData05(pRecvPack); break;
+//			case 0x06 : fnSendData06(pRecvPack); break;
+//			case 0x07 : fnSendData07(pRecvPack); break;
+//			default	  : break;
+//		}
+//	}else{
+//		OutputDebugStringW(L"Decoding Error");
+//	}
+//	delete pRecvPack;
+//}
 //---------------------------------------------------------------------------
 void __fastcall TMainF::fnRecvData05(TProtocol *a_pRecvPack)
 {
 	TTcpData05 *pData;
 	pData = (TTcpData05*)a_pRecvPack->Body;
-	m_pData05 = pData;
+	m_pData05 = pData;         //	변경필요!
 	switch (pData->CtrlCode) {
 		case 0x30 : rdModulPower->ItemIndex 	= pData->CtrlData01; break;
 		case 0x31 :	edResetTime->Text 			= pData->CtrlData01; break;
@@ -314,7 +321,6 @@ void __fastcall TMainF::fnRecvData05(TProtocol *a_pRecvPack)
 	fnSaveData05();
 	delete pData;
 }
-
 
 //---------------------------------------------------------------------------
 void __fastcall TMainF::fnSendData06(TProtocol *a_pRecvPack)
@@ -387,36 +393,64 @@ void __fastcall TMainF::Button1Click(TObject *Sender)
 	delete pRecvPack;
 }
 //---------------------------------------------------------------------------
-void __fastcall TMainF::FormShow(TObject *Sender)
-{
-	// Load From File
-	fnLoadData();
-	IdUDPServer1->Active = true;
-}
-//---------------------------------------------------------------------------
-
 void __fastcall TMainF::Button2Click(TObject *Sender)
 {
 	Timer1->Enabled = true;
 }
 //---------------------------------------------------------------------------
-
 void __fastcall TMainF::Timer1Timer(TObject *Sender)
 {
 	Button1Click(Sender);
-
 }
 //---------------------------------------------------------------------------
-
-
 void __fastcall TMainF::Button3Click(TObject *Sender)
 {
-
 //	m_pData05->ControlTime = "19900205094535";
 //	m_pData05->ControlTime = '12';
 
 //	Edit1->Text = m_pData05->ControlTime;
 //	Edit1->Text = sizeof(UnicodeString);
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainF::FormCreate(TObject *Sender)
+{
+	TTcpThread *pTcpThread;
+	pTcpThread = new TTcpThread(m_pAppInfo);
+	m_pAppInfo->ThreadId = pTcpThread->ThreadID;
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainF::FormShow(TObject *Sender)
+{
+	// Load From File
+	fnLoadData();
+//	m_pThread->Start();                      //	스레드생성자에서  Suspended를 true로하면 정상실행가능
+//	IdUDPServer1->Active = true;
+	PostThreadMessage(m_pAppInfo->ThreadId, WM_TCP_OPEN, 0, 0);
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainF::FormClose(TObject *Sender, TCloseAction &Action)
+{
+//	m_pThread->Terminate();
+//	delete m_pThread;                    //	?????????????????????????????????????????????????????????????????????????????????
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainF::FormCloseQuery(TObject *Sender, bool &CanClose)
+{
+
+	CanClose = false;
+
+		if(Application->MessageBox(L"프로그램을 종료하시겠습니까?", L"확인",
+								   MB_YESNO|MB_ICONQUESTION|MB_APPLMODAL) == IDNO) return;
+
+
+
+		if(m_pAppInfo->ThreadId){
+			PostThreadMessage(m_pAppInfo->ThreadId, WM_QUIT, 0, 0);
+		}
+
+		CanClose = true;
+
 }
 //---------------------------------------------------------------------------
 

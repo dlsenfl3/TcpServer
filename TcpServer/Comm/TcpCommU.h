@@ -81,8 +81,8 @@ struct TstCode05                          //  제어	//	26바이트
 	BYTE byCtrlCode;
 	BYTE byCtrlData01;
 	BYTE byCtrlData02[2];
-	char byCtrlData08[8];               //  !!!수정필요!!!
-	char byCtrlData14[14];             	//  !!!수정필요!!!
+	AnsiString byCtrlData08;             // 수정함
+	AnsiString byCtrlData14;             // 수정함
 };
 //---------------------------------------------------------------------------
 struct TstTempData05                          //  제어데이터 임시 메모리 데이터
@@ -115,12 +115,12 @@ public:
 	int __fastcall fnEncodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iTail);
 	int __fastcall fnDecodingBody(BYTE *a_pBuffer, int &a_iIndex, int a_iSize, int a_iTail);
 public:		//	m_stData property
-	__property BYTE		   CtrlCode	    		=	{read=m_stData.byCtrlCode   	};
-	__property BYTE		   CtrlData01	       	=	{read=m_stData.byCtrlData01		};
-	__property BYTE		   CtrlData02	 		=	{read=m_stData.byCtrlData02[0]  };	//	1BYTE만 읽음.
-	__property char		   CtrlData08  		 	=	{read=m_stData.byCtrlData08[0]  };
-	__property char		   CtrlData14	    	=	{read=m_stData.byCtrlData14[0]  };
-	__property int 		   DataLen				=	{read=fnGetDataLen			 	};
+	__property BYTE		           CtrlCode	    		=	{read=m_stData.byCtrlCode   	};
+	__property BYTE		           CtrlData01	       	=	{read=m_stData.byCtrlData01		};
+	__property BYTE		           CtrlData02	 		=	{read=m_stData.byCtrlData02[0]  };	//	1BYTE만 읽음.
+	__property AnsiString          CtrlData08  		 	=	{read=m_stData.byCtrlData08 	};
+	__property AnsiString          CtrlData14	    	=	{read=m_stData.byCtrlData14  	};
+	__property int 		           DataLen				=	{read=fnGetDataLen			 	};
 public:		//	m_stTemp property
 	__property BYTE		           ModulPower   		=	{read=m_stTemp.byModulPower        ,  write = m_stTemp.byModulPower		 };
 	__property BYTE		           ResetTime	       	=	{read=m_stTemp.byResetTime	   	   ,  write = m_stTemp.byResetTime       };

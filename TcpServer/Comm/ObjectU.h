@@ -12,6 +12,7 @@
 // WM_USER == 0x400 ( 0x0400 ~ 0x7fff ) 사용자 메시지 영역
 //---------------------------------------------------------------------------
 #define WM_TCP_OPEN						(WM_USER + 0x01)
+#define WM_TCP_RECV                     (WM_USER + 0x02)
 //---------------------------------------------------------------------------
 class TStatusInfo
 {
@@ -39,8 +40,10 @@ public:
 	__fastcall 	TApplicationInfo();
 	__fastcall ~TApplicationInfo();
 public:
-	__property	TStatusInfo*	Status	= {read = m_pStatusInfo,	 write = m_pStatusInfo};
-
+	__property	TStatusInfo*	Status		= {read = m_pStatusInfo	,	 write = m_pStatusInfo};
+	__property  int				Ip			= {read = m_iIp			,	 write = m_iIp	   	  };
+	__property  int				Port		= {read = m_iPort		,	 write = m_iPort	  };
+	__property  DWORD			ThreadId	= {read = m_dwTcpThrd	,	 write = m_dwTcpThrd  };
 };
 //---------------------------------------------------------------------------
 

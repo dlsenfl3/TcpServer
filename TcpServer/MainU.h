@@ -5,6 +5,7 @@
 //---------------------------------------------------------------------------
 #include "TcpCommU.h"
 #include "ObjectU.h"
+#include "TcpThreadU.h"
 //---------------------------------------------------------------------------
 #include <System.Classes.hpp>
 #include <Vcl.Controls.hpp>
@@ -163,19 +164,24 @@ __published:	// IDE-managed Components
 	TButton *Button3;
 	TEdit *Edit1;
 	void __fastcall btSaveClick(TObject *Sender);
-	void __fastcall IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
-		  TIdSocketHandle *ABinding);
+//	void __fastcall IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
+//		  TIdSocketHandle *ABinding);
 	void __fastcall Button1Click(TObject *Sender);
 	void __fastcall FormShow(TObject *Sender);
 	void __fastcall Button2Click(TObject *Sender);
 	void __fastcall Timer1Timer(TObject *Sender);
 	void __fastcall Button3Click(TObject *Sender);
+	void __fastcall FormCreate(TObject *Sender);
+	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+	void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
 private:
-	UnicodeString  m_sIP;
-	WORD 		   m_wPORT;
-	TTcpData05	   *m_pData05;
-	TTcpData06 	   *m_pData06;
-	TTcpData07 	   *m_pData07;
+	TApplicationInfo *m_pAppInfo;
+//	TTcpThread       *m_pThread;
+	UnicodeString     m_sIP;
+	WORD 		      m_wPORT;
+	TTcpData05	     *m_pData05;
+	TTcpData06 	     *m_pData06;
+	TTcpData07 	     *m_pData07;
 private:
 	void __fastcall fnSaveToMem();
 	void __fastcall fnLoadData();
@@ -190,6 +196,14 @@ private:
 public:		// User declarations
 	__fastcall 	TMainF(TComponent* Owner);
 	__fastcall ~TMainF();
+
+
+
+
+BEGIN_MESSAGE_MAP
+	VCL_MESSAGE_HANDLER(WM_TCP_OPEN,  TMessage, );
+	VCL_MESSAGE_HANDLER(WM_TCP_RECV,  TMessage, );
+END_MESSAGE_MAP(TForm);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TMainF *MainF;

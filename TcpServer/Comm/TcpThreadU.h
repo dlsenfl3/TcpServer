@@ -11,16 +11,21 @@
 #include <IdUDPServer.hpp>
 //---------------------------------------------------------------------------
 #include "ObjectU.h"
+#include <IniFiles.hpp>
 //---------------------------------------------------------------------------
 class TTcpThread : public TThread
 {
 private:
 	TApplicationInfo *m_pAppInfo;
-	TIdUDPServer *IdUDPServer;
+	TIdUDPServer *IdUDPServerThr;
 
 private:
-	void __fastcall IdUDPServerUDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
+	void __fastcall IdUDPServerThrUDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
 		  TIdSocketHandle *ABinding);
+	void __fastcall fnTcpOpen();
+	void __fastcall fnSendThrData();
+	void __fastcall fnRecvThrData05(TProtocol *a_pRecvPack);
+	void __fastcall fnSaveData05(TTcpData05 *a_pRecvData);
 
 protected:
 	void __fastcall Execute();
