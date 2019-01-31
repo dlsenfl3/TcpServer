@@ -81,8 +81,8 @@ __fastcall TMainF::TMainF(TComponent* Owner)
 //---------------------------------------------------------------------------
 __fastcall TMainF::~TMainF()
 {
+//	delete m_pThread;		// 스레드 소스파일에서 FreeOnTerminate = false로 지정후 메인함수 소멸자에서 호출하면 정상실행.
 	delete m_pAppInfo;
-
 //	delete m_pData05;
 //	delete m_pData06;
 //	delete m_pData07;
@@ -437,18 +437,14 @@ void __fastcall TMainF::Timer1Timer(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainF::Button3Click(TObject *Sender)
 {
-//	m_pData05->ControlTime = "19900205094535";
-//	m_pData05->ControlTime = '12';
-
-//	Edit1->Text = m_pData05->ControlTime;
-//	Edit1->Text = sizeof(UnicodeString);
+	Timer1->Enabled = false;
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainF::FormCreate(TObject *Sender)
 {
-	TTcpThread *pTcpThread;
-	pTcpThread = new TTcpThread(m_pAppInfo);
-	m_pAppInfo->ThreadId = pTcpThread->ThreadID;
+	TTcpThread *m_pThread;
+	m_pThread = new TTcpThread(m_pAppInfo);
+	m_pAppInfo->ThreadId = m_pThread->ThreadID;
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainF::FormShow(TObject *Sender)
@@ -463,13 +459,13 @@ void __fastcall TMainF::FormShow(TObject *Sender)
 void __fastcall TMainF::FormClose(TObject *Sender, TCloseAction &Action)
 {
 //	m_pThread->Terminate();
-//	delete m_pThread;                    //	?????????????????????????????????????????????????????????????????????????????????
+//	m_pThread->WaitFor();
+//	delete m_pThread;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TMainF::FormCloseQuery(TObject *Sender, bool &CanClose)
 {
-
 	CanClose = false;
 
 		if(Application->MessageBox(L"프로그램을 종료하시겠습니까?", L"확인",

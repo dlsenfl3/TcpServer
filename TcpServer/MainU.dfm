@@ -53,11 +53,11 @@ object MainF: TMainF
       OnClick = Button1Click
     end
     object Button3: TButton
-      Left = 520
-      Top = 49
+      Left = 200
+      Top = 139
       Width = 139
       Height = 88
-      Caption = #47700#47784
+      Caption = 'StopTimer'
       TabOrder = 2
       OnClick = Button3Click
     end
@@ -1105,13 +1105,6 @@ object MainF: TMainF
     Caption = 'RunTimer'
     TabOrder = 2
     OnClick = Button2Click
-  end
-  object Edit1: TEdit
-    Left = 264
-    Top = 52
-    Width = 250
-    Height = 21
-    TabOrder = 3
   end
   object IdUDPServer1: TIdUDPServer
     Bindings = <>

@@ -162,7 +162,6 @@ __published:	// IDE-managed Components
 	TButton *Button2;
 	TTimer *Timer1;
 	TButton *Button3;
-	TEdit *Edit1;
 	void __fastcall btSaveClick(TObject *Sender);
 //	void __fastcall IdUDPServer1UDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
 //		  TIdSocketHandle *ABinding);

@@ -20,15 +20,17 @@
 //      }
 //---------------------------------------------------------------------------
 __fastcall TTcpThread::TTcpThread(TApplicationInfo *a_pAppInfo)
-	: TThread(true)		// false 이면 생성된 직후에 바로 실행.
-{
+	: TThread(true)		// false 이면 생성된 직후에 바로 실행.  false로 실행할때 Suspended = false로 두면
+{						   	// 실행중인 상태로 인식  Error발생.
 	m_pAppInfo = a_pAppInfo;
 	IdUDPServerThr = new TIdUDPServer();
 	IdUDPServerThr->OnUDPRead = IdUDPServerThrUDPRead;
 
 	Priority 		= tpNormal;
 	FreeOnTerminate = true;                            //	스레드가 Terminate할때 자동으로 파괴할지를 결정하는 property
+	//	Suspended = false로 실행가능상태로 만듦.
 	Suspended		= false;                           //	스레드 중지할지 결정하는 property
+
 }
 //---------------------------------------------------------------------------
 __fastcall TTcpThread::~TTcpThread()
