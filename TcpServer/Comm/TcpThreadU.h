@@ -23,9 +23,11 @@ private:
 	void __fastcall IdUDPServerThrUDPRead(TIdUDPListenerThread *AThread, const TIdBytes AData,
 		  TIdSocketHandle *ABinding);
 	void __fastcall fnTcpOpen();
-	void __fastcall fnSendThrData();
+	void __fastcall fnSendThrData(int a_iCode);
 	void __fastcall fnRecvThrData05(TProtocol *a_pRecvPack);
 	void __fastcall fnSaveData05(TTcpData05 *a_pRecvData);
+	void __fastcall fnSaveData06();
+	void __fastcall fnSaveData07();
 
 protected:
 	void __fastcall Execute();

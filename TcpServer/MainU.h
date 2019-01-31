@@ -183,11 +183,13 @@ private:
 	TTcpData06 	     *m_pData06;
 	TTcpData07 	     *m_pData07;
 private:
-	void __fastcall fnSaveToMem();
-	void __fastcall fnLoadData();
-	void __fastcall fnSaveData05();
-	void __fastcall fnSaveData06();
-	void __fastcall fnSaveData07();
+	void __fastcall fnSaveToMem05();
+	void __fastcall fnSaveToMem06();
+	void __fastcall fnSaveToMem07();
+	void __fastcall fnLoadToForm();
+	void __fastcall fnLoadData05(TMessage a_Msg);
+//	void __fastcall fnSaveData06();
+//	void __fastcall fnSaveData07();
 
 	void __fastcall fnRecvData05(TProtocol *a_pRecvPack);
 	void __fastcall fnSendData06(TProtocol *a_pRecvPack);
@@ -201,8 +203,8 @@ public:		// User declarations
 
 
 BEGIN_MESSAGE_MAP
-	VCL_MESSAGE_HANDLER(WM_TCP_OPEN,  TMessage, );
-	VCL_MESSAGE_HANDLER(WM_TCP_RECV,  TMessage, );
+//	VCL_MESSAGE_HANDLER(WM_TCP_OPEN, TMessage, fnLoadToForm);
+	VCL_MESSAGE_HANDLER(WM_TCP_RECV05,  TMessage, fnLoadData05);
 END_MESSAGE_MAP(TForm);
 };
 //---------------------------------------------------------------------------

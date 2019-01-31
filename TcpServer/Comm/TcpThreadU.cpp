@@ -46,9 +46,18 @@ void __fastcall TTcpThread::Execute()
 				Terminate();                             //	메세지의 값이 0이면(메세지가 없으면)
 			}else{
 				switch(stMsg.message){
-					case WM_TCP_OPEN:                    //	메세지가 WM_TCP_OPEN이면
-					fnTcpOpen();
-					break;
+					case WM_TCP_OPEN: {                   //	메세지가 WM_TCP_OPEN이면
+						fnTcpOpen();
+						break;
+					}
+					case WM_TCP_SAVE06: {                   //	메세지가 WM_TCP_OPEN이면
+						fnSaveData06();
+						break;
+					}
+					case WM_TCP_SAVE07: {                   //	메세지가 WM_TCP_OPEN이면
+						fnSaveData07();
+						break;
+					}
 				}
 			}
 		}
@@ -110,7 +119,7 @@ void __fastcall TTcpThread::fnRecvThrData05(TProtocol *a_pRecvPack)
 	}
 	// Save To File
 	fnSaveData05(pData);
-	fnSendThrData();
+	fnSendThrData(pData->CtrlCode);
 	delete pData;
 }
 //---------------------------------------------------------------------------
@@ -137,9 +146,53 @@ void __fastcall TTcpThread::fnSaveData05(TTcpData05 *a_pRecvData)
 	delete pIni;
 }
 //---------------------------------------------------------------------------
-void __fastcall TTcpThread::fnSendThrData()
+void __fastcall TTcpThread::fnSendThrData(int a_iCode)
 {
-	PostMessage(Application->MainFormHandle, WM_TCP_RECV, (WPARAM)5, 1);
+	PostMessage(Application->MainFormHandle, WM_TCP_RECV05, (WPARAM)5, (LPARAM)a_iCode);
+}
+//---------------------------------------------------------------------------
+void __fastcall TTcpThread::fnSaveData06()
+{
+	AnsiString sPath;
+	sPath 			= ExtractFilePath(Application->ExeName) + "TcpServer_Project.ini";
+	TIniFile *pIni  = new TIniFile(sPath);
+
+	pIni->WriteInteger("Data06", "Door"		  	        , m_pAppInfo->Status->TcpData06->Door 		         );
+	pIni->WriteInteger("Data06", "Power"		        , m_pAppInfo->Status->TcpData06->Power 	             );
+	pIni->WriteInteger("Data06", "Fan"			        , m_pAppInfo->Status->TcpData06->Fan 		         );
+	pIni->WriteInteger("Data06", "Heater"		        , m_pAppInfo->Status->TcpData06->Heater 	         );
+	pIni->WriteInteger("Data06", "OuterLight"	        , m_pAppInfo->Status->TcpData06->OuterLight          );
+	pIni->WriteInteger("Data06", "FormKind"	  	        , m_pAppInfo->Status->TcpData06->FormKind 	         );
+	pIni->WriteInteger("Data06", "ReplayCheck"	        , m_pAppInfo->Status->TcpData06->ReplayCheck         );
+	pIni->WriteInteger("Data06", "PowerOdd"	  	        , m_pAppInfo->Status->TcpData06->PowerOdd 	         );
+	pIni->WriteInteger("Data06", "ModulOdd"	  	        , m_pAppInfo->Status->TcpData06->ModulOdd 	         );
+	pIni->WriteInteger("Data06", "Temperature"	        , m_pAppInfo->Status->TcpData06->Temperature         );
+	pIni->WriteInteger("Data06", "DisplayBright"        , m_pAppInfo->Status->TcpData06->DisplayBright       );
+	pIni->WriteInteger("Data06", "Etc2"		  	        , m_pAppInfo->Status->TcpData06->Etc2		         );
+
+	delete pIni;
+}
+//---------------------------------------------------------------------------
+void __fastcall TTcpThread::fnSaveData07()
+{
+	AnsiString sPath;
+	sPath 			= ExtractFilePath(Application->ExeName) + "TcpServer_Project.ini";
+	TIniFile *pIni  = new TIniFile(sPath);
+
+	pIni->WriteInteger("Data07", "PowerMode" 		 	, m_pAppInfo->Status->TcpData07->PowerMode 			 );
+	pIni->WriteInteger("Data07", "Fan"				 	, m_pAppInfo->Status->TcpData07->Fan				 );
+	pIni->WriteInteger("Data07", "FanTemper"		 	, m_pAppInfo->Status->TcpData07->FanTemper			 );
+	pIni->WriteInteger("Data07", "Heater"			 	, m_pAppInfo->Status->TcpData07->Heater				 );
+	pIni->WriteInteger("Data07", "HeaterTemper"		 	, m_pAppInfo->Status->TcpData07->HeaterTemper		 );
+	pIni->WriteInteger("Data07", "DisplayBright"	   	, m_pAppInfo->Status->TcpData07->DisplayBright	  	 );
+	pIni->WriteInteger("Data07", "FlashCycle"		  	, m_pAppInfo->Status->TcpData07->FlashCycle			 );
+	pIni->WriteInteger("Data07", "OuterLightOperating" 	, m_pAppInfo->Status->TcpData07->OuterLightOperating );
+	pIni->WriteInteger("Data07", "OuterLightOnBright"  	, m_pAppInfo->Status->TcpData07->OuterLightOnBright	 );
+	pIni->WriteInteger("Data07", "Scenario"			   	, m_pAppInfo->Status->TcpData07->Scenario			 );
+	pIni->WriteInteger("Data07", "Etc1"				   	, m_pAppInfo->Status->TcpData07->Etc1				 );
+	pIni->WriteInteger("Data07", "Etc2"				   	, m_pAppInfo->Status->TcpData07->Etc2				 );
+
+	delete pIni;
 }
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
