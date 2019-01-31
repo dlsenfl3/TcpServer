@@ -40,7 +40,8 @@ class TApplicationInfo
 {
 private:
 	TStatusInfo *m_pStatusInfo;
-	int 		 m_iIp;
+
+	AnsiString	 m_iIp;
 	int 		 m_iPort;
 	DWORD 		 m_dwTcpThrd;
 public:
@@ -48,7 +49,7 @@ public:
 	__fastcall ~TApplicationInfo();
 public:
 	__property	TStatusInfo*	Status		= {read = m_pStatusInfo	,	 write = m_pStatusInfo};
-	__property  int				Ip			= {read = m_iIp			,	 write = m_iIp	   	  };
+	__property  AnsiString	   	Ip			= {read = m_iIp			,	 write = m_iIp	   	  };
 	__property  int				Port		= {read = m_iPort		,	 write = m_iPort	  };
 	__property  DWORD			ThreadId	= {read = m_dwTcpThrd	,	 write = m_dwTcpThrd  };
 };

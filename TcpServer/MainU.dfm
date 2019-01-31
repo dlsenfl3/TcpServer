@@ -1115,7 +1115,7 @@ object MainF: TMainF
   end
   object IdUDPServer1: TIdUDPServer
     Bindings = <>
-    DefaultPort = 5000
+    DefaultPort = 5001
     Left = 40
     Top = 32
   end

@@ -28,7 +28,7 @@ __fastcall 	TApplicationInfo::TApplicationInfo()
 	sPath	   	  = ExtractFilePath(Application->ExeName) + "TcpServer_Project.ini";
 	TIniFile* pIni = new TIniFile(sPath);
 	//	IP, PORT 초기화
-	m_iIp	= pIni->ReadInteger("APP", "IPAddress"	, 0);
+	m_iIp	= pIni->ReadString ("APP", "IPAddress"	, 0);
 	m_iPort	= pIni->ReadInteger("APP", "Port"		, 0);
 
 	//	Data05 Memory로드

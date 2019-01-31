@@ -230,7 +230,7 @@ void __fastcall TTcpThread::fnSendIOData(TProtocol *a_pSendPack)
 {
 	int iResult = 0;
 	if((iResult=a_pSendPack->fnEncoding()) == 0){
-//		IdUDPServerThr->SendBuffer(m_pAppInfo->Ip , m_pAppInfo->Port, RawToBytes(a_pSendPack->SendPacket, a_pSendPack->SendPacketSize));
+		IdUDPServerThr->SendBuffer(m_pAppInfo->Ip , m_pAppInfo->Port, RawToBytes(a_pSendPack->SendPacket, a_pSendPack->SendPacketSize));
 
 		UnicodeString sTemp;
 		UnicodeString sLog = "";
