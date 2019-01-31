@@ -12,10 +12,14 @@
 // WM_USER == 0x400 ( 0x0400 ~ 0x7fff ) 사용자 메시지 영역
 //---------------------------------------------------------------------------
 #define WM_TCP_OPEN						(WM_USER + 0x01)
+#define WM_SEND_TEST                   	(WM_USER + 0x03)
 
 #define WM_TCP_RECV05                   (WM_USER + 0x05)
 #define WM_TCP_SAVE06                   (WM_USER + 0x06)
 #define WM_TCP_SAVE07                   (WM_USER + 0x07)
+
+
+
 //---------------------------------------------------------------------------
 class TStatusInfo
 {

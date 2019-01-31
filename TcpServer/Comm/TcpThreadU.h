@@ -30,8 +30,9 @@ private:
 	void __fastcall fnSaveData07();
 	void __fastcall fnSendData06(TProtocol *a_pRecvPack);
 	void __fastcall fnSendData07(TProtocol *a_pRecvPack);
-
 	void __fastcall fnSendIOData(TProtocol *a_pSendPack);
+
+	void __fastcall fnSendTest();
 protected:
 	void __fastcall Execute();
 public:

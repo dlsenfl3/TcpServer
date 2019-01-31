@@ -410,17 +410,19 @@ void __fastcall TMainF::fnLoadToForm()
 //---------------------------------------------------------------------------
 void __fastcall TMainF::Button1Click(TObject *Sender)
 {
-	int iResult = 0;
-	TProtocol *pRecvPack;
+	PostThreadMessageA(m_pAppInfo->ThreadId, WM_SEND_TEST, 0, 0);
 
-	pRecvPack = new TProtocol();
-	pRecvPack->VMSID = 0xFF;
-	pRecvPack->Code  = 0x06;
-	pRecvPack->SFNo  = 0x01;
-	pRecvPack->AFNo  = 0x01;
-
+//	int iResult = 0;
+//	TProtocol *pRecvPack;
+//
+//	pRecvPack = new TProtocol();
+//	pRecvPack->VMSID = 0xFF;
+//	pRecvPack->Code  = 0x06;
+//	pRecvPack->SFNo  = 0x01;
+//	pRecvPack->AFNo  = 0x01;
+//
 //	fnSendData06(pRecvPack);
-	delete pRecvPack;
+//	delete pRecvPack;
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainF::Button2Click(TObject *Sender)

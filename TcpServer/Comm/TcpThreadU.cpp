@@ -58,6 +58,9 @@ void __fastcall TTcpThread::Execute()
 						fnSaveData07();
 						break;
 					}
+					case WM_SEND_TEST:
+						fnSendTest();
+						break;
 				}
 			}
 		}
@@ -227,7 +230,7 @@ void __fastcall TTcpThread::fnSendIOData(TProtocol *a_pSendPack)
 {
 	int iResult = 0;
 	if((iResult=a_pSendPack->fnEncoding()) == 0){
-		IdUDPServerThr->SendBuffer(m_pAppInfo->Ip , m_pAppInfo->Port, RawToBytes(a_pSendPack->SendPacket, a_pSendPack->SendPacketSize));
+//		IdUDPServerThr->SendBuffer(m_pAppInfo->Ip , m_pAppInfo->Port, RawToBytes(a_pSendPack->SendPacket, a_pSendPack->SendPacketSize));
 
 		UnicodeString sTemp;
 		UnicodeString sLog = "";
@@ -241,6 +244,22 @@ void __fastcall TTcpThread::fnSendIOData(TProtocol *a_pSendPack)
 		OutputDebugStringW(L"Encoding Error ");
 	}
 }
+//---------------------------------------------------------------------------
+void __fastcall TTcpThread::fnSendTest()
+{
+	int iResult = 0;
+	TProtocol *pRecvPack;
+
+	pRecvPack = new TProtocol();
+	pRecvPack->VMSID = 0xFF;
+	pRecvPack->Code  = 0x06;
+	pRecvPack->SFNo  = 0x01;
+	pRecvPack->AFNo  = 0x01;
+
+	fnSendData06(pRecvPack);
+	delete pRecvPack;
+}
+
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
