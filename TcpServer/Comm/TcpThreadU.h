@@ -28,7 +28,10 @@ private:
 	void __fastcall fnSaveData05(TTcpData05 *a_pRecvData);
 	void __fastcall fnSaveData06();
 	void __fastcall fnSaveData07();
+	void __fastcall fnSendData06(TProtocol *a_pRecvPack);
+	void __fastcall fnSendData07(TProtocol *a_pRecvPack);
 
+	void __fastcall fnSendIOData(TProtocol *a_pSendPack);
 protected:
 	void __fastcall Execute();
 public:

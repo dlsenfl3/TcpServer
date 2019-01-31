@@ -65,8 +65,6 @@ void __fastcall TTcpThread::Execute()
 			OutputDebugString(E.Message.c_str());
 		}
 	}
-
-
 }
 //---------------------------------------------------------------------------
 void __fastcall TTcpThread::fnTcpOpen()
@@ -88,8 +86,8 @@ void __fastcall TTcpThread::IdUDPServerThrUDPRead(TIdUDPListenerThread *AThread,
 	if((iResult=pRecvPack->fnDecoding(byBuf, AData.Length)) == 0){
 		switch (pRecvPack->Code) {
 			case 0x05 : fnRecvThrData05(pRecvPack); break;
-//			case 0x06 : fnSendData06(pRecvPack); break;
-//			case 0x07 : fnSendData07(pRecvPack); break;
+			case 0x06 : fnSendData06(pRecvPack); break;
+			case 0x07 : fnSendData07(pRecvPack); break;
 			default	  : break;
 		}
 	}else{
@@ -193,6 +191,55 @@ void __fastcall TTcpThread::fnSaveData07()
 	pIni->WriteInteger("Data07", "Etc2"				   	, m_pAppInfo->Status->TcpData07->Etc2				 );
 
 	delete pIni;
+}
+//---------------------------------------------------------------------------
+void __fastcall TTcpThread::fnSendData06(TProtocol *a_pRecvPack)
+{
+	TProtocol  *pSendPack = new TProtocol();
+	TTcpData06 *pData 	  = new TTcpData06(m_pAppInfo->Status->TcpData06);		//	복사 생성자
+
+	pSendPack->VMSID      = a_pRecvPack->VMSID;
+	pSendPack->Code       = a_pRecvPack->Code;
+	pSendPack->SFNo	      = a_pRecvPack->SFNo;
+	pSendPack->AFNo       = a_pRecvPack->AFNo;
+	pSendPack->Body       = (void*)pData;
+
+	fnSendIOData(pSendPack);
+	delete pSendPack;
+}
+//---------------------------------------------------------------------------
+void __fastcall TTcpThread::fnSendData07(TProtocol *a_pRecvPack)
+{
+	TProtocol  *pSendPack = new TProtocol();
+	TTcpData07 *pData 	  = new TTcpData07(m_pAppInfo->Status->TcpData07);
+
+	pSendPack->VMSID      = a_pRecvPack->VMSID;
+	pSendPack->Code       = a_pRecvPack->Code;
+	pSendPack->SFNo	      = a_pRecvPack->SFNo;
+	pSendPack->AFNo       = a_pRecvPack->AFNo;
+	pSendPack->Body       = (void*)pData;
+
+	fnSendIOData(pSendPack);
+	delete pSendPack;              //	프로토콜 소멸할때 fnDeleteBody호출해서 바디메모리 delete
+}
+//---------------------------------------------------------------------------
+void __fastcall TTcpThread::fnSendIOData(TProtocol *a_pSendPack)
+{
+	int iResult = 0;
+	if((iResult=a_pSendPack->fnEncoding()) == 0){
+		IdUDPServerThr->SendBuffer(m_pAppInfo->Ip , m_pAppInfo->Port, RawToBytes(a_pSendPack->SendPacket, a_pSendPack->SendPacketSize));
+
+		UnicodeString sTemp;
+		UnicodeString sLog = "";
+		for(int i=0; i<a_pSendPack->SendPacketSize; i++){
+			sLog += sTemp.sprintf(L"%02X ", a_pSendPack->SendPacket[i]);
+		}
+		OutputDebugString(sLog.c_str());
+
+	}else{
+		//Log iResult;
+		OutputDebugStringW(L"Encoding Error ");
+	}
 }
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------

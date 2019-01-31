@@ -191,10 +191,10 @@ private:
 //	void __fastcall fnSaveData06();
 //	void __fastcall fnSaveData07();
 
-	void __fastcall fnRecvData05(TProtocol *a_pRecvPack);
-	void __fastcall fnSendData06(TProtocol *a_pRecvPack);
-	void __fastcall fnSendData07(TProtocol *a_pRecvPack);
-	void __fastcall fnSendIOData(TProtocol *a_pSendPack);
+//	void __fastcall fnRecvData05(TProtocol *a_pRecvPack);
+//	void __fastcall fnSendData06(TProtocol *a_pRecvPack);
+//	void __fastcall fnSendData07(TProtocol *a_pRecvPack);
+//	void __fastcall fnSendIOData(TProtocol *a_pSendPack);
 public:		// User declarations
 	__fastcall 	TMainF(TComponent* Owner);
 	__fastcall ~TMainF();

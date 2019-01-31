@@ -218,10 +218,11 @@ __fastcall TTcpData06::TTcpData06()
 	ZeroMemory(&m_stData, sizeof(m_stData));
 }
 //---------------------------------------------------------------------------
-__fastcall TTcpData06::TTcpData06(const TTcpData06 *a_pData)                     // 깊은복사 생성자
+__fastcall TTcpData06::TTcpData06(const TTcpData06 *a_pData)                     // 복사 생성자
+	 : m_stData(a_pData->m_stData)
 {
-	ZeroMemory(&m_stData, sizeof(m_stData));
-	CopyMemory(&m_stData, &a_pData->m_stData, sizeof(m_stData));
+//	ZeroMemory(&m_stData, sizeof(m_stData));
+//	CopyMemory(&m_stData, &a_pData->m_stData, sizeof(m_stData));
 //	m_stData = a_pData->m_stData;
 }
 //---------------------------------------------------------------------------

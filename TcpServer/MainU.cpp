@@ -352,61 +352,61 @@ void __fastcall TMainF::fnLoadToForm()
 //	delete pData;
 //}
 
+////---------------------------------------------------------------------------
+//void __fastcall TMainF::fnSendData06(TProtocol *a_pRecvPack)
+//{
+//	TTcpData06 *pData;
+//	TProtocol  *pSendPack;
+//	pSendPack = new TProtocol();
+//
+//	pSendPack->VMSID   = a_pRecvPack->VMSID;
+//	pSendPack->Code    = a_pRecvPack->Code;
+//	pSendPack->SFNo	   = a_pRecvPack->SFNo;
+//	pSendPack->AFNo    = a_pRecvPack->AFNo;
+//
+//	pData = new TTcpData06(m_pData06);
+//
+//	pSendPack->Body      = pData;
+//	fnSendIOData(pSendPack);
+//	delete pSendPack;
+//}
 //---------------------------------------------------------------------------
-void __fastcall TMainF::fnSendData06(TProtocol *a_pRecvPack)
-{
-	TTcpData06 *pData;
-	TProtocol  *pSendPack;
-	pSendPack = new TProtocol();
-
-	pSendPack->VMSID   = a_pRecvPack->VMSID;
-	pSendPack->Code    = a_pRecvPack->Code;
-	pSendPack->SFNo	   = a_pRecvPack->SFNo;
-	pSendPack->AFNo    = a_pRecvPack->AFNo;
-
-	pData = new TTcpData06(m_pData06);
-
-	pSendPack->Body      = pData;
-	fnSendIOData(pSendPack);
-	delete pSendPack;
-}
+//void __fastcall TMainF::fnSendData07(TProtocol *a_pRecvPack)
+//{
+//	TTcpData07 *pData;
+//	TProtocol  *pSendPack;
+//	pSendPack = new TProtocol();
+//
+//	pSendPack->VMSID   = a_pRecvPack->VMSID;
+//	pSendPack->Code    = a_pRecvPack->Code;
+//	pSendPack->SFNo	   = a_pRecvPack->SFNo;
+//	pSendPack->AFNo    = a_pRecvPack->AFNo;
+//
+//	pData = new TTcpData07(m_pData07);
+//
+//	pSendPack->Body = (void*)pData;
+//	fnSendIOData(pSendPack);
+//	delete pSendPack;              //	프로토콜 소멸할때 fnDeleteBody호출해서 바디메모리 delete
+//}
 //---------------------------------------------------------------------------
-void __fastcall TMainF::fnSendData07(TProtocol *a_pRecvPack)
-{
-	TTcpData07 *pData;
-	TProtocol  *pSendPack;
-	pSendPack = new TProtocol();
-
-	pSendPack->VMSID   = a_pRecvPack->VMSID;
-	pSendPack->Code    = a_pRecvPack->Code;
-	pSendPack->SFNo	   = a_pRecvPack->SFNo;
-	pSendPack->AFNo    = a_pRecvPack->AFNo;
-
-	pData = new TTcpData07(m_pData07);
-
-	pSendPack->Body = (void*)pData;
-	fnSendIOData(pSendPack);
-	delete pSendPack;              //	프로토콜 소멸할때 fnDeleteBody호출해서 바디메모리 delete
-}
-//---------------------------------------------------------------------------
-void __fastcall TMainF::fnSendIOData(TProtocol *a_pSendPack)
-{
-	int iResult = 0;
-	if((iResult=a_pSendPack->fnEncoding()) == 0){
-		IdUDPServer1->SendBuffer(m_sIP, m_wPORT, RawToBytes(a_pSendPack->SendPacket, a_pSendPack->SendPacketSize));
-
-		UnicodeString sTemp;
-		UnicodeString sLog = "";
-		for(int i=0; i<a_pSendPack->SendPacketSize; i++){
-			sLog += sTemp.sprintf(L"%02X ", a_pSendPack->SendPacket[i]);
-		}
-		OutputDebugString(sLog.c_str());
-
-	}else{
-		//Log iResult;
-		OutputDebugStringW(L"Encoding Error ");
-	}
-}
+//void __fastcall TMainF::fnSendIOData(TProtocol *a_pSendPack)
+//{
+//	int iResult = 0;
+//	if((iResult=a_pSendPack->fnEncoding()) == 0){
+//		IdUDPServer1->SendBuffer(m_sIP, m_wPORT, RawToBytes(a_pSendPack->SendPacket, a_pSendPack->SendPacketSize));
+//
+//		UnicodeString sTemp;
+//		UnicodeString sLog = "";
+//		for(int i=0; i<a_pSendPack->SendPacketSize; i++){
+//			sLog += sTemp.sprintf(L"%02X ", a_pSendPack->SendPacket[i]);
+//		}
+//		OutputDebugString(sLog.c_str());
+//
+//	}else{
+//		//Log iResult;
+//		OutputDebugStringW(L"Encoding Error ");
+//	}
+//}
 //---------------------------------------------------------------------------
 void __fastcall TMainF::Button1Click(TObject *Sender)
 {
@@ -419,7 +419,7 @@ void __fastcall TMainF::Button1Click(TObject *Sender)
 	pRecvPack->SFNo  = 0x01;
 	pRecvPack->AFNo  = 0x01;
 
-	fnSendData06(pRecvPack);
+//	fnSendData06(pRecvPack);
 	delete pRecvPack;
 }
 //---------------------------------------------------------------------------
